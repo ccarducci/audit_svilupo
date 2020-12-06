@@ -28,6 +28,7 @@ import it.tecnet.crs.web.dto.StatoSessionePratica;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
@@ -1239,10 +1240,22 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 		log.info("getRiepilogoFasiNonConf OK");
 		return listaRet;
 	}
-
+ 
 	@Override
 	public List<CampagnaDto> getDatiCampagnaVarCompDto(long idCampagna) {
-		String queryStr = "select " +idCampagna + ", AU_S_NONCONF.ID_M_NONCONF, ID_M_VARCOMP, AU_S_SESSIONE.DATA_INIZIO, AU_S_SESSIONE.DATA_FINE, ID_FASE, AU_S_VARCOMP.NUM -- into  TMP_AU_C_VARCOMP FROM AU_S_NONCONF, AU_S_SESSIONE, AU_S_VARCOMP, AU_SESSIONI, AU_M_NONCONFwhere AU_S_NONCONF.ID_S_SESSIONE = AU_S_SESSIONE.ID_S_SESSIONE  AND AU_S_NONCONF.ID_S_NONCONF   = AU_S_VARCOMP.ID_S_NONCONF ANDAU_S_SESSIONE.ID_SESSIONE  = AU_SESSIONI.ID_SESSIONE   AND --ID_M_NONCONF di AU_S_VARCOMP = ID_M_NONCONF di AU_M_AU_S_VARCOMP.ID_M_NONCONF  = AU_M_NONCONF.ID_M_NON_CONF  ANDAU_SESSIONI.ID_CAMPAGNA   = " + idCampagna + " AND AU_S_SESSIONE.STATO_ESAME_SESSIONE   = 'C'";
+		String queryStr = "select  " + idCampagna +", AU_S_NONCONF.ID_M_NONCONF" +
+				", ID_M_VARCOMP" +
+				", AU_S_SESSIONE.DATA_INIZIO" +
+				", AU_S_SESSIONE.DATA_FINE" +
+				", ID_FASE" +
+				", AU_S_VARCOMP.NUM  " +
+				"	FROM AU_S_NONCONF, AU_S_SESSIONE, AU_S_VARCOMP, AU_SESSIONI, AU_M_NONCONF " +
+				" where AU_S_NONCONF.ID_S_SESSIONE = AU_S_SESSIONE.ID_S_SESSIONE  " +
+				" AND AU_S_NONCONF.ID_S_NONCONF   = AU_S_VARCOMP.ID_S_NONCONF " +
+				" AND AU_S_SESSIONE.ID_SESSIONE  = AU_SESSIONI.ID_SESSIONE  " +
+				" AND AU_S_VARCOMP.ID_M_NONCONF  = AU_M_NONCONF.ID_M_NON_CONF " +
+				" AND AU_SESSIONI.ID_CAMPAGNA   = " + idCampagna + 
+				" AND AU_S_SESSIONE.STATO_ESAME_SESSIONE   = 'C'";
 		List<Object[]> lista = new ArrayList<Object[]>();
 		List<CampagnaDto> listRet = new ArrayList<CampagnaDto>();
 		try {
@@ -1250,7 +1263,14 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 			for (Object[] row : lista) {
 				CampagnaDto item = 
 					new CampagnaDto();
-				
+				item.setIdCampagna((Integer)row[0]);
+				item.setID_M_NONCONF((Long)row[1]);
+				item.setID_M_VARCOMP((Long)row[2]);
+				item.setDATA_INIZIO((Date)row[3]);
+				item.setDATA_FINE((Date)row[4]);
+				item.setID_FASE((Long)row[5]);
+				item.setNUM((Integer)row[6]);
+				listRet.add(item);
 				/*
 				item.setIdMNonConf((Long)row[0]);
 				item.setIdFase((Long)row[1]);
