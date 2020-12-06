@@ -293,7 +293,7 @@ function generateReportPianoMiglioramentoWord(){
 	
 }
 
-// -------------------------------------------------------------------- OKKIO INIZIO
+// -------------------------------------------------------------------- OKKIO INIZIO 
 function generaReportAccessiAnnualeIDCampagna(){
 	window.location.href= "/CruscottoAuditAtpoWebWeb/jsonATPO/getReportAccessoPDFAnnuale";
 }

@@ -42,7 +42,7 @@ public class CalcoloIndicatoriCampagnaService {
 	protected static Logger log = Logger
 			.getLogger(CalcoloIndicatoriCampagnaService.class);
 
-
+  
 	private AuCalcolaIndicatoriDao auCalcolaIndicatoriDao;
 	
 	public void setAuCalcolaIndicatoriDao(AuCalcolaIndicatoriDao auCalcolaIndicatoriDao) {

@@ -420,7 +420,7 @@
    	<!-- SERVICES PDF -->
    	<bean id="reportPDFService" class="it.tecnet.crs.report.service.ReportPDFServicImpl">
 		<property name="reportPDFDao"  ref="reportPDFDao"/> 
-   	</bean>
+   	</bean> 
   
     <bean id="calcoloIndicatoriCampagnaService" class="it.tecnet.crs.indicatori.campagna.CalcoloIndicatoriCampagnaService">
 		<property name="auCalcolaIndicatoriDao"  ref="auCalcolaIndicatoriDao"/>  

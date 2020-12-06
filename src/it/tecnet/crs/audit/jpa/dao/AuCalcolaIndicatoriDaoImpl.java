@@ -1250,6 +1250,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 			for (Object[] row : lista) {
 				CampagnaDto item = 
 					new CampagnaDto();
+				
 				/*
 				item.setIdMNonConf((Long)row[0]);
 				item.setIdFase((Long)row[1]);

@@ -46,7 +46,7 @@ import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.opensymphony.xwork2.ModelDriven;
-
+ 
 public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDriven<ReportPDFBean>{
 	
 	public class BaseReportBuilder extends PdfPageEventHelper {
@@ -2579,7 +2579,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 			idCampagna = Long.parseLong(idCampagnaS);
 		
 		idCampagna = 2;
-		
+		 
 		calcoloIndicatoriCampagnaService.calcolaIndicatoriCampagna(idCampagna);
 		//long idSSessione = user.getIdSSessione();
 		

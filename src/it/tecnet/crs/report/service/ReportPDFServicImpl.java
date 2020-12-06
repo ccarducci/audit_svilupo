@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class ReportPDFServicImpl implements ReportPDFService {
-
+ 
 	protected static Logger log = Logger.getLogger(ReportPDFServicImpl.class);
 	private ReportPDFDao reportPDFDao;
 	public List<Object[]> getReportErmPDF(long idSSessione) {

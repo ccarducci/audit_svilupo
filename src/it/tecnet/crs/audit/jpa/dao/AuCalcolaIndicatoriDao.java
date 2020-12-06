@@ -142,6 +142,7 @@ public interface AuCalcolaIndicatoriDao {
 	public Double getPraticheEsamintate(long idSSessione);
 	
 	public List<CalcoloIndicatoriRiepilogoPraticheNonConfFasi> getRiepilogoFasiNonConf(long idSSessione);
-
+    
+	// ---
 	public List<CampagnaDto> getDatiCampagnaVarCompDto(long idCampagna);
 }

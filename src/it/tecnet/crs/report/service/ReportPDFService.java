@@ -6,7 +6,7 @@ import it.tecnet.crs.report.web.dto.ReportAccessoPDFDto;
 import java.util.List;
 
 public interface ReportPDFService {
-	
+	 
 	public List<Object[]> getReportErmPDF(long idSSessione);
 	public List<AtpoPratiche> getReportAllegatiPDF(String sede, long idSessione);
 	

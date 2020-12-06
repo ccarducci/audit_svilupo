@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 import com.ibm.math.BigDecimal;
 
 public class ReportPDFDaoImpl implements ReportPDFDao {
-	
+	 
 	@PersistenceContext()
 	private EntityManager em;
 

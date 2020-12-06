@@ -155,6 +155,7 @@ implements Interceptor {
 						}
 					}
 				}
+				/* DA RIMUOVERE DOPO LO SVILUPO inizio  */
 				for(CrsRuolo crsRuolo:listaRuoliValidi){
 					UserRole role = new UserRole();
 					CrsAssUtenteRuolo ass=new CrsAssUtenteRuolo();
@@ -164,7 +165,7 @@ implements Interceptor {
 					role.setRoleName(crsRuolo.getDescrizione());
 					appUser.getRoles().add(role);
 				}
-				
+				/* DA RIMUOVERE DOPO LO SVILUPO fine  */
 				
 				if(appUser.getRoles().size()==0){
 					log.info("nessun ruolo assegnato all'utente "+nome+" "+cognome);
