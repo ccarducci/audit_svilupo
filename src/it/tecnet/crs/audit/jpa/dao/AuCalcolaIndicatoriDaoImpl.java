@@ -1251,6 +1251,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				", AU_S_SESSIONE.DATA_FINE" +
 				", ID_FASE" +
 				", AU_S_VARCOMP.NUM  " +
+				", AU_S_VARCOMP.PERC_PESATA " +
 				"	FROM AU_S_NONCONF, AU_S_SESSIONE, AU_S_VARCOMP, AU_SESSIONI, AU_M_NONCONF " +
 				" where AU_S_NONCONF.ID_S_SESSIONE = AU_S_SESSIONE.ID_S_SESSIONE  " +
 				" AND AU_S_NONCONF.ID_S_NONCONF   = AU_S_VARCOMP.ID_S_NONCONF " +
@@ -1272,13 +1273,10 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				item.setDATA_FINE((Date)row[4]);
 				item.setID_FASE((Long)row[5]);
 				item.setNUM((Integer)row[6]);
+				// item.setValorePesato(((BigDecimal)row[2]).doubleValue());
+				item.setPERC_PESATA(((BigDecimal)row[7]).doubleValue());
 				listRet.add(item);
-				/*
-				item.setIdMNonConf((Long)row[0]);
-				item.setIdFase((Long)row[1]);
-				item.setValorePesato(((BigDecimal)row[2]).doubleValue());
-				listaRet.add(item);
-				*/
+
 			}
 		} catch (Exception e) {
 			System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());

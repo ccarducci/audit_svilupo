@@ -57,6 +57,13 @@ public class CalcoloIndicatoriCampagnaService {
 		return null;
 	}
 	
+	private CampagnaMVarCompDto getSumIdMVarComp(long id, List<CampagnaMVarCompDto> listaSumIdMVarComp){
+		for (CampagnaMVarCompDto campagnaMVarCompDto : listaSumIdMVarComp) {
+			if(campagnaMVarCompDto.getID_M_VARCOMP().equals(id))return campagnaMVarCompDto;
+		}
+		return null;
+	}
+	
 	@Transactional
 	private void calcolaVarComp(long idCampagna){
 		auCalcolaIndicatoriDao.deleteDatiCampagnaVarComp(idCampagna);
@@ -75,18 +82,26 @@ public class CalcoloIndicatoriCampagnaService {
 				item.setID_M_NON_CONF(campagnaDto.getID_M_NONCONF());
 				item.setID_M_VARCONP(campagnaDto.getID_M_VARCOMP());
 				item.setNUM(campagnaDto.getNUM());
-				item.setPERC_PESATA(0D);
+				item.setPERC_PESATA(campagnaDto.getPERC_PESATA().doubleValue());
 				item.setPERC_SU_PS(0D);
 				listaAU_C_VARCOMP.add(item);
 			}else{
 				Integer num = varConf.getNUM();
 				varConf.setNUM(num + campagnaDto.getNUM());
+		
 			}
+		}
+		
+		
+		for (AU_C_VARCOMP campagnaDto : listaAU_C_VARCOMP) {
+			CampagnaMVarCompDto comp = getSumIdMVarComp(campagnaDto.getID_M_VARCONF(),listaSumIdMVarComp);
+			campagnaDto.setPERC_SU_PS(campagnaDto.getNUM().doubleValue()/comp.getSUM().doubleValue());
 		}
 		
 		for (AU_C_VARCOMP campagnaDto : listaAU_C_VARCOMP) {
 			auCalcolaIndicatoriDao.insertDatiCampagnaVarComp(campagnaDto);
 		}
+		
 		
 		
 	}

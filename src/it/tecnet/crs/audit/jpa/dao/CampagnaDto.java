@@ -10,6 +10,7 @@ public class CampagnaDto {
 	private Date DATA_FINE;
 	private Long ID_FASE;
 	private Integer NUM;
+	private Double PERC_PESATA;
 	public Integer getIdCampagna() {
 		return idCampagna;
 	}
@@ -52,7 +53,12 @@ public class CampagnaDto {
 	public void setNUM(Integer num) {
 		NUM = num;
 	}
-	
-	
-	
+	public Double getPERC_PESATA() {
+		return PERC_PESATA;
+	}
+	public void setPERC_PESATA(Double perc_pesata) {
+		PERC_PESATA = perc_pesata;
+	}
+
+
 }
