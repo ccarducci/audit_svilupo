@@ -8,6 +8,7 @@ import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFaseGestioneIstruttoria;
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePeritale;
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePostPeritale;
 import it.tecnet.crs.audit.web.dto.CalcoloIndicatoriRiepilogoPraticheNonConfFasi;
+import it.tecnet.crs.indicatori.campagna.AU_C_VARCOMP;
 import it.tecnet.crs.indicatori.sessione.AuTotH3PerRischio;
 import it.tecnet.crs.indicatori.sessione.RiepilogoTipologica;
 import it.tecnet.crs.jpa.model.AuCampagna;
@@ -1243,7 +1244,8 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
  
 	@Override
 	public List<CampagnaDto> getDatiCampagnaVarCompDto(long idCampagna) {
-		String queryStr = "select  " + idCampagna +", AU_S_NONCONF.ID_M_NONCONF" +
+		String queryStr = "select  " + idCampagna 
+				+", AU_S_NONCONF.ID_M_NONCONF" +
 				", ID_M_VARCOMP" +
 				", AU_S_SESSIONE.DATA_INIZIO" +
 				", AU_S_SESSIONE.DATA_FINE" +
@@ -1287,4 +1289,56 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 		return listRet;
 	}
 
+	@Override
+	public List<CampagnaMVarCompDto> getSumiCampagnaByIdMVarCompDto(long idCampagna) {
+		String queryStr = "	select   " + 
+							"ID_M_VARCOMP  " + 
+							", Sum(AU_S_VARCOMP.NUM )   " + 
+						"	 " + 
+						"	FROM AU_S_NONCONF, AU_S_SESSIONE, AU_S_VARCOMP, AU_SESSIONI, AU_M_NONCONF   " + 
+						"	where AU_S_NONCONF.ID_S_SESSIONE = AU_S_SESSIONE.ID_S_SESSIONE    " + 
+						"	AND AU_S_NONCONF.ID_S_NONCONF   = AU_S_VARCOMP.ID_S_NONCONF   " + 
+						"	AND AU_S_SESSIONE.ID_SESSIONE  = AU_SESSIONI.ID_SESSIONE    " + 
+						"	AND AU_S_VARCOMP.ID_M_NONCONF  = AU_M_NONCONF.ID_M_NON_CONF   " + 
+						"	AND AU_SESSIONI.ID_CAMPAGNA   =     " + idCampagna +
+						"	AND AU_S_SESSIONE.STATO_ESAME_SESSIONE   = 'C' " + 
+						"	group by ID_M_VARCOMP";
+		List<Object[]> lista = new ArrayList<Object[]>();
+		List<CampagnaMVarCompDto> listRet = new ArrayList<CampagnaMVarCompDto>();
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+			for (Object[] row : lista) {
+				CampagnaMVarCompDto item = 
+					new CampagnaMVarCompDto();
+				item.setID_M_VARCOMP((Long)row[0]);
+				item.setSUM((Integer)row[1]);
+				listRet.add(item);
+				/*
+				item.setIdMNonConf((Long)row[0]);
+				item.setIdFase((Long)row[1]);
+				item.setValorePesato(((BigDecimal)row[2]).doubleValue());
+				listaRet.add(item);
+				*/
+			}
+		} catch (Exception e) {
+			System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			log.info("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			e.printStackTrace();
+		}
+		
+		return listRet;
+	}
+
+	@Override
+	public void deleteDatiCampagnaVarComp(long idCampagna) {
+		em.createNativeQuery(
+				"DELETE AU_C_VARCOMP WHERE ID_C_CAMPAGNA = " + idCampagna)
+				.executeUpdate();
+	}
+	
+	@Override
+	public void insertDatiCampagnaVarComp(AU_C_VARCOMP itemToInsert){
+		em.persist(itemToInsert);
+	}
+	
 }

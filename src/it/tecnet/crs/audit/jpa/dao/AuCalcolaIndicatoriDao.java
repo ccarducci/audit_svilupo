@@ -8,6 +8,7 @@ import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFaseGestioneIstruttoria;
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePeritale;
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePostPeritale;
 import it.tecnet.crs.audit.web.dto.CalcoloIndicatoriRiepilogoPraticheNonConfFasi;
+import it.tecnet.crs.indicatori.campagna.AU_C_VARCOMP;
 import it.tecnet.crs.indicatori.sessione.AuTotH3PerRischio;
 import it.tecnet.crs.indicatori.sessione.RiepilogoTipologica;
 import it.tecnet.crs.jpa.model.AuCampagna;
@@ -143,6 +144,9 @@ public interface AuCalcolaIndicatoriDao {
 	
 	public List<CalcoloIndicatoriRiepilogoPraticheNonConfFasi> getRiepilogoFasiNonConf(long idSSessione);
     
-	// ---
+	// ----------------------------------------------------------------------------
 	public List<CampagnaDto> getDatiCampagnaVarCompDto(long idCampagna);
+	List<CampagnaMVarCompDto> getSumiCampagnaByIdMVarCompDto(long idCampagna);
+	void deleteDatiCampagnaVarComp(long idCampagna);
+	public void insertDatiCampagnaVarComp(AU_C_VARCOMP itemToInsert);
 }
