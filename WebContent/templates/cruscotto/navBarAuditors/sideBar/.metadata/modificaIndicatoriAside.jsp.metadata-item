@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132056607
+file-version=1
+checksum=6f38249006025bce2fa30543de5a4f19
+fetch-size=2516
+mtime=1555513886
+item-spec=41553030383A344C5A4B3651204D4F444946494341494E44494341544F52494153494445204A53502D313732363031343731312E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarAuditors/sideBar/modificaIndicatoriAside.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

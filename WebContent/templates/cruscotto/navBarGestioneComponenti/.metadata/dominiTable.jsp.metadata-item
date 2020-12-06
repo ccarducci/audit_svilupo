@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132858905
+file-version=2
+checksum=35eca8f461a222e09763e2d51f325bad
+fetch-size=6164
+mtime=1561970086
+item-spec=41553030383A444F4D494E495441424C45204A53502D313439373738323536312E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarGestioneComponenti/dominiTable.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

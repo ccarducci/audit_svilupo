@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132054087
+file-version=1
+checksum=540c7f9482055439383ef77f1be29221
+fetch-size=810
+mtime=1555513868
+item-spec=41553030383A344C5A4B365120424F4F545354524150204441544554494D455049434B4552205A4820434E204A532D313432353838373538372E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

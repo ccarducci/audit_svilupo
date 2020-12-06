@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132857924
+file-version=3
+checksum=cee40f851713cdc421cf601e170ba46a
+fetch-size=5501
+mtime=1561101875
+item-spec=41553030383A344C5A4B36512050524F434553534F5441424C45504147494E41544F52204A4156412D313639373230323133302E412D5352433B33
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/mod/web/bean/ProcessoTablePaginator.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

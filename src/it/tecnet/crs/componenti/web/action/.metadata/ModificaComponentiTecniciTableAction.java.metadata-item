@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132857750
+file-version=2
+checksum=31d38cc17243a5ef8a23d76c75811c57
+fetch-size=5544
+mtime=1561970079
+item-spec=41553030383A4D4F444946494341434F4D504F4E454E54495445434E4943495441424C45414354494F4E204A4156412D313431313431343938302E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/componenti/web/action/ModificaComponentiTecniciTableAction.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

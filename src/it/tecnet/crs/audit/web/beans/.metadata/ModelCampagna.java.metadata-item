@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132723727
+file-version=2
+checksum=bda496574d565ff2863fa989de86fb5f
+fetch-size=4597
+mtime=1558082674
+item-spec=41553030383A344C5A4B3651204D4F44454C43414D5041474E41204A4156412D323034363430373336382E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/audit/web/beans/ModelCampagna.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

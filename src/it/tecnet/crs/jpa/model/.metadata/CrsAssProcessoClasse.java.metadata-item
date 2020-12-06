@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132723985
+file-version=2
+checksum=055fb76df862f4adff6564468c4fff6c
+fetch-size=1693
+mtime=1559200935
+item-spec=41553030383A344C5A4B36512043525341535350524F434553534F434C41535345204A4156412D313230393638383535342E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/jpa/model/CrsAssProcessoClasse.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

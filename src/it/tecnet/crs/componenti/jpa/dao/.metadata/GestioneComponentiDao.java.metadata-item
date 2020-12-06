@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132857690
+file-version=4
+checksum=68a051c6e1108a23f97bd87adbf06a3c
+fetch-size=7038
+mtime=1561970078
+item-spec=41553030383A344C5A4B36512047455354494F4E45434F4D504F4E454E544944414F204A4156412D323134313036353034372E412D5352433B34
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/componenti/jpa/dao/GestioneComponentiDao.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

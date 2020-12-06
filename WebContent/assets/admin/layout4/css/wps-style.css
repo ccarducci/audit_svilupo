@@ -1,0 +1,15 @@
+/* Modifiche del 21-07-2015 */
+@media (max-width: 767px) {
+	.fc-left button {
+		position: relative;
+		top: 25px;
+		left: -100px;
+	}
+	.fc-right {
+		position: relative;
+		top: 35px;
+	}
+}
+
+
+ 

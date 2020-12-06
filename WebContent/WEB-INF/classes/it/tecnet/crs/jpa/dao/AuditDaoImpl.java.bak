@@ -1,0 +1,693 @@
+package it.tecnet.crs.jpa.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import it.tecnet.crs.ATPO.auditors.web.dto.AtpoTipologicheDto;
+import it.tecnet.crs.audit.jpa.dao.AuAuditDao;
+import it.tecnet.crs.jpa.model.AuSessioni;
+import it.tecnet.crs.jpa.model.AuVerbale;
+import it.tecnet.crs.jpa.model.AuVerbaleManualeDefinizione;
+import it.tecnet.crs.jpa.model.AuVerbaleManualeNotifica;
+import it.tecnet.crs.util.ApplicationUtil;
+import it.tecnet.crs.web.dto.NonConformitaDto;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
+
+public class AuditDaoImpl implements AuditDao {
+
+	protected static Logger log = Logger.getLogger(AuditDaoImpl.class);
+
+	@PersistenceContext()
+	private EntityManager em;
+
+	public AuditDaoImpl() {
+
+	}
+	
+	public Long getIdAuditBySessione(Long idSessione){
+		
+		String queryStr = "select a.ID_AUDIT from AU_AUDIT a, AU_CAMPAGNA c,AU_SESSIONI s ";
+		queryStr +=" where s.ID_SESSIONE ="+idSessione;
+		queryStr +=" and s.ID_CAMPAGNA=c.ID_CAMPAGNA ";
+		queryStr +=" and c.ID_AUDIT=a.ID_AUDIT ";
+		Long id = null;
+		try{
+			Query querySel = em.createNativeQuery(queryStr);
+			id = (Long) querySel.getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("Errore durante l'esecuzioe del meotodo getIdAuditBySessione() della classe AuditDaoImpl.java ");
+			
+		}
+		log.info("Metodo getIdAuditBySessione() della classe AuditDaoImpl.java eseguito");
+		return id == null ? 0L : id;
+		
+	}
+
+	/*
+	 * CAMPAGNA
+	 */
+
+	/*
+	 * CAMPIONE
+	 */
+
+	/* AGGIUNGERE FILTRO RISCHIO */
+	public Integer countAllCampioneByIdSessione(long idSessione,
+			boolean rischio, String textSearch) {
+		Integer count=null;
+		String queryStr = "SELECT COUNT(v.ID_VERBALE) "
+				+ " from AU_VERBALE v, AU_CAMPAGNA c, AU_SESSIONI s, AU_ASS_VERBALE_CAMPAGNA ass "
+				+ "  where v.ID_VERBALE=ass.IDVERBALE " 
+				+ "  and ass.ID_CAMPAGNA=s.ID_CAMPAGNA "
+				//+ "  and c.ID_CAMPAGNA = v.ID_CAMPAGNA "
+				+ "  and s.ID_SESSIONE = " + idSessione;
+		;
+
+		if (!StringUtils.isEmpty(textSearch)) {
+			queryStr += " and (" + "upper(v.SEDE) like UPPER('%" + textSearch
+					+ "%') " + "or upper(v.AZIENDA) like UPPER('%" + textSearch
+					+ "%')" + "or upper(v.CODICE_FISCALE) like UPPER('%"
+					+ textSearch + "%')" + "or upper(c.NOME) like UPPER('%"
+					+ textSearch + "%')" + ")";
+		}
+
+		
+		try{
+			Query querySel = em.createNativeQuery(queryStr);
+			 count = (Integer) querySel.getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("Errore durante l'esecuzioe del meotodo countAllCampioneByIdSessione() della classe AuditDaoImpl.java ");
+			
+		}
+			log.info("Metodo countAllCampioneByIdSessione() della classe AuditDaoImpl.java eseguito");
+		return count == null ? 0 : count;
+	}
+
+	/* AGGIUNGERE FILTRO RISCHIO */
+	public List<AuVerbale> getCampioneByIdSessione(long idSessione,
+			boolean rischio, Integer pageNumber, Integer pageSize,
+			String columnNameToOrder, String orderType, String textSearch) {
+		String queryStr = "SELECT v.*, c.*, s.*,"
+				+ " c.NOME,c.DATA_INIZIO,c.DATA_FINE, c.STATO "
+				+ " from AU_VERBALE v, AU_CAMPAGNA c, AU_SESSIONI s , AU_ASS_VERBALE_CAMPAGNA ass"
+				+ "  where v.ID_VERBALE=ass.ID_VERBALE " 
+				+ "  and ass.ID_CAMPAGNA=s.ID_CAMPAGNA "
+				//+ "  and c.ID_CAMPAGNA = v.ID_CAMPAGNA "
+				+ "  and s.ID_SESSIONE = " + idSessione;
+
+		if (!StringUtils.isEmpty(textSearch)) {
+
+			queryStr += " and (" + "upper(v.sede) like UPPER('%" + textSearch
+					+ "%') " + "or upper(v.AZIENDA) like UPPER('%" + textSearch
+					+ "%')" + "or upper(v.CODICE_FISCALE) like UPPER('%"
+					+ textSearch + "%')" + "or upper(c.nome) like UPPER('%"
+					+ textSearch + "%')" + "or upper(s.sede) like UPPER('%"
+					+ textSearch + "%')" + "or upper(s.tipo) like UPPER('%"
+					+ textSearch + "%')"
+					+ "or upper(s.dirigente) like UPPER('%" + textSearch
+					+ "%')" + "or upper(s.auditors) like UPPER('%" + textSearch
+					+ "%')" + ")";
+		}
+
+		if (!StringUtils.isEmpty(columnNameToOrder)) {
+			queryStr += " order by " + columnNameToOrder + " " + orderType;
+		}
+		Query querySel = em.createNativeQuery(queryStr);
+		if (pageNumber != null && pageSize != null && pageSize > 0) {
+			querySel.setFirstResult(pageNumber);// ((pageNumber-1) * pageSize);
+			querySel.setMaxResults(pageSize);
+		}
+
+		// querySel.setParameter("idUtente", idUtente);
+		System.out.println(queryStr);
+
+		List<AuVerbale> verbaliList = (List<AuVerbale>) querySel
+				.getResultList();
+		try {
+			if (verbaliList.size() == 0) {
+				throw new Exception(
+						" Non esiste nessuna verbale con idsessione '"
+								+ idSessione + "'");
+			}
+		} catch (Throwable e) {
+			log.error("Errore getCampioneByIdSessione. Errore:"
+					+ e.getMessage(), e);
+		}
+		return verbaliList;
+	}
+
+	/*
+	 * DOMANDA
+	 */
+
+	/*
+	 * RISPOSTA
+	 */
+
+	/*
+	 * RISULTATI CAMPAGNA
+	 */
+
+	/*
+	 * RISULTATI CAMPIONE
+	 */
+
+	/*
+	 * SESSIONI
+	 */
+
+	public List<AuSessioni> getSessioneByIdAudit(long idAudit) {
+		String queryStr = "SELECT ID_SESSIONE,S.ID_CAMPAGNA,C.NOME,SEDE,TIPO,S.DATA_INIZIO,S.DATA_FINE,S.STATO,DIRIGENTE,AUDITORS, S.NOTA "
+				+ " FROM AU_SESSIONI S INNER JOIN  AU_CAMPAGNA C ON S.ID_CAMPAGNA = S.ID_CAMPAGNA "
+				+ " INNER JOIN   AU_AUDIT A ON C.ID_AUDIT = A.ID_AUDIT WHERE ID_AUDIT = :idAudit";
+		Query querySel = em.createQuery(queryStr);
+		querySel.setParameter("ID_AUDIT", idAudit);
+
+		List<AuSessioni> sessioniList = (List<AuSessioni>) querySel
+				.getResultList();
+		try {
+			if (sessioniList.size() == 0) {
+				throw new Exception(
+						" Non esiste nessuna sessione con id audit'" + idAudit
+								+ "'");
+			}
+		} catch (Throwable e) {
+			log.error("Errore getSessioneByIdAudit. Errore:" + e.getMessage(),
+					e);
+		}
+		return sessioniList;
+	}
+
+	public Integer countAllSessioniUtente(long idUtente, String textSearch) {
+		Integer count=null;
+		String queryStr = "SELECT COUNT (s.id_sessione)"
+			+ " FROM Au_Sessioni s,  Au_Ass_Utente_Sessione us, Crs_Utente u,"
+			+ " AU_AUDIT aud, AU_CAMPAGNA cmp "
+			+ " where s.id_Sessione=us.id_Sessione "
+			+ " and us.id_utente= u.id_utente "
+			+ " and u.id_Utente = "
+			+ idUtente
+			+ " and cmp.ID_CAMPAGNA= s.ID_CAMPAGNA and aud.ID_AUDIT=cmp.ID_AUDIT ";
+
+		if (!StringUtils.isEmpty(textSearch)) {
+
+			queryStr += " and (" + "upper(aud.DESCRIZIONE) like UPPER('%" + textSearch + "%'))";
+		}
+			try{
+				Query querySel = em.createNativeQuery(queryStr);
+
+				 count = (Integer) querySel.getSingleResult();
+	
+			}catch(Exception e){
+				log.error("Errore durante l'esecuzione del meotodo countAllSessioniUtente() della classe AuditDaoImpl.java ");
+				
+			}
+			log.info("Metodo countAllSessioniUtente() della classe AuditDaoImpl.java eseguito");
+		
+		return count == null ? 0 : count;
+	}
+
+	public List<AuSessioni> getListaSessioniUtente(long idUtente,
+			Integer pageNumber, Integer pageSize, String columnNameToOrder,
+			String orderType, String textSearch) {
+		
+		List<AuSessioni> sessioniList=null;
+		String queryStr = "SELECT s.id_sessione, cmp.NOME, aud.DESCRIZIONE, s.SEDE, s.DATA_INIZIO, s.DATA_FINE, s.STATO, s.DIRIGENTE "
+				+ " FROM Au_Sessioni s,  Au_Ass_Utente_Sessione us, Crs_Utente u,"
+				+ " AU_AUDIT aud, AU_CAMPAGNA cmp "
+				+ " where s.id_Sessione=us.id_Sessione "
+				+ " and us.id_utente= u.id_utente "
+				+ " and u.id_Utente = "
+				+ idUtente
+				+ " and cmp.ID_CAMPAGNA= s.ID_CAMPAGNA and aud.ID_AUDIT=cmp.ID_AUDIT ";
+
+		if (!StringUtils.isEmpty(textSearch)) {
+
+			queryStr += " and (" + "upper(aud.descrizione) like UPPER('%" + textSearch + "%') "  + ")";
+		}
+		if (!StringUtils.isEmpty(columnNameToOrder)) {
+			int columnNametoOrder= Integer.valueOf(columnNameToOrder);
+			queryStr +=" ORDER BY "+(columnNametoOrder + 1)+" "+orderType +" OFFSET "+pageNumber+" ROWS ";
+			queryStr +=" FETCH NEXT "+pageSize+" ROWS ONLY ";
+		}
+		
+		Query querySel = em.createNativeQuery(queryStr);
+		/*if (pageNumber != null && pageSize != null && pageSize > 0) {
+			querySel.setFirstResult(pageNumber);
+			querySel.setMaxResults(pageSize);
+		}*/
+
+		try{
+			 sessioniList = (List<AuSessioni>) querySel.getResultList();
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo getListaSessioniUtente() della classe AuditDaoImpl.java ");
+		}
+		log.info("Metodo getListaSessioniUtente() della classe AuditDaoImpl.java eseguito");
+
+		return sessioniList;
+	}
+
+	@Override
+	public String getNotaSessione(long idSessione) {
+		String nota=null;
+		String queryStr = "select nota from AU_SESSIONI where ID_SESSIONE="+idSessione;
+		try{
+			Query querySel = em.createNativeQuery(queryStr);
+			 nota= (String) querySel.getSingleResult();
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo getNotaSessione() della classe AuditDaoImpl.java ");
+
+		}
+		log.info("Metodo getNotaSessione() della classe AuditDaoImpl.java eseguito");
+		 
+		return nota;
+	}
+
+	@Override
+	public void salvaNota(AuSessioni s) {
+		try{
+			em.merge(s);
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo salvaNota() della classe AuditDaoImpl.java ");
+		}
+		
+		log.info("Metodo salvaNota() della classe AuditDaoImpl.java eseguito");
+	}
+	
+	/*
+	 * VERBALE
+	 */
+
+	public Integer countAllPraticheSessione(long idSessione, String textSearch) {
+		Integer count =null;
+		String queryStr = "SELECT count (v.id_verbale) "
+				+ " from AU_ASS_CAMP_VERB ass "
+				+ " inner join au_campione c on ass.ID_CAMPIONE=c.ID_CAMPIONE"
+				+ " inner join AU_VERBALE v on v.ID_VERBALE = ass.ID_VERBALE"
+				+ " inner join AU_SESSIONI s on s.ID_SESSIONE=c.ID_SESSIONE"
+				+ " inner join AU_ASS_VERBALE_CAMPAGNA assvc on assvc.ID_VERBALE= v.ID_VERBALE"
+				+ " inner join au_campagna ca on ca.ID_CAMPAGNA=assvc.ID_CAMPAGNA"
+				
+				+ " where s.ID_SESSIONE=" + idSessione;
+
+		if (!StringUtils.isEmpty(textSearch)) {
+
+			queryStr += " and (" + 
+			"upper(v.NUMERO_PROTOCOLLO) like UPPER('%" + textSearch+ "%') " + ")";
+		}
+
+		try{
+			Query querySel = em.createNativeQuery(queryStr);
+
+			 count = (Integer) querySel.getSingleResult();
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo countAllPraticheSessione() della classe AuditDaoImpl.java ");
+		}
+		log.info("Metodo countAllPraticheSessione() della classe AuditDaoImpl.java eseguito");
+		return count == null ? 0 : count;
+	}
+
+	public List<AuVerbale> getListaPraticheSessione(long idSessione,
+			Integer pageNumber, Integer pageSize, String columnNameToOrder,
+			String orderType, String textSearch) {
+		List<AuVerbale> verbaliList=null;
+		String queryStr = "SELECT  v.ID_VERBALE,v.NUMERO_PROTOCOLLO,v.RAGIONE_SOCIALE,v.CODICE_FISCALE, v.DATA_FINE_ISPEZIONE, v.DATA_INSERIMENTO_NOTIFICA,v.TIPO_NOTIFICA,v.IMPORTO_ACCERTATO "
+				+ " from AU_ASS_CAMP_VERB ass "
+				+ " inner join au_campione c on ass.ID_CAMPIONE=c.ID_CAMPIONE"
+				+ " inner join AU_VERBALE v on v.ID_VERBALE = ass.ID_VERBALE"
+				+ " inner join AU_SESSIONI s on s.ID_SESSIONE=c.ID_SESSIONE"
+				+ " inner join AU_ASS_VERBALE_CAMPAGNA assvc on assvc.ID_VERBALE= v.ID_VERBALE"
+				+ " inner join au_campagna ca on ca.ID_CAMPAGNA=assvc.ID_CAMPAGNA"
+				+ " where s.ID_SESSIONE=" + idSessione;
+
+		if (!StringUtils.isEmpty(textSearch)) {
+
+			queryStr += " and (" + 
+			"upper(v.NUMERO_PROTOCOLLO) like UPPER('%" + textSearch+ "%') " + ")";
+		}
+		if (!StringUtils.isEmpty(columnNameToOrder)) {
+			int c= Integer.valueOf(columnNameToOrder);
+			queryStr +=" ORDER BY "+(c + 1)+" "+orderType +" OFFSET "+pageNumber+" ROWS ";
+			queryStr +=" FETCH NEXT "+pageSize+" ROWS ONLY ";
+		}
+		Query querySel = em.createNativeQuery(queryStr);
+	
+
+		try{
+			 verbaliList = (List<AuVerbale>) querySel.getResultList();
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo getListaPraticheSessione() della classe AuditDaoImpl.java ");
+		}
+		log.info("Metodo getListaPraticheSessione() della classe AuditDaoImpl.java eseguito");
+		
+
+		return verbaliList;
+	}
+
+	public AuVerbale getVerbale(long idVerbale) {
+		AuVerbale auv=null;
+		try{
+			auv= em.find(AuVerbale.class, idVerbale);
+	
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo getVerbale() della classe AuditDaoImpl.java ");
+		}
+		log.info("Metodo getVerbale() della classe AuditDaoImpl.java eseguito");
+		return  auv;
+	}
+
+	@Transactional
+	public void saveVerbale(AuVerbale v) {
+		try{
+			em.merge(v);
+		}catch(Exception e){
+			
+			log.error("Errore durante l'esecuzione del meotodo saveVerbale() della classe AuditDaoImpl.java ");
+		}
+		log.info("Metodo saveVerbale() della classe AuditDaoImpl.java eseguito");
+	
+	}
+	
+	@Transactional
+	public <T> void salva(T obj) {
+		//a.setIdAudit(null);
+		try {
+			em.merge(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/*
+	 * VERBALE MANUALE NOTIFICA
+	 */
+
+	public AuVerbaleManualeNotifica getVerbaleManualeNotifica(long idVerbale) {
+		String queryStr = "SELECT ID_VERBALE_MANUALE_NOTIFICA,ID_VERBALE,DATA_AFFISSIONE,"
+				+ "DATA_AUDIT,DATA_CONSEGNA_A_MANO,DATA_GIACENZA,DATA_NOTIFICA,"
+				+ "DATA_RACCOMANDATA,DATA_RICEVUTA,DATA_TRIBUNALE,INDIRIZZO_PEC_REALE,"
+				+ "DATA_ATTI_INTERRUTTIVI,DESTINATARIO_REALE"
+				+ " from AU_VERBALE_MANUALE_NOTIFICA "
+				+ " where ID_VERBALE="
+				+ idVerbale;
+
+		Query querySel = em.createNativeQuery(queryStr,
+				AuVerbaleManualeNotifica.class);
+
+		AuVerbaleManualeNotifica verbale = null;
+		try {
+			verbale = (AuVerbaleManualeNotifica) querySel.getSingleResult();
+		} catch (Exception e) {
+			log.error("Errore getVerbaleManualeNotifica. Errore:"
+					+ e.getMessage(), e);
+		}
+
+		return verbale;
+	}
+
+	@Transactional
+	public void salvaVerbaleManualeNotifica(
+			AuVerbaleManualeNotifica verbaleManualeNotifica) {
+		try{
+			em.merge(verbaleManualeNotifica);
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo salvaVerbaleManualeNotifica() della classe AuditDaoImpl.java" );
+		}
+		log.info("Metodo salvaVerbaleManualeNotifica() della classe AuditDaoImpl.java eseguito");
+	}
+
+	/*
+	 * VERBALE MANUALE DEFINIZIONE
+	 */
+
+	public AuVerbaleManualeDefinizione getVerbaleManualeDefinizione(
+			long idVerbale) {
+		String queryStr = "SELECT ID_VERBALE_MANUALE_DEFINIZIONE,ID_VERBALE,"
+				+ "DATA_RICORSO,DATA_FALLIMENTO,DATA_INVIO_UL13,DATA_TRASMISSIONE,"
+				+ "ESITO_REALE,NUMERO_COMUNICAZIONI_DA_INVIARE,NUMERO_COMUNICAZIONI_INVIATE,"
+				+ "DESCRIZIONE_ATTI_INTERRUTTIVI"
+				+ " from AU_VERBALE_MANUALE_DEFINIZIONE "
+				+ " where ID_VERBALE=" + idVerbale;
+
+		Query querySel = em.createNativeQuery(queryStr,
+				AuVerbaleManualeDefinizione.class);
+		AuVerbaleManualeDefinizione verbale = null;
+		try {
+			verbale = (AuVerbaleManualeDefinizione) querySel.getSingleResult();
+		} catch (Exception e) {
+			log.error("Errore durante l'esecuzione del meotodo getVerbaleManualeDefinizione() della classe AuditDaoImpl.java"
+					+ e.getMessage(), e);
+		}
+		log.info("Metodo getVerbaleManualeDefinizione() della classe AuditDaoImpl.java eseguito");
+		return verbale;
+	}
+
+	@Transactional
+	public void salvaVerbaleManualeDefinizione(
+			AuVerbaleManualeDefinizione verbaleManualeDefinizione) {
+		try{
+			em.merge(verbaleManualeDefinizione);
+		}catch(Exception e){
+			log.error("Errore getVerbaleManualeDefinizione. Errore:"
+					+ e.getMessage(), e);
+		}
+		log.info("Metodo salvaVerbaleManualeDefinizione() della classe AuditDaoImpl.java eseguito");
+	}
+
+	
+	
+	/*
+	 * PRATICHE CON RISCHIO
+	 */
+	public int countPraticheConRischio(int sessionId, String textSearch, String columnNameToOrder, String orderType, Integer pageNumber, Integer pageSize) {
+		String query=" SELECT  count(distinct v.ID_VERBALE)" +
+		  " from AU_ASS_CAMP_VERB ass " +
+		  "	inner join au_campione c on ass.ID_CAMPIONE=c.ID_CAMPIONE " +
+		  "	inner join AU_VERBALE v on v.ID_VERBALE = ass.ID_VERBALE " +
+		  "	inner join AU_SESSIONI s on s.ID_SESSIONE=c.ID_SESSIONE " +
+		  " inner join AU_ASS_VERBALE_CAMPAGNA assvc on assvc.ID_VERBALE= v.ID_VERBALE" +
+		  " inner join au_campagna ca on ca.ID_CAMPAGNA=assvc.ID_CAMPAGNA" +
+		  " INNER JOIN AU_NON_CONFORMITA_VERBALE ncv ON v.ID_VERBALE = ncv.ID_VERBALE " +
+		  "	INNER JOIN AU_NON_CONFORMITA nc ON ncv.ID_NON_CONFORMITA = nc.ID_NON_CONFORMITA " +
+		  "	where "+
+		  "( nc.RISCHIO != '' AND ncv.RISULTATO_REALE is null  AND ncv.RISULTATO < 0  and S.ID_SESSIONE="+sessionId+" ) or"+
+		  "(nc.RISCHIO != ''  AND ncv.RISULTATO_REALE is not null AND ncv.RISULTATO_REALE < 0  and S.ID_SESSIONE="+sessionId+" )";
+		
+	if (!StringUtils.isEmpty(textSearch)) {
+		
+			query += " and (" + " upper(v.NUMERO_PROTOCOLLO) like UPPER('%"+ textSearch + "%')" + ")";
+		
+	}
+	if (!StringUtils.isEmpty(columnNameToOrder)) {
+		int columnNToOrder= Integer.valueOf(columnNameToOrder);
+		query +=" ORDER BY "+(columnNToOrder + 1)+" "+orderType +" OFFSET "+pageNumber+" ROWS ";
+	}
+		Query querySel = em.createNativeQuery(query);
+		
+		Integer count=null;
+		try{
+			 count = (Integer) querySel.getSingleResult();
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo countPraticheConRischio() della classe AuditDaoImpl.java");
+		}
+		
+		log.info("Metodo countPraticheConRischio() della classe AuditDaoImpl.java eseguito");
+		
+		return count == null ? 0 : count;
+		
+		
+	}
+	
+	public List<AuVerbale> getListaPraticheConRischio(long idSessione,
+			Integer pageNumber, Integer pageSize, String columnNameToOrder,
+			String orderType, String textSearch) {
+
+		String queryStr = " SELECT distinct v.ID_VERBALE, v.NUMERO_PROTOCOLLO,v.ragione_sociale, v.PARTITA_IVA, v.DATA_FINE_ISPEZIONE, v.DATA_INSERIMENTO_NOTIFICA, v.TIPO_NOTIFICA, v.IMPORTO_ACCERTATO, nc.RISCHIO "+
+						  " from AU_ASS_CAMP_VERB ass " +
+						  "	inner join au_campione c on ass.ID_CAMPIONE=c.ID_CAMPIONE " +
+						  "	inner join AU_VERBALE v on v.ID_VERBALE = ass.ID_VERBALE " +
+						  "	inner join AU_SESSIONI s on s.ID_SESSIONE=c.ID_SESSIONE " +
+						  " inner join AU_ASS_VERBALE_CAMPAGNA assvc on assvc.ID_VERBALE= v.ID_VERBALE" +
+						  " inner join au_campagna ca on ca.ID_CAMPAGNA=assvc.ID_CAMPAGNA" +
+						  " INNER JOIN AU_NON_CONFORMITA_VERBALE ncv ON v.ID_VERBALE = ncv.ID_VERBALE " +
+						  "	INNER JOIN AU_NON_CONFORMITA nc ON ncv.ID_NON_CONFORMITA = nc.ID_NON_CONFORMITA " +
+						  "	where "+
+						  "(( nc.RISCHIO != '' AND ncv.RISULTATO_REALE is null  AND ncv.RISULTATO < 0  and S.ID_SESSIONE="+idSessione+" ) or"+
+						  "(nc.RISCHIO != ''  AND ncv.RISULTATO_REALE is not null AND ncv.RISULTATO_REALE < 0  and S.ID_SESSIONE="+idSessione+" ))";
+
+		if (!StringUtils.isEmpty(textSearch)) {
+			queryStr += " and (" + " upper(v.NUMERO_PROTOCOLLO) like UPPER('%"+ textSearch + "%')" + ")";
+		
+		}
+		if (!StringUtils.isEmpty(columnNameToOrder)) {
+			int columnNToOrder= Integer.valueOf(columnNameToOrder);
+			queryStr +=" ORDER BY "+(columnNToOrder + 1)+" "+orderType +" OFFSET "+pageNumber+" ROWS ";
+		}
+		Query querySel = em.createNativeQuery(queryStr);
+	
+
+		List<AuVerbale> praticheConRischio = querySel.getResultList();
+
+		return praticheConRischio;
+
+	}
+	
+	
+
+	@Override
+	public List<NonConformitaDto> mediaNonConformita(long idSessione) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Transactional
+	public <T> T cerca(Class<T> obj , Object pk) {
+		//a.setIdAudit(null);
+		try {
+			return (T) em.find(obj,pk);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+<<<<<<< .mine
+	@Override
+	public List<AuSessioni> getListaSessioniUtenteAsDirigente(long idUtente,
+			Integer pageNumber, Integer pageSize, String columnNameToOrder,
+			String orderType, String textSearch) {
+		
+		List<AuSessioni> sessioniList=null;
+		String queryStr = "SELECT sess.id_sessione, cmp.NOME, au.DESCRIZIONE, sess.SEDE, sess.DATA_INIZIO, sess.DATA_FINE, sess.STATO, sess.DIRIGENTE"+ 
+		" FROM AU_SESSIONI sess,AU_CAMPAGNA cmp,AU_ASS_DIRIGENTE_AUDIT ass,AU_AUDIT au"+
+		" WHERE ass.ID_UTENTE= "+idUtente+
+		" AND sess.ID_CAMPAGNA=cmp.ID_CAMPAGNA"+
+		" AND cmp.ID_AUDIT= ass.ID_AUDIT"+
+		" AND au.ID_AUDIT=ass.ID_AUDIT";
+||||||| .r1617
+=======
+	/*
+	 * TIPOLOGICHE
+	 */
+	@Override
+	public List<Object[]> getCorrettoErrato() {
+		List<Object[]> list = new ArrayList<Object[]>();
+>>>>>>> .r1621
+
+<<<<<<< .mine
+		if (!StringUtils.isEmpty(textSearch)) {
+
+			queryStr += " and (" + "upper(au.DESCRIZIONE) like UPPER('%" + textSearch + "%') "  + ")";
+		}
+		if (!StringUtils.isEmpty(columnNameToOrder)) {
+			int columnNametoOrder= Integer.valueOf(columnNameToOrder);
+			queryStr +=" ORDER BY "+(columnNametoOrder + 1)+" "+orderType +" OFFSET "+pageNumber+" ROWS ";
+			queryStr +=" FETCH NEXT "+pageSize+" ROWS ONLY ";
+		}
+		
+		Query querySel = em.createNativeQuery(queryStr);
+		/*if (pageNumber != null && pageSize != null && pageSize > 0) {
+			querySel.setFirstResult(pageNumber);
+			querySel.setMaxResults(pageSize);
+		}*/
+
+		try{
+			 sessioniList = (List<AuSessioni>) querySel.getResultList();
+		}catch(Exception e){
+			log.error("Errore durante l'esecuzione del meotodo getListaSessioniUtenteAsDirigente() della classe AuditDaoImpl.java ");
+		}
+		log.info("Metodo getListaSessioniUtenteAsDirigente() della classe AuditDaoImpl.java eseguito");
+
+		return sessioniList;
+		
+	}
+
+	@Override
+	public Integer countAllSessioniUtenteAsDirigente(long idUtente, String textSearch) {
+		
+		Integer count = null;
+		String queryStr = "SELECT count(sess.ID_SESSIONE)"+
+			" from AU_SESSIONI sess,AU_CAMPAGNA cmp,AU_ASS_DIRIGENTE_AUDIT ass,AU_AUDIT au"+ 
+			" WHERE ass.ID_UTENTE= "+idUtente+
+			" and sess.ID_CAMPAGNA=cmp.ID_CAMPAGNA"+
+			" and cmp.ID_AUDIT= ass.ID_AUDIT"+
+			" and au.ID_AUDIT=ass.ID_AUDIT";	
+
+		if (!StringUtils.isEmpty(textSearch)) {
+			queryStr += " and (" + "upper(au.descrizione) like UPPER('%" + textSearch + "%'))";
+		}
+
+		try {
+			Query querySel = em.createNativeQuery(queryStr);
+			count = (Integer) querySel.getSingleResult();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return count;
+	}
+
+
+||||||| .r1617
+=======
+		String queryStr = "select * from AU_TPL_CORRETTO_ERRATO";	
+
+		try {
+			Query querySel = em.createNativeQuery(queryStr);
+			list = querySel.getResultList();
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Object[]> getModalitaNotifica() {
+		List<Object[]> list = new ArrayList<Object[]>();
+
+		String queryStr = "select * from AU_TPL_MODALITA_NOTIFICA";	
+
+		try {
+			Query querySel = em.createNativeQuery(queryStr);
+			list = querySel.getResultList();
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Object[]> getChiNotifica() {
+		List<Object[]> list = new ArrayList<Object[]>();
+
+		String queryStr = "select * from AU_TPL_CHI_NOTIFICA";	
+
+		try {
+			Query querySel = em.createNativeQuery(queryStr);
+			list = querySel.getResultList();
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return list;
+	}
+
+
+>>>>>>> .r1621
+	
+
+}

@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132859019
+file-version=2
+checksum=ae0b140b7c8b83435c7220a38f5a976a
+fetch-size=4759
+mtime=1561970084
+item-spec=41553030383A434F4D505445434E4943495441424C45534F54544F50524F434553534F204A53502D313639353639373537382E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarModellazione/modificaSottoProcesso/componentiTecnici/compTecniciTableSottoProcesso.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

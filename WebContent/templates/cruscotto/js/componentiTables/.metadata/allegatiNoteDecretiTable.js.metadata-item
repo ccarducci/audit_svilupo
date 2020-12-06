@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132723112
+file-version=1
+checksum=b381ac315eaf44061e42d37fdef2c2bc
+fetch-size=4797
+mtime=1559200931
+item-spec=41553030383A414C4C45474154494E4F5445444543524554495441424C45204A532D313934373731393736392E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/js/componentiTables/allegatiNoteDecretiTable.js
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

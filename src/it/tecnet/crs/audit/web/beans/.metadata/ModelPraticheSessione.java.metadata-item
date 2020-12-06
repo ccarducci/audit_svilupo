@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132056722
+file-version=1
+checksum=14238a2bf5b7157bbb8b863991baa14a
+fetch-size=2607
+mtime=1555513888
+item-spec=41553030383A344C5A4B3651204D4F44454C505241544943484553455353494F4E45204A4156412D313634333238333835352E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/audit/web/beans/ModelPraticheSessione.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

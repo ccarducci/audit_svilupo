@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132723119
+file-version=1
+checksum=cbfed6238d759ea5a8371345c1bed78e
+fetch-size=4805
+mtime=1559200930
+item-spec=41553030383A414C4C45474154494C45474749444543524554495441424C45204A532D313735333237363036322E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/js/componentiTables/allegatiLeggiDecretiTable.js
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132100712
+file-version=1
+checksum=257f3f8c4283160ec3d67704481ec6b7
+fetch-size=537
+mtime=1556007089
+item-spec=41553030383A5449504F4C4F474941505241544943484543414D50494F4E4544544F204A4156412D313339333332313631382E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/ATPO/auditors/web/dto/TipologiaPraticheCampioneDto.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

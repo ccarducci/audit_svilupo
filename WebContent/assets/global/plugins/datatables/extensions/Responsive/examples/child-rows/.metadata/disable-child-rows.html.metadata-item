@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132060495
+file-version=1
+checksum=91d1612caf6b13828b1f582e9d73c5bd
+fetch-size=22472
+mtime=1555513875
+item-spec=41553030383A344C5A4B36512044495341424C45204348494C4420524F57532048544D4C2D313030373635323331332E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/assets/global/plugins/datatables/extensions/Responsive/examples/child-rows/disable-child-rows.html
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

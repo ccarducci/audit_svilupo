@@ -1,0 +1,13 @@
+version=10.2
+item-uid=135559848
+file-version=2
+checksum=bdacd412682cc5f09dad3610baeabe66
+fetch-size=6245
+mtime=1576255338
+item-spec=41553030383A344C5A4B36512041554449544F5253414354494F4E204A4156412D313833363931303834382E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/web/action/AuditorsAction.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

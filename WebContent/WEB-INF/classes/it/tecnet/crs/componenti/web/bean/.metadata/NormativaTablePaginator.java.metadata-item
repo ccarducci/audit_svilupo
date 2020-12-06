@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132723781
+file-version=2
+checksum=85d58075f38c9a43aff5d80f1a500c20
+fetch-size=3071
+mtime=1559200935
+item-spec=41553030383A344C5A4B3651204E4F524D41544956415441424C45504147494E41544F52204A4156412D323033343832353836352E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/componenti/web/bean/NormativaTablePaginator.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

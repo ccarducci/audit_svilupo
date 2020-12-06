@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722600
+file-version=1
+checksum=954f6f86148afc9dcc5a2ff2e660305a
+fetch-size=3550
+mtime=1558012594
+item-spec=41553030383A4142535452414354444154415441424C4553504152414D5554494C495459204A4156412D313332383636393430342E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/util/datatables/AbstractDataTablesParamUtility.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

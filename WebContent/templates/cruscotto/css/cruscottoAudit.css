@@ -1,0 +1,58 @@
+#descrizioneAudit,#obiettiviAudit,#outputAudit,
+#inputAudit{
+	resize: none;
+}
+
+#bottoniAudit{
+	padding-top: 70;
+    padding-left: 320;
+}
+
+
+.utente-crusc {
+    display: inline-block !important;
+    border: 1px solid #7FB0DA;
+    width: 35px !important;
+    height: 35px !important;
+    padding: 8px;
+    border-radius: 50%;
+    margin-left: 5px !important;
+}
+
+#ruoloAttivo {
+	color: #5b9bd1 !important;
+
+}
+
+#pannelloUtente {
+	border-radius: 10px;
+}
+
+textarea{
+	resize: none;
+}
+
+
+#bottoniDelegati{
+    margin-left: 43% !important;
+}
+
+#bottoniProcessoFasi{
+    margin-left: 37% !important;
+}
+
+
+.dropdown:hover .dropdown-report {
+	display: block;
+}
+
+li.dropdown-report.active > ul > li.active>a{
+	background:#337ab7;
+	color: #ffffff;
+}
+
+li.dropdown-report.active > ul > li.active>a:hover{
+	background:#337ab7;
+	color: #ffffff;
+}
+

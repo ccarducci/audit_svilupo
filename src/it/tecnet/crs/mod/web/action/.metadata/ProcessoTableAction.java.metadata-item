@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132857912
+file-version=3
+checksum=65eb949c1238904dc5fed0ec6f17597f
+fetch-size=5511
+mtime=1561101875
+item-spec=41553030383A344C5A4B36512050524F434553534F5441424C45414354494F4E204A4156412D323032313535323733302E412D5352433B33
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/mod/web/action/ProcessoTableAction.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

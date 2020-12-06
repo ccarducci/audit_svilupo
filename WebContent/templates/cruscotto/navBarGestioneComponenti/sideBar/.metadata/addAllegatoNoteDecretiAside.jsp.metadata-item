@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722278
+file-version=1
+checksum=ae0994f6ff92a7eddbef12dcd9675742
+fetch-size=1548
+mtime=1559200932
+item-spec=41553030383A414444414C4C454741544F4E4F5445444543524554494153494445204A53502D313637323135343230382E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarGestioneComponenti/sideBar/addAllegatoNoteDecretiAside.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

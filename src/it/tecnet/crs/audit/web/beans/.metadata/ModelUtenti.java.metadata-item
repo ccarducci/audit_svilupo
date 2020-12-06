@@ -1,0 +1,13 @@
+version=10.2
+item-uid=136065252
+file-version=1
+checksum=e1db6522c114806654a988e84ac1eb4c
+fetch-size=3246
+mtime=1581583950
+item-spec=41553030383A4D4F44454C5554454E5449204A4156412D323032373231343138302E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/audit/web/beans/ModelUtenti.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

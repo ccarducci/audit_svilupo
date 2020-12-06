@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722607
+file-version=1
+checksum=c1dd9cde4d6b7ad36e96befc574a1ed0
+fetch-size=3607
+mtime=1559921955
+item-spec=41553030383A444F4D534F54544F50524F434553534F534352495054204A532D313332383636393430342E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/js/modellazioneTables/modificaSottoProcesso/domSottoProcessoScript.js
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

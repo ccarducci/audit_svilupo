@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132054946
+file-version=1
+checksum=dc5a6960b36ec1b60c968f3796d5117d
+fetch-size=1170
+mtime=1555513890
+item-spec=41553030383A344C5A4B36512043525352554F4C4F204A4156412D313130343131323136372E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/jpa/model/CrsRuolo.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

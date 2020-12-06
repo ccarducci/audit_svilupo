@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132857539
+file-version=1
+checksum=42ecba0c190a80f66bb94c0eeab54d00
+fetch-size=2067
+mtime=1561044716
+item-spec=41553030383A435253444F4D494E4956414C4F5249204A4156412D313436363130313935332E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/componenti/jpa/model/CrsDominiValori.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

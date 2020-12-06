@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722501
+file-version=1
+checksum=b4dfd346d592a064375633222cd4992f
+fetch-size=2898
+mtime=1560773883
+item-spec=41553030383A5249534348494143434553534F535441544F455350525249534348494F204A53502D313232373434373939362E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templatesATPO/cruscotto/navBarAuditorsATPO/tabModificaAccessi/rischiAccessoStatoEsprRischio.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

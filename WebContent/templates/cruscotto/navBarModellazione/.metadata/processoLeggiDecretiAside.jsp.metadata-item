@@ -1,0 +1,13 @@
+version=10.2
+item-uid=133158303
+file-version=2
+checksum=86c97f0324ead383132a37363afb6e9f
+fetch-size=1001
+mtime=1563366156
+item-spec=41553030383A50524F434553534F4C45474749444543524554494153494445204A53502D323030353439393433312E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarModellazione/processoLeggiDecretiAside.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132055209
+file-version=1
+checksum=6a094b8790f90093e230199464a42fbd
+fetch-size=1326
+mtime=1555513865
+item-spec=41553030383A344C5A4B365120434F4D4D4153205350454320434F464645452D313930383930373536372E412D4441543B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/assets/global/plugins/morris/spec/lib/commas_spec.coffee
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

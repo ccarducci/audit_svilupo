@@ -1,0 +1,13 @@
+version=10.2
+item-uid=136143117
+file-version=3
+checksum=9f15d2e0c2b74684a0214bed738709cf
+fetch-size=9317
+mtime=1582197928
+item-spec=41553030383A4154504F41554D434F4E544553544F204A4156412D313737343032333431312E412D5352433B33
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/ATPO/auditors/jpa/model/AtpoAuMContesto.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

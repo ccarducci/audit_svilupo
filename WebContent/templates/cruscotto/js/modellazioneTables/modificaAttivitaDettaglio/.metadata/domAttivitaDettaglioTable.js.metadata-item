@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722993
+file-version=1
+checksum=11c4dc48f6589e93cf2622db67d589fa
+fetch-size=4494
+mtime=1560353151
+item-spec=41553030383A444F4D41545449564954414445545441474C494F5441424C45204A532D313530323635393334382E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/js/modellazioneTables/modificaAttivitaDettaglio/domAttivitaDettaglioTable.js
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

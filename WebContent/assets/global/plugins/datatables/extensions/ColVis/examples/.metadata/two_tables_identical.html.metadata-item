@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132059647
+file-version=1
+checksum=32bf4f8d45fc9d4073144f68393e236a
+fetch-size=11717
+mtime=1555513871
+item-spec=41553030383A344C5A4B36512054574F205441424C4553204944454E544943414C2048544D4C2D313539333735383731332E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/assets/global/plugins/datatables/extensions/ColVis/examples/two_tables_identical.html
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

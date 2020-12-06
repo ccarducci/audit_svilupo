@@ -1,0 +1,15 @@
+#Tue May 14 12:01:15 CEST 2019
+vals/com.ibm.jee.validation.core.validator.WasWebExtensionsPmeValidator/global=FF01
+override=true
+USER_MANUAL_PREFERENCE=enabledManualValidatorListcom.businessobjects.crystalreports.integration.eclipse.wtp.CrystalReportsValidator;com.ibm.etools.webtools.sdo.jdbc.ui.validators.JDBCMediatorConnectionFileValidator;org.eclipse.jst.j2ee.internal.classpathdep.ClasspathDependencyValidator;com.ibm.etools.j2ee.migration.classpath.J2EEClasspathValidator;org.eclipse.wst.common.componentcore.internal.ModuleCoreValidator;
+vals/com.ibm.xtt.xsl.ui.xsl/global=FF02
+vals/com.ibm.etools.javaee.core.WebV2Validator/global=FF01
+vals/org.eclipse.wst.xml.core.xml/global=FF03
+suspend=true
+eclipse.preferences.version=1
+vf.version=3
+DELEGATES_PREFERENCE=delegateValidatorList
+vals/com.ibm.jee.validation.core.validator.WasWebExtensionsValidator/global=FF01
+vals/com.ibm.ast.ws.was7.policyset.ui.BindingXMLValidator/global=FF01
+USER_PREFERENCE=overrideGlobalPreferencestruedisableAllValidationtrueversion1.2.13.v201003050500
+USER_BUILD_PREFERENCE=enabledBuildValidatorListcom.businessobjects.crystalreports.integration.eclipse.wtp.CrystalReportsValidator;com.ibm.etools.webtools.sdo.jdbc.ui.validators.JDBCMediatorConnectionFileValidator;org.eclipse.jst.j2ee.internal.classpathdep.ClasspathDependencyValidator;com.ibm.etools.j2ee.migration.classpath.J2EEClasspathValidator;org.eclipse.wst.common.componentcore.internal.ModuleCoreValidator;

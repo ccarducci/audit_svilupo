@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722881
+file-version=1
+checksum=754720413369ce45b75a118516cd9d9f
+fetch-size=4409
+mtime=1559903726
+item-spec=41553030383A444F4D50524F434553534F5441424C45204A532D313133323336343231372E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/js/modellazioneTables/modificaProcesso/domProcessoTable.js
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+<!-- https://www.ibm.com/developerworks/websphere/techjournal/1402_hollman/1402_hollman.html -->
+  <persistence-unit name="atpoJPA">
+  	<class>it.tecnet.crs.mod.jpa.model.CrsSottoprocesso</class>
+  	<class>it.tecnet.crs.mod.jpa.model.CrsProcesso</class>
+  	<class>it.tecnet.crs.mod.jpa.model.CrsAttivitaDettaglio</class>
+  	<class>it.tecnet.crs.mod.jpa.model.CrsAttivitaComponente</class>
+  	<class>it.tecnet.crs.mod.jpa.model.CrsArea</class>
+  	<class>it.tecnet.crs.mod.jpa.model.CrsAssAttivitaComponenteCompTec</class>
+  	<class>it.tecnet.crs.mod.jpa.model.CrsAssAttivitaComponenteDomini</class>
+  	<class>it.tecnet.crs.jpa.model.CrsUtenteAdv</class>
+  	<class>it.tecnet.crs.jpa.model.CrsUtente</class>
+  	<class>it.tecnet.crs.jpa.model.CrsRuolo</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAssUtenteRuolo</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAssSottoprocessoClasse</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAssProcessoClasse</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAssDirigenteProcesso</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAssDelegatoDirigente</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAssCodiceDirigente</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAssAdClasse</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAssAcClasse</class>
+  	<class>it.tecnet.crs.jpa.model.AuTplTipologiche</class>
+  	<class>it.tecnet.crs.jpa.model.AuSessioni</class>
+  	<class>it.tecnet.crs.jpa.model.AuSede</class>
+  	<class>it.tecnet.crs.jpa.model.AuSVarcomp</class>
+  	<class>it.tecnet.crs.jpa.model.AuSTvalori</class>
+  	<class>it.tecnet.crs.jpa.model.AuSSessione</class>
+  	<class>it.tecnet.crs.jpa.model.AuSRisrag</class>
+  	<class>it.tecnet.crs.jpa.model.AuSRisespr</class>
+  	<class>it.tecnet.crs.jpa.model.AuSRischio</class>
+  	<class>it.tecnet.crs.jpa.model.AuSPraticaVarcomp</class>
+  	<class>it.tecnet.crs.jpa.model.AuSPraticaRis</class>
+  	<class>it.tecnet.crs.jpa.model.AuSPratica</class>
+  	<class>it.tecnet.crs.jpa.model.AuSPraCalIndLog</class>
+  	<class>it.tecnet.crs.jpa.model.AuSNonconf</class>
+  	<class>it.tecnet.crs.jpa.model.AuRisultatiCampione</class>
+  	<class>it.tecnet.crs.jpa.model.AuRisultatiCampagna</class>
+  	<class>it.tecnet.crs.jpa.model.AuRisposteSessione</class>
+  	<class>it.tecnet.crs.jpa.model.AuRegoleCampagna</class>
+  	<class>it.tecnet.crs.jpa.model.AuQuestionario</class>
+  	<class>it.tecnet.crs.jpa.model.AuNonConformitaVerbale</class>
+  	<class>it.tecnet.crs.jpa.model.AuNonConformita</class>
+  	<class>it.tecnet.crs.jpa.model.AuMediaNonConformita</class>
+  	<class>it.tecnet.crs.jpa.model.AuMediaFase</class>
+  	<class>it.tecnet.crs.jpa.model.AuMVarcomp</class>
+  	<class>it.tecnet.crs.jpa.model.AuMRisposta</class>
+  	<class>it.tecnet.crs.jpa.model.AuMRisepr</class>
+  	<class>it.tecnet.crs.jpa.model.AuMRischio</class>
+  	<class>it.tecnet.crs.jpa.model.AuMNonConf</class>
+  	<class>it.tecnet.crs.jpa.model.AuMDomanda</class>
+  	<class>it.tecnet.crs.jpa.model.AuInccDes</class>
+  	<class>it.tecnet.crs.jpa.model.AuCampione</class>
+  	<class>it.tecnet.crs.jpa.model.AuCampagna</class>
+  	<class>it.tecnet.crs.jpa.model.AuAudit</class>
+  	<class>it.tecnet.crs.jpa.model.AuAssUtenteSessione</class>
+  	<class>it.tecnet.crs.jpa.model.AuAssUtenteAudit</class>
+  	<class>it.tecnet.crs.jpa.model.AuAssCampVerb</class>
+  	<class>it.tecnet.crs.jpa.model.AuAssCampPrtAtpo</class>
+  	<class>it.tecnet.crs.jpa.model.AuAssAuditFase</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsTipo</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsTplEnteEmittente</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsTplTipoLegge</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsDescrizioneTipo</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsDatiTipo</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsDocumentiMedia</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsTplDocMedia</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsDomini</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsAssDominiDocumenti</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsComponenteTecnico</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsAssCompTecnDocumenti</class>
+  	<class>it.tecnet.crs.componenti.jpa.model.CrsClasse</class>
+  	<class>it.tecnet.crs.audit.model.AuAssVerbaleCampagna</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoRiepilogoFascicolo</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoPraticheSISCO</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoPratiche</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoPraticheCOGISAN</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePostPeritale</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePeritale</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFaseGestioneIstruttoria</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFaseEsecuzioneProvvedimenti</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFaseDati</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFaseAutotutelaResistenzaGiudizio</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFaseAcquisizioneIstanza</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoAuMContesto</class>
+  	<class>it.tecnet.crs.jpa.model.AuSTempi</class>
+  	<class>it.tecnet.crs.jpa.model.AuSTfascicolo</class>
+  	<class>it.tecnet.crs.jpa.model.AuSTfascicolo</class>
+  	<class>it.tecnet.crs.jpa.model.AuTdocmanc</class>
+  	<class>it.tecnet.crs.ATPO.auditors.jpa.model.AtpoDettaglioFascicolo</class>
+  	<class>it.tecnet.crs.jpa.model.CrsGlossario</class>
+  	<class>it.tecnet.crs.jpa.model.CrsSinonimo</class>
+  	<class>it.tecnet.crs.jpa.model.CrsAmbito</class>
+  	<class>it.tecnet.crs.jpa.model.CrsEntita</class>
+    <properties>
+      <property name="openjpa.RuntimeUnenhancedClasses" value="unsupported"/>
+      <property name="openjpa.Log" value="SQL=TRACE, Enhance=TRACE, MetaData=TRACE"/> 
+       <property name="openjpa.jdbc.DBDictionary" value="sqlserver(NextSequenceQuery=NEXT VALUE FOR {0})"/>
+     <!--  <property name="openjpa.DetachState" value="loaded(DetachedStateField=true)"/> -->
+      <property name="openjpa.DetachState" value="fetch-groups(DetachedStateField=true)"/> 
+    </properties>
+  </persistence-unit>
+</persistence>

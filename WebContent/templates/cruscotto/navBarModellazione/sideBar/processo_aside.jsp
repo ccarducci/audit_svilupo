@@ -1,0 +1,117 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+ <aside class="menu-sx-levelone-facility add">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption font-green"><i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">NUOVO PROCESSO</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form">
+                    <div class="form-body">
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="form_control_1" style="top: 0; font-size: 13px; color: #888888; opacity: 1; width: 100%;">Area <i class="fa fa-asterisk obbligatorio"></i></label>
+                                    <s:select class="form-control input-medium select2me" 
+                               			data-placeholder="Area" 
+                               			id="comboArea" 
+	                              		list="areaList"
+	                              		listKey="idArea"
+										listValue="descrizione"	/>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="form-group form-md-line-input">
+                                    <input type="text" class="form-control" id="ordinamento" value="" style="height: 38px;">
+                                    <label for="form_control_2">Ordinamento <i class="fa fa-asterisk obbligatorio"></i></label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="input-group input-medium">
+                                         <span class="help-block">Data Inizio <i class="fa fa-asterisk obbligatorio"></i></span>
+                                         <input id="dataInizio" class="form-control form-control-inline input-medium date-picker" size="16" type="text" >
+                                    </div>
+                                    <!-- /input-group -->
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6" style="margin-bottom: 15px;">
+                                <div class="form-group form-md-line-input">
+                                    <input type="text" class="form-control" id="descrizione" value="" style="height: 38px;">
+                                    <label for="form_control_2">Descrizione <i class="fa fa-asterisk obbligatorio"></i></label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-medium ">
+                                       <span class="help-block">
+                                    Data fine </span>
+                                        <input id="dataFine" class="form-control form-control-inline input-medium date-picker" size="16" type="text" >
+                                    </div>
+                                    <!-- /input-group -->
+                                
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6" style="margin-bottom: 15px;">
+                                <div class="form-group form-md-line-input">
+                                    <input type="text" class="form-control" id="input" value="" style="height: 38px;">
+                                    <label for="form_control_2">Input</label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-md-line-input">
+                                    <input type="text" class="form-control" id="output" value="" style="height: 38px;">
+                                    <label for="form_control_2">Output</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">	
+                        	<div class="col-md-6" style="margin-bottom: 15px;">
+                        	 	<div class="form-group form-md-line-input">
+                        	 		<input type="text" class="form-control" id="owner" value="" readonly="true" style="height: 38px">
+                                    <label for="form_control_2">Owner</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 
+                        <div id="statoRadioButton">
+	                        <div class="row">
+		                        	<div class="form-group form-md-radios">
+											<div class="md-radio-list">	
+												<div class="col-md-3 col-xs-6">
+													<label for="form_control_2" style="margin-right: 20px;">Stato Processo</label>
+														<input type="radio" name="statoRB" id="statoAttivo" value="A">
+														<span style="margin-left: 10px;">Attivo </span></>
+												</div>
+												<div class="col-md-3 col-xs-6">
+														<input type="radio" name="statoRB" id="statoDisattivo" value="D">
+														<span style="margin-left: 10px;">Disattivo </span></>
+			                               		</div>
+			                               	</div>	
+									</div>	
+	                        </div>
+	                    </div>
+                        -->
+                        
+                    </div>
+                    <div class="form-actions noborder" style="position: absolute; bottom: 10px;">
+                        <button type="button" class="btn blue" onclick="salvaProcesso('I');">Salva</button>
+                        <button type="button" class="btn default" onclick="slideAsideNew('');">Annulla</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+  </aside>

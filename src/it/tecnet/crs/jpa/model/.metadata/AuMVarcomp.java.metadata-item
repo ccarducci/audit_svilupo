@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132056187
+file-version=1
+checksum=3ca9be0069adf2ef82b6c1a84aa7156f
+fetch-size=2098
+mtime=1555513890
+item-spec=41553030383A344C5A4B36512041554D564152434F4D50204A4156412D313430323838343939382E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/jpa/model/AuMVarcomp.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722341
+file-version=1
+checksum=a37df60ea06fe2e4a17476bd3382dd21
+fetch-size=1710
+mtime=1559292050
+item-spec=41553030383A434F4D4D4F4E5554494C53414354494F4E204A4156412D313338343538373538362E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/web/action/CommonUtilsAction.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

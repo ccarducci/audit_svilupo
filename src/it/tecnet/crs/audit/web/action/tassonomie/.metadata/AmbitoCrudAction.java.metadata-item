@@ -1,0 +1,13 @@
+version=10.2
+item-uid=133516147
+file-version=4
+checksum=5b1f47a8b748c4988f5bda85a4e27184
+fetch-size=4059
+mtime=1566811900
+item-spec=41553030383A414D4249544F43525544414354494F4E204A4156412D313839323231313339322E412D5352433B34
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/audit/web/action/tassonomie/AmbitoCrudAction.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

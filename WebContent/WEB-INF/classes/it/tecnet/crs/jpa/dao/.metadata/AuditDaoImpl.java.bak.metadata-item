@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132110592
+file-version=1
+checksum=47008dcb4ed1a04f3fd06f50617e6d0a
+fetch-size=23561
+mtime=1555513890
+item-spec=41553030383A415544495444414F494D504C204A4156412042414B2D323134353736303433312E412D4441543B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/jpa/dao/AuditDaoImpl.java.bak
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

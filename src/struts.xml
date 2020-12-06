@@ -1,0 +1,2977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.action.extension" value=",,do" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.objectFactory.spring.autoWire" value="type" />
+	<constant name="struts.convention.result.path" value="/templates/cruscotto/" />
+	<constant name="struts.convention.default.parent.package"
+		value="serviceStruts" />
+	<constant name="struts.struts.ognl.allowStaticMethodAccess"
+		value="true" />
+	
+ 	<package name="serviceStruts" extends="struts-default"></package>
+ 	
+	<package name="cruscotto"  extends="serviceStruts" namespace="/">
+
+  		<interceptors>
+			<interceptor name="authorization" class="it.tecnet.crs.web.interceptors.AuthorizationInterceptor" />
+			<interceptor name="exception" class="it.tecnet.crs.web.interceptors.ExceptionInterceptor" />
+            <interceptor-stack name="htmlServiceStack">
+				<interceptor-ref name="exception"></interceptor-ref>
+
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+  		</interceptors>
+
+		<default-interceptor-ref name="htmlServiceStack"></default-interceptor-ref>
+
+
+		<default-action-ref name="index" />
+
+		<global-results>
+			<result name="error" type="dispatcher">/error.jsp
+			</result>
+
+		</global-results>
+
+  		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Throwable" result="error" />
+		</global-exception-mappings>
+
+
+		<action name="logOut" class="it.tecnet.crs.web.action.TestDaoServiceAction" method="logOut">
+        	<result name="success">/idm.jsp</result>
+        </action>
+
+		<action name="index" class="it.tecnet.crs.web.action.IndexAction">
+   			<interceptor-ref name="authorization" />
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/home.jsp</result>
+			<result name="loginError">/error.jsp
+			</result>
+        </action>
+
+       
+
+        <!-- AUDITORS ACCESSI -->
+
+        <action name="accessi" class="it.tecnet.crs.web.action.AuditorsAction" method="getAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templates/cruscotto/navBarAuditors/accessi.jsp </result>
+			<result name="actionError">/error.jsp
+			</result>
+        </action>
+        <action name="reports" class="it.tecnet.crs.web.action.AuditorsAction" method="getReports">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templates/cruscotto/navBarAuditors/reports.jsp </result>
+			<result name="actionError">/error.jsp
+			</result>
+        </action>
+
+		<action name="getDetailGrafFase" class="it.tecnet.crs.web.action.AuditorsAction" method="getDetailGrafFase">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templates/cruscotto/navBarAuditors/reportsGrDetails.jsp </result>
+			<result name="actionError">/error.jsp
+			</result>
+        </action>
+
+        <!-- MODIDICA ACCESSO -->
+
+        <action name="modificaAccesso" class="it.tecnet.crs.web.action.AuditorsAction" method="modificaAccesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAuditors/modifica-accessi.jsp</result>
+   			<!-- result name="atpo">/templates/cruscotto/navBarAuditorsATPO/modificaAccessiATPO.jsp</result-->
+			<result name="actionError">/error.jsp </result>
+        </action>
+
+        <!-- MODIFICA  PRATICA -->
+
+        <action name="modificaPratica" class="it.tecnet.crs.web.action.AuditorsAction" method="modificaPratica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAuditors/modifica_accessi_pratica.jsp</result>
+			<result name="actionError">/error.jsp
+			</result>
+        </action>
+
+        
+
+
+        <action name="salvaNotaAccesso" class="it.tecnet.crs.web.action.AuditorsAction" method="salvaNota">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+		</action>
+
+        <action name="annullaNotaAccesso" class="it.tecnet.crs.web.action.AuditorsAction" method="annullaNota">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+		</action>
+
+
+        <action name="salvaNonConformitaVerbale" class="it.tecnet.crs.web.action.AuditorsAction" method="salvaNonConformitaVerbale">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/blank.jsp
+			</result>
+			<result name="actionError">/error.jsp
+			</result>
+		</action>
+
+		<action name="addFasiToAudit" class="it.tecnet.crs.audit.web.action.AuAuditActionTable"
+			method="addFasiToAudit">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/blank.jsp
+			</result>
+			<result name="actionError">/error.jsp
+			</result>
+		</action>
+
+		<!-- NAVBAR MODELLAZIONE (AREA - PROCESSI - FASE - ATTIVITA) -->
+         <action name="getAreaList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getAreaList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/area.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="salvaArea" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="salvaArea">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="eliminaArea" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="eliminaArea">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="attivaArea" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="attivaArea">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="getProcessiList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getProcessiList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/processo.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <action name="getProcessiTableAside" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getProcessiList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/sideBar/areaProcesso_aside.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="eliminaProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="eliminaProcesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="pubblicaProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="pubblicaProcesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="modificaProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getProcessoById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/modificaProcesso.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+		<action name="getSottoProcessiList" class="it.tecnet.crs.mod.web.action.ModellazioneAction"
+			method="getSottoProcessiList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/sottoProcesso.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+		<action name="gestisciSottoProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction"
+			method="gestisciSottoProcesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+       <action name="eliminaSottoProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="eliminaSottoProcesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="modificaSottoProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getSottoProcessoById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/modificaSottoProcesso.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="getAttivitaComponenteList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getAttivitaComponenteList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/attivitaComponente.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="eliminaAttivitaComponente" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="eliminaAttivitaComponente">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="gestisciAttivitaComponente" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="gestisciAttivitaComponente">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="modificaAttivitaComponente" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getAttivitaComponenteById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/modificaAttivitaComponente.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+         <action name="getAttivitaDettaglioList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getAttivitaDettaglioList">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/attivitaDettaglio.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <action name="eliminaAttivitaDettaglio" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="eliminaAttivitaDettaglio">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="gestisciAttivitaDettaglio" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="gestisciAttivitaDettaglio">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <action name="modificaAttivitaDettaglio" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getAttivitaDettaglioById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/modificaAttivitaDettaglio.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <!-- NAVBAR AUDIT ACTION (GENERALE - CAMPAGNA - ACCESS) -->
+        <!-- restituisce solo la pagina -->
+   		<action name="auAudit" class="it.tecnet.crs.audit.web.action.AuAuditActionTable" method="getAudit">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/generale/generale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+		<action name="caricamentopraticheList" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="getCaricamentoPratiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAmministrazione/caricamentopratiche/generale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+		<action name="salvaNuovoCaricamentoPratica" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="salvaNuovoCaricamentoPratica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="eliminaCaricamentoPratiche" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="eliminaCaricamentoPratiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+         <action name="modificaCaricamentoPraticaLoad" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="modificaCaricamentoPraticaLoad">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAmministrazione/caricamentopratiche/modificaGenerale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+		<action name="tipologicheList" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="getTipologiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAmministrazione/tipologiche/generale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+		<action name="sogliecoloriList" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="getSoglieColori">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAmministrazione/sogliecolori/generale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="salvaNuovaIsnc" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="salvaNuovaIsnc">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="eliminaIsnc" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="eliminaIsnc">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+         <action name="modificaIsncLoad" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="modificaIsncLoad">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAmministrazione/sogliecolori/modificaGenerale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+ 		<action name="salvaNuovaTipologica" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="salvaNuovaTipologica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+		<action name="eliminaTipologica" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="eliminaTipologica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+         <action name="modificaTipologicaLoad" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="modificaTipologicaLoad">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAmministrazione/tipologiche/modificaGenerale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+		<action name="usersList" class="it.tecnet.crs.audit.web.action.UserListActionTable" method="getUsers">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAmministrazione/generale/generale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="salvaNuovoUtente" class="it.tecnet.crs.audit.web.action.UserListActionTable" method="salvaNuovoUtente">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="eliminaUtente" class="it.tecnet.crs.audit.web.action.UserListActionTable" method="eliminaUtente">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+         <action name="modificaUtenteLoad" class="it.tecnet.crs.audit.web.action.UserListActionTable" method="modificaUtenteLoad">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAmministrazione/generale/modificaGenerale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="salvaNuovoAudit" class="it.tecnet.crs.audit.web.action.AuAuditActionTable" method="salvaNuovoAudit">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="salvaModificheAudit" class="it.tecnet.crs.audit.web.action.AuAuditActionTable" method="salvaModificheAudit">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+         <action name="modificaAuditGenerale" class="it.tecnet.crs.audit.web.action.AuAuditActionTable" method="getDataToUpdateAudit">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/generale/modificaGenerale.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="eliminaAudit" class="it.tecnet.crs.audit.web.action.AuAuditActionTable" method="eliminaAudit">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+ 		
+        <action name="eliminaFase" class="it.tecnet.crs.audit.web.action.AuAuditFasiActionTable" method="eliminaFase">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+         
+
+
+
+
+       <action name="initCampagna" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable" method="initCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/campagna/campagna.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+         <action name="salvaNuovaCampagna" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable" method="newCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+		</action>
+
+        <action name="eliminaCampagna" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable" method="eliminaCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			  <result name="success">/templates/cruscotto/navBarAudit/campagna/campagna.jsp</result>
+
+   			<result name="actionError">/error.jsp</result>
+		</action>
+
+         <action name="modificaCampagnaGenerale" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable" method="modificaCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			  <result name="success">/templates/cruscotto/navBarAudit/campagna/modificaCampagna.jsp?tipo=vigilanza</result>
+			  <result name="ATPO">/templates/cruscotto/navBarAudit/campagna/modificaCampagna.jsp?tipo=atpo</result>
+				
+   			  <result name="actionError">/error.jsp</result>
+        </action>
+
+        <action name="salvaModificaCampagna" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable" method="salvaModificaCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+
+   			<result name="actionError">/error.jsp</result>
+        </action>
+
+		<action name="attivaRegolaCampagna" class="it.tecnet.crs.audit.web.action.AuAuditRegoleActionTable" method="attivaRegolaCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <action name="disattivaRegolaCampagna" class="it.tecnet.crs.audit.web.action.AuAuditRegoleActionTable" method="disattivaRegolaCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+      
+        
+        
+        <action name="initAccessoAudit" class="it.tecnet.crs.audit.web.action.AuAuditAccessoActionTable" method="initAccessoAudit">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/accesso/accesso.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+		<action name="modificaAuditAccesso" class="it.tecnet.crs.audit.web.action.AuAuditAccessoActionTable" method="modificaAccesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">
+	/templates/cruscotto/navBarAudit/accesso/modificaAccesso.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+		</action>
+<!-- NAVBAR GESTIONE COMPONENTI ACTION (NORMATIVA - DOCUMENTI - REGOLE E MODELLI - DOMINI - DIZIONARI) -->
+		<action name="getNormativaList" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getNormativaList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/normativa.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <action name="getPageCircolariInps" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getPageCircolariInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/circolariInpsTable.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <action name="getPageNoteDecreti" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getPageNoteDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/noteDecretiTable.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <action name="getPageMessaggiInps" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getPageMessaggiInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/messaggiInpsTable.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        <action name="getPageLeggiDecreti" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getPageLeggiDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/leggiDecretiTable.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        
+        <action name="getPageAllegatiCircolariInps" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getPageAllegatiCircolariInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/modificaCircolariInpsAllegati.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="getPageAllegatiNoteDecreti" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getPageAllegatiNoteDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/modificaNoteDecretiAllegati.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="getPageAllegatiMessaggiInps" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getPageAllegatiMessaggiInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/modificaMessaggiInpsAllegati.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        <action name="getPageAllegatiLeggiDecreti" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getPageAllegatiLeggiDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarGestioneComponenti/modificaLeggiDecretiAllegati.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        
+        <action name="eliminaAccessoAudit" class="it.tecnet.crs.audit.web.action.AuAuditAccessoActionTable" method="eliminaAccesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+		</action>	
+		
+        
+        
+		<action name="risultatiTabJsp" class="it.tecnet.crs.audit.web.action.AuAuditRisultatiTabAction" method="initPageRisultatiTab">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/accesso/risultatiTab.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+		</action>
+		
+		<action name="eliminaNormativa" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="eliminaNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/blank.jsp</result>
+   			<result name="actionError">/error.jsp</result>
+        </action>
+        
+        
+        
+        <action name="getNormativeAssociateList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getNormativeAssociateList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/normativeAssociate.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        
+        <action name="getCircolariInpsAssociateAsideList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getCircolariInpsAssociateAsideList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/processoCircolariInpsAside.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        <action name="getNoteDecretiAssociateAsideList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getNoteDecretiAssociateAsideList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/processoNoteDecretiAside.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        <action name="getMessaggiInpsAssociateAsideList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getMessaggiInpsAssociateAsideList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/processoMessaggiInpsAside.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        <action name="getLeggiDecretiAssociateAsideList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getLeggiDecretiAssociateAsideList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/processoLeggiDecretiAside.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        <action name="getNormativeFasiAssociateAsideList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getNormativeAssociateList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/sottoProcessoNormativaAside.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        <action name="getNormativeACAssociateAsideList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getNormativeAssociateList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/acNormativaAside.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        <action name="getNormativeADAssociateAsideList" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getNormativeAssociateList">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarModellazione/adNormativaAside.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        <action name="getCircolariInpsById" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getCircolariInpsById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles"> dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templates/cruscotto/navBarGestioneComponenti/modificaCircolariInps.jsp</result>
+			<result name="actionError">/error.jsp</result>			 
+		</action>
+		<action name="getNoteDecretiById" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getNoteDecretiById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles"> dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templates/cruscotto/navBarGestioneComponenti/modificaNoteDecreti.jsp</result>
+			<result name="actionError">/error.jsp</result>			 
+		</action>
+		<action name="getMessaggiInpsById" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getMessaggiInpsById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles"> dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templates/cruscotto/navBarGestioneComponenti/modificaMessaggiInps.jsp</result>
+			<result name="actionError">/error.jsp</result>			 
+		</action>
+		<action name="getLeggiDecretiById" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getLeggiDecretiById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles"> dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templates/cruscotto/navBarGestioneComponenti/modificaLeggiDecreti.jsp</result>
+			<result name="actionError">/error.jsp</result>			 
+		</action>
+
+        
+        <action name="organizzazioneAuditGenerale" class="it.tecnet.crs.organizzazioneAudit.web.action.GeneraleAction" method="getOrganizzazioneAuditGenerale">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors,dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarOrganizzazioneAudit/generale/generale.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        <action name="getPageTabRischio" class="it.tecnet.crs.audit.web.action.AuAuditRischiActionTable" method="getPageTabRischio">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors,dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/generale/tabModificaGenerale/rischiEnonConformita/rischi.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        <action name="getPageTabEsprRischio" class="it.tecnet.crs.audit.web.action.AuAuditEspressioneRischioActionTable" method="getPageTabEsprRischio">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/generale/tabModificaGenerale/rischiEnonConformita/espressioneRischio.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        <action name="getPageTabNonConformita" class="it.tecnet.crs.audit.web.action.AuAuditNonConformActionTable" method="getPageTabNonConformita">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/generale/tabModificaGenerale/rischiEnonConformita/nonConformita.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        <action name="getPageTabVarComportamentale" class="it.tecnet.crs.audit.web.action.AuAuditVarComportamentaleActionTable" method="getPageTabVarComportamentale">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/generale/tabModificaGenerale/rischiEnonConformita/varianteComportamentale.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+         <action name="questionario" class="it.tecnet.crs.audit.web.action.AuAuditQuestionarioActionTable" method="getDomande">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/generale/tabModificaGenerale/questionario.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+         <action name="modificaDomanda" class="it.tecnet.crs.audit.web.action.AuAuditModificaDomandaAction" method="modificaDomanda">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAudit/generale/tabModificaGenerale/modifica-domanda.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        
+        
+         <action name="getTabRischioPratiche" class="it.tecnet.crs.web.action.RischiPraticheAction" method="getTabRischioPratiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAuditors/tabAccessiModificaPratica/rischi.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+        <action name="getTabNonConformitaPratiche" class="it.tecnet.crs.web.action.NonConformitaTableAction" method="getTabNonConformitaActionPratiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+   			<result name="success">/templates/cruscotto/navBarAuditors/tabAccessiModificaPratica/nonConformita.jsp</result>
+   			<result name="actionError">/templates/cruscotto/error.jsp</result>
+        </action>
+        
+		<action name="getTabDatiCalcolatiPratica" class="it.tecnet.crs.web.action.DatiCalcolatiAction" method="getTabDatiCalcolatiPratica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templates/cruscotto/navBarAuditors/tabAccessiModificaPratica/datiCalcolatiPratica.jsp</result>
+			<result name="actionError">/templates/cruscotto/error.jsp</result>
+		</action>
+		<action name="getTabNonConfAccessi" class="it.tecnet.crs.web.action.NonConformitaAccessiTableAction" method="getTabNonConfAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templatesATPO/cruscotto/navBarAuditorsATPO/tabModificaAccessi/tabNonConformitaAccesso.jsp</result>
+			<result name="actionError">/error.jsp</result>
+		</action>	
+		<action name="getDettagliNonConfAccessi" class="it.tecnet.crs.web.action.NonConformitaAccessiTableAction" method="getDettagliNonConfAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templatesATPO/cruscotto/navBarAuditorsATPO/tabModificaAccessi/nonConformitaAccessoDettagli.jsp</result>
+			<result name="actionError">/templates/cruscotto/error.jsp</result>			 
+		</action>
+		<action name="getPageVarCompNonConfAccessi" class="it.tecnet.crs.web.action.NonConformitaAccessiTableAction" method="getPageVarCompNonConfAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templatesATPO/cruscotto/navBarAuditorsATPO/tabModificaAccessi/nonConformitaAccessoVarComp.jsp</result>
+			<result name="actionError">/templates/cruscotto/error.jsp</result>			 
+		</action>
+		<action name="getTabRischiAccessi" class="it.tecnet.crs.web.action.RischiAccessiAction" method="getTabRischiAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templatesATPO/cruscotto/navBarAuditorsATPO/tabModificaAccessi/tabRischiAccesso.jsp</result>
+			<result name="actionError">/templates/cruscotto/error.jsp</result>			 
+		</action>
+		
+		<action name="getDettagliRischiAccessi" class="it.tecnet.crs.web.action.RischiAccessiAction" method="getDettagliRischiAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templatesATPO/cruscotto/navBarAuditorsATPO/tabModificaAccessi/rischiAccessoDettagli.jsp</result>
+			<result name="actionError">/templates/cruscotto/error.jsp</result>			 
+		</action>
+		<action name="getStatoEspRischiAccessi" class="it.tecnet.crs.web.action.RischiAccessiAction" method="getStatoEspRischiAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="htmlServiceStack" />
+			<result name="success">/templatesATPO/cruscotto/navBarAuditorsATPO/tabModificaAccessi/rischiAccessoStatoEsprRischio.jsp</result>
+			<result name="actionError">/templates/cruscotto/error.jsp</result>			 
+		</action>
+		
+		
+		
+		</package>
+
+	<!-- ACTION JSON -->
+	<package name="cruscottoJson" extends="serviceStruts, json-default" namespace="/json">
+		<interceptors>
+			<interceptor name="authorization"
+				class="it.tecnet.crs.web.interceptors.AuthorizationInterceptor" />
+			<interceptor name="exception"
+				class="it.tecnet.crs.web.interceptors.ExceptionInterceptor"></interceptor>
+			<interceptor name="json"
+				class="org.apache.struts2.json.JSONInterceptor" />
+	            <interceptor-stack name="jsonServiceStack">
+				<interceptor-ref name="exception"></interceptor-ref>
+
+	                <interceptor-ref name="json"></interceptor-ref>
+	                <interceptor-ref name="defaultStack"></interceptor-ref>
+	            </interceptor-stack>
+  		</interceptors>
+
+		<default-interceptor-ref name="jsonServiceStack"></default-interceptor-ref>
+
+
+		<global-results>
+	      <result  name="input" type="json">
+	        <param name="root">fieldErrors</param>
+	        <param name="wrapPrefix"><![CDATA[{ "errors" : ]]></param>
+				<param name="wrapSuffix"><![CDATA[}]]></param>
+	      </result>
+	      <result  name="error" type="json">
+	      	<param name="statusCode">500</param>
+	        <param name="root">actionErrors</param>
+	        <param name="wrapPrefix"><![CDATA[{ "errors" : ]]></param>
+	        <param name="wrapSuffix"><![CDATA[}]]></param>
+	      </result>
+	      <result name="login" type="json">
+			<param name="statusCode">401</param>
+	        <param name="root">actionErrors</param>
+	        <param name="wrapPrefix"><![CDATA[{ "login" : ]]></param>
+	        <param name="wrapSuffix"><![CDATA[}]]></param>
+		  </result>
+	    </global-results>
+	    
+	    <action name="getRuoli" class="it.tecnet.crs.web.action.IndexAction" method="getRuoli">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="switchActiveRole" class="it.tecnet.crs.web.action.IndexAction" method="switchActiveRole">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+
+		<action name="test" class="it.tecnet.crs.web.action.TestDaoServiceAction" method="test">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+
+		<action name="searchSessioni" class="it.tecnet.crs.web.action.SessioneTableAction" method="searchSessioni">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+
+		<!-- search pratiche -->
+		<action name="searchPratiche" class="it.tecnet.crs.web.action.PraticaTableAction" method="searchPratiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+
+		<!-- search pratiche con rischi-->
+		<action name="searchPraticheConRischio" class="it.tecnet.crs.web.action.PraticaConRischioTableAction" method="searchPraticheConRischio">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>				
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+
+		<action name="search" class="it.tecnet.crs.web.action.FaseDefinizioneTableAction" method="searchSessioni">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+
+		<action name="search" class="it.tecnet.crs.web.action.FaseNotificaTableAction" method="searchSessioni">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+
+		
+	 	<!-- TABELLA FASE NOTIFICA IN modifica-accessi.jsp tab3 -->
+		<action name="getMediaFaseNotifica" class="it.tecnet.crs.web.action.MediaNonConformitaFaseNotifica" method="getMediaNonConformitaNotifica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 		<!-- TABELLA FASE DEFINIZIONE IN modifica-accessi.jsp tab3 -->
+		<action name="getMediaFaseDefinizione" class="it.tecnet.crs.web.action.MediaNonConformitaFaseDefinizione" method="getMediaNonConformitaDefinizione">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+
+
+		<action name="getAreaTable" class="it.tecnet.crs.mod.web.action.AreaTableAction" method="getAreaTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<!-- AUDIT- GENERALE -->
+
+		<action name="searchAuAudit" class="it.tecnet.crs.audit.web.action.AuAuditActionTable" method="searchAuAudit">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="searchUsers" class="it.tecnet.crs.audit.web.action.UserListActionTable" method="searchUsers">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		<action name="searchSoglieColori" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="searchSoglieColori">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		<action name="searchTipologiche" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="searchTipologiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		<action name="searchCaricamentoPratiche" class="it.tecnet.crs.audit.web.action.TipologicheActionTable" method="searchCaricamentoPratiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		<action name="getDelegati" class="it.tecnet.crs.audit.web.action.AuAuditDelegatiActionTable" method="getDelegati">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="associaDelegato" class="it.tecnet.crs.audit.web.action.AuAuditDelegatiActionTable" method="associaDelegato">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="dissociaDelegato" class="it.tecnet.crs.audit.web.action.AuAuditDelegatiActionTable" method="dissociaDelegato">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="getAuditors" class="it.tecnet.crs.audit.web.action.AuAuditAuditorsActionTable" method="getAuditors">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="associaAuditors" class="it.tecnet.crs.audit.web.action.AuAuditAuditorsActionTable" method="associaAuditors">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="dissociaAuditors" class="it.tecnet.crs.audit.web.action.AuAuditAuditorsActionTable" method="dissociaAuditors">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+
+		<action name="searchFasiAudit" class="it.tecnet.crs.audit.web.action.AuAuditFasiActionTable" method="getFasiModificaGenerale">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+
+
+		<action name="getProcessiTable" class="it.tecnet.crs.mod.web.action.ProcessoTableAction" method="getProcessiTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+
+		<action name="searchFasiInAsideTable" class="it.tecnet.crs.audit.web.action.AuAuditFasiActionTable" method="getFasiInAsideTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+
+		
+
+	 	<action name="salvaProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="salvaProcesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        
+     	<action name="checkIfAuditHasChildren" class="it.tecnet.crs.audit.web.action.AuAuditActionTable" method="checkIfAuditHasChildren">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+       
+
+		<action name="getSottoProcessiTable" class="it.tecnet.crs.mod.web.action.SottoProcessoTableAction" method="getSottoProcessiTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+
+	 	<action name="salvaSottoProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="salvaSottoProcesso">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+	 	<action name="searchCampagne" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable" method="searchCamapagne">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+
+		<action name="checkIfCampagnaHasSessioni" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable" method="checkIfCampagnaHasSessioni">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+
+		<action name="getAttivitaComponenteTable" class="it.tecnet.crs.mod.web.action.AttivitaComponenteTableAction" method="getAttivitaComponenteTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+		<action name="salvaAttivitaComponente" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="salvaAttivitaComponente">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action> 
+<!--  
+		<action name="contaColonneReportSedi" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable" method="contaColonneReportSedi" >	
+			<interceptor-ref name="authorization"> 				
+			<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+			
+	        </result>
+		</action>
+-->		
+		<action name="searchReportSedi" class="it.tecnet.crs.audit.web.action.AuAuditReportSediActionTable" method="searchReportSedi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+			<result type="json">
+				 <param name="root">model</param>
+				<param name="excludeNullProperties">false</param>
+				<param name="noCache">true</param>
+			
+			</result>
+		</action>
+		
+		<action name="getAccessiCampagna" class="it.tecnet.crs.audit.web.action.AuAuditSessioniCampagnaActionTable" method="getAccessiCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+			<result type="json">
+				 <param name="root">model</param>
+				<param name="excludeNullProperties">false</param>
+				<param name="noCache">true</param>
+			
+			</result>
+		</action>
+
+		<action name="salvaAttivitaComponente" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="salvaAttivitaComponente">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+
+		<action name="getAttivitaDettaglioTable" class="it.tecnet.crs.mod.web.action.AttivitaDettaglioTableAction" method="getAttivitaDettaglioTable" >	
+			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+
+		<action name="salvaAttivitaDettaglio" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="salvaAttivitaDettaglio">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="searchRegole" class="it.tecnet.crs.audit.web.action.AuAuditRegoleActionTable" method="searchRegole">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+	
+		<action name="getVerbaliCampagna" class="it.tecnet.crs.audit.web.action.AuAuditVerbaliActionTable" method="getVerbaliCampagna">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="getListaSessioniAuditAccesso" class="it.tecnet.crs.audit.web.action.AuAuditAccessoActionTable" method="getListaSessioni">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+		
+		 <action name="salvaNuovoAccessoAudit" class="it.tecnet.crs.audit.web.action.AuAuditAccessoActionTable" method="salvaNuovoAccessoAudit">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action> 
+        
+        <action name="modificaAccessoAudit" class="it.tecnet.crs.audit.web.action.AuAuditAccessoActionTable" method="salvaModificheAccesso">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+
+        
+        
+        <action name="getNormativaTable" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getNormativaTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="contaColonneNormativa" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="contaColonneNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action> 
+        <action name="getVerbaliCampione" class="it.tecnet.crs.audit.web.action.AuAuditVerbaliCampioneActionTable" method="getVerbaliCampione">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>	
+        
+        <action name="getCampioneSessione" class="it.tecnet.crs.audit.web.action.AuAuditVerbaliCampioneActionTable" method="getCampioneSessione">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="salvaNuovoCampioneSessione" class="it.tecnet.crs.audit.web.action.AuAuditVerbaliCampioneActionTable" method="salvaCampioneSessione">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+         <action name="calcolaDatiDiContesto" class="it.tecnet.crs.audit.web.action.AuAuditVerbaliCampioneActionTable" method="calcolaDatiDiContesto">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        <action name="getListaVerbaliCampagna" class="it.tecnet.crs.audit.web.action.AuAuditPraticheSessioneActionTable" method="getListaVerbaliCampagna">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="aggiungiPraticaAlCampione" class="it.tecnet.crs.audit.web.action.AuAuditPraticheSessioneActionTable" method="aggiungiPraticaAlCampione">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="checkIfPraticaIsOpen" class="it.tecnet.crs.audit.web.action.AuAuditVerbaliCampioneActionTable" method="checkIfPraticaIsOpen">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="salvaCircolariInps" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="salvaCircolariInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="salvaNoteDecreti" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="salvaNoteDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="salvaMessaggiInps" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="salvaMessaggiInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="salvaLeggiDecreti" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="salvaLeggiDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+		</action>
+		
+		<action name="modificaNormativa" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="getNormativaById">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="getAssociaProcessoNormativaTable" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getAssociaProcessoNormativaTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="getAssociabiliCircolariInpsTable" class="it.tecnet.crs.mod.web.action.ProcessoTableAction" method="getAssociabiliCircolariInpsTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="getAssociabiliNoteDecretiTable" class="it.tecnet.crs.mod.web.action.ProcessoTableAction" method="getAssociabiliNoteDecretiTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="getAssociabiliMessaggiInpsTable" class="it.tecnet.crs.mod.web.action.ProcessoTableAction" method="getAssociabiliMessaggiInpsTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="getAssociabiliLeggiDecretiTable" class="it.tecnet.crs.mod.web.action.ProcessoTableAction" method="getAssociabiliLeggiDecretiTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="associaProcessoNormativa" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="associaProcessoNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="rimuoviAssociazioneProcessoNormativa" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="rimuoviAssociazioneProcessoNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        
+        
+        <action name="getSottoProcessoNormativaTable" class="it.tecnet.crs.mod.web.action.SottoProcessoTableAction" method="getSottoProcessoNormativaTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="associaSottoProcessoNormativa" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="associaSottoProcessoNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="rimuoviAssociazioneSottoProcessoNormativa" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="rimuoviAssociazioneSottoProcessoNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        
+         <action name="getAttivitaComponenteNormativaTable" class="it.tecnet.crs.mod.web.action.AttivitaComponenteTableAction" method="getAttivitaComponenteNormativaTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="associaAttivitaComponenteNormativa" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="associaAttivitaComponenteNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="rimuoviAssociazioneAttivitaComponenteNormativa" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="rimuoviAssociazioneAttivitaComponenteNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        
+        <action name="getAttivitaDettaglioNormativaTable" class="it.tecnet.crs.mod.web.action.AttivitaDettaglioTableAction" method="getAttivitaDettaglioNormativaTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="associaAttivitaDettaglioNormativa" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="associaAttivitaDettaglioNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="rimuoviAssociazioneAttivitaDettaglioNormativa" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="rimuoviAssociazioneAttivitaDettaglioNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+
+        
+ 		<action name="salvaFaseDefinizione" class="it.tecnet.crs.web.action.AuditorsAction" method="salvaFaseDefinizione">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+		
+		<action name="salvaFaseNotifica" class="it.tecnet.crs.web.action.AuditorsAction" method="salvaFaseNotifica">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>        
+        
+        <action name="searchRischiEnonConformitaRischio" class="it.tecnet.crs.audit.web.action.AuAuditRischiActionTable" method="searchRischi">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        <action name="salvaNuovoRischio" class="it.tecnet.crs.audit.web.action.AuAuditRischiActionTable" method="salvaNuovoRischio">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+         <action name="checkCodiceRischio" class="it.tecnet.crs.audit.web.action.AuAuditRischiActionTable" method="checkCodiceRischio">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        <action name="eliminaRischio" class="it.tecnet.crs.audit.web.action.AuAuditRischiActionTable" method="eliminaRischio">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+		<action name="getComboProcessoByIdArea" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getComboProcessoByIdArea">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato 02, masterDCSIT</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>		
+	 	<action name="searchRischiEnonConformitaEsprRischio" class="it.tecnet.crs.audit.web.action.AuAuditEspressioneRischioActionTable" method="searchRischiEnonConformitaEsprRischio">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>        
+        <action name="checkCodiceEsprRischio" class="it.tecnet.crs.audit.web.action.AuAuditEspressioneRischioActionTable" method="checkCodiceEsprRischio">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        <action name="salvaNuovoEsprRischio" class="it.tecnet.crs.audit.web.action.AuAuditEspressioneRischioActionTable" method="salvaNuovoEsprRischio">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+ 		<action name="getComboSottoProcessoByIdProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getComboSottoProcessoByIdProcesso">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>        
+	 	<action name="getAuMRischioForOption" class="it.tecnet.crs.audit.web.action.AuAuditEspressioneRischioActionTable" method="getAuMRischioForOption">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        <action name="getComboAttivitaComponenteByIdSottoProcesso" class="it.tecnet.crs.mod.web.action.ModellazioneAction" method="getComboAttivitaComponenteByIdSottoProcesso">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>        
+	 	
+	 	<action name="eliminaEsprRischio" class="it.tecnet.crs.audit.web.action.AuAuditEspressioneRischioActionTable" method="eliminaEsprRischio">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action> 
+	 	
+	 	<action name="searchRischiEnonConformitaNonConform" class="it.tecnet.crs.audit.web.action.AuAuditNonConformActionTable" method="searchRischiEnonConformitaNonConform">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	
+	 	<action name="salvaNuovaNonConf" class="it.tecnet.crs.audit.web.action.AuAuditNonConformActionTable" method="salvaNuovaNonConf">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 
+	 	<action name="eliminaNonConform" class="it.tecnet.crs.audit.web.action.AuAuditNonConformActionTable" method="eliminaNonConform">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="searchVariantiComportamentali" class="it.tecnet.crs.audit.web.action.AuAuditVarComportamentaleActionTable" method="searchVariantiComportamentali">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="salvaNuovaVarComp" class="it.tecnet.crs.audit.web.action.AuAuditVarComportamentaleActionTable" method="salvaNuovaVarComp">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="checkCodiceVarComp" class="it.tecnet.crs.audit.web.action.AuAuditVarComportamentaleActionTable" method="checkCodiceVarComp">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="eliminaVarComp" class="it.tecnet.crs.audit.web.action.AuAuditVarComportamentaleActionTable" method="eliminaVarComp">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="searchDomandeQuestionario" class="it.tecnet.crs.audit.web.action.AuAuditQuestionarioActionTable" method="searchDomandeQuestionario">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="salvaNuovaDomanda" class="it.tecnet.crs.audit.web.action.AuAuditQuestionarioActionTable" method="salvaNuovaDomanda">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="salvaDomandaModificata" class="it.tecnet.crs.audit.web.action.AuAuditModificaDomandaAction" method="salvaDomandaModificata">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="searchRisposteDomanda" class="it.tecnet.crs.audit.web.action.AuAuditModificaDomandaAction" method="searchRisposteDomanda">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="salvaNuovaRisposta" class="it.tecnet.crs.audit.web.action.AuAuditModificaDomandaAction" method="salvaNuovaRisposta">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="salvaModificaRisposta" class="it.tecnet.crs.audit.web.action.AuAuditModificaDomandaAction" method="salvaModificaRisposta">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="eliminaRisposte" class="it.tecnet.crs.audit.web.action.AuAuditModificaDomandaAction" method="eliminaRisposte">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="eliminaDomande" class="it.tecnet.crs.audit.web.action.AuAuditQuestionarioActionTable" method="eliminaDomande">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="checkRischiAssociatiAllaDomanda" class="it.tecnet.crs.audit.web.action.AuAuditQuestionarioActionTable" method="checkRischiAssociatiAllaDomanda">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="checkCodiceNC" class="it.tecnet.crs.audit.web.action.AuAuditNonConformActionTable" method="checkCodiceNC">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="searchNonConformita" class="it.tecnet.crs.web.action.NonConformitaTableAction" method="searchNonConformita">
+			<interceptor-ref name="authorization">
+			<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+			<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="searchRischiPratiche" class="it.tecnet.crs.web.action.RischiPraticheAction" method="searchRischiPratiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+
+	 	<action name="getTabNonConformitaPratiche" class="it.tecnet.crs.web.action.DatiCalcolatiPraticaAction" method="getTabNonConformitaPratiche">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+
+	 	<action name="calcolaIndicatoriPratica" class="it.tecnet.crs.web.action.CalcolaIndicatoriAction" method="calcolaIndicatoriPratica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 		 	
+	 	<action name="calcolaIndicatoriSessione" class="it.tecnet.crs.web.action.CalcolaIndicatoriAction" method="calcolaIndicatoriSessione">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="riapriPratica" class="it.tecnet.crs.web.action.CalcolaIndicatoriAction" method="riapriPratica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="inLavorazionePratica" class="it.tecnet.crs.web.action.CalcolaIndicatoriAction" method="inLavorazionePratica">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>	 	
+	 	
+	 	<action name="riapriSessione" class="it.tecnet.crs.web.action.CalcolaIndicatoriAction" method="riapriSessione">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+		<action name="searchNonConformAccessi" class="it.tecnet.crs.web.action.NonConformitaAccessiTableAction" method="getNonConfAccessiTabella">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="searchRischiAccessi" class="it.tecnet.crs.web.action.RischiAccessiAction" method="searchRischiAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="deleteQuestionario" class="it.tecnet.crs.audit.web.action.AuAuditActionTable" method="deleteQuestionario">
+   			<interceptor-ref name="authorization"> 
+				<param name="allowedRoles">dirGenerale, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles" />
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />	
+	 		 <result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        <action name="eliminaNormativaCheckReference" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction" method="eliminaNormativaCheckReference">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        
+        <action name="getVarCompNonConfAccessi" class="it.tecnet.crs.web.action.NonConformitaAccessiTableAction" method="getVarCompNonConfAccessi">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        <action name="searchStatoEsprRischio" class="it.tecnet.crs.web.action.RischiAccessiAction" method="searchStatoEsprRischioTable">
+        <interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+        <action name="initReportsfasi" class="it.tecnet.crs.web.action.AuditorsAction" method="initReportsfasi">
+        <interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+        </action>
+	 	
+	 	 <action name="getCircolariInpsTable" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getCircolariInpsTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	 		  <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="getNoteDecretiTable" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getNoteDecretiTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	 		  <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	
+	 	
+	 	<action name="getMessaggiInpsTable" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getMessaggiInpsTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	 		  <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="getLeggiDecretiTable" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getLeggiDecretiTable">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	 		  <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	
+	 	
+	 	<action name="getAllegatiCircolariInps" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getAllegatiCircolariInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	 		  <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	<action name="getAllegatiNoteDecreti" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getAllegatiNoteDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	 		  <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	<action name="getAllegatiMessaggiInps" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getAllegatiMessaggiInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	 		  <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	<action name="getAllegatiLeggiDecreti" class="it.tecnet.crs.componenti.web.action.NormativaTableAction" method="getAllegatiLeggiDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		 <result type="json">
+	 		  <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="getDocNoAllegatiCircolariInps" class="it.tecnet.crs.componenti.web.action.NormativaTableAction"  method="getDocNoAllegatiCircolariInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="ignoreHierarchy">false</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<action name="getDocNoAllegatiNoteDecreti" class="it.tecnet.crs.componenti.web.action.NormativaTableAction"  method="getDocNoAllegatiNoteDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	<action name="getDocNoAllegatiMessaggiInps" class="it.tecnet.crs.componenti.web.action.NormativaTableAction"  method="getDocNoAllegatiMessaggiInps">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	<action name="getDocNoAllegatiLeggiDecreti" class="it.tecnet.crs.componenti.web.action.NormativaTableAction"  method="getDocNoAllegatiLeggiDecreti">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="addAllegatoNormativa" class="it.tecnet.crs.componenti.web.action.NormativaTableAction"  method="addAllegatoNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="eliminaAllegatoNormativa" class="it.tecnet.crs.componenti.web.action.NormativaTableAction"  method="eliminaAllegatoNormativa">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">dirigente, delegato01, delegato02, masterDCSIT</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="ignoreHierarchy">false</param>
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	          <param name="includeProperties">
+				    sEcho,
+					iDisplayLength,
+					iDisplayStart,
+					iTotalRecords,
+					iTotalDisplayRecords,
+					aaData.*
+			  </param>
+	        </result>
+	 	</action>
+	 	
+        </package>
+
+	<!-- package ATPO -->
+ 	<include file="struts-ATPO.xml"></include>
+
+</struts>

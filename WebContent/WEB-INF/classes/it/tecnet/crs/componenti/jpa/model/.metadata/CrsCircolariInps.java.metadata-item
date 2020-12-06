@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132857702
+file-version=2
+checksum=eaa00b547da706de37e2fa73d6bdd370
+fetch-size=4768
+mtime=1561044716
+item-spec=41553030383A435253434952434F4C415249494E5053204A4156412D313635323035343635342E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/componenti/jpa/model/CrsCircolariInps.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

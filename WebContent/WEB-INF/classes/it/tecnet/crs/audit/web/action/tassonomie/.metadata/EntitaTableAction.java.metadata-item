@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722003
+file-version=1
+checksum=3f5c198d9a8558517015455521d3875c
+fetch-size=1106
+mtime=1559307165
+item-spec=41553030383A454E544954415441424C45414354494F4E204A4156412D313638383235313831302E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/audit/web/action/tassonomie/EntitaTableAction.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

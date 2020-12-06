@@ -1,0 +1,13 @@
+version=10.2
+item-uid=136077008
+file-version=1
+checksum=ac149e6e391d0e8ea975c02f81f0060f
+fetch-size=8025
+mtime=1581614989
+item-spec=41553030383A5449504F4C4F4749434845414354494F4E5441424C45204A4156412D313235363139373333332E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/audit/web/action/TipologicheActionTable.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

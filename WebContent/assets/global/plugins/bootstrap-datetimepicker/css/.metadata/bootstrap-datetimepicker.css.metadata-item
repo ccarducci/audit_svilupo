@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132059718
+file-version=1
+checksum=de2541594ba55a2c6d7e08b3cca6001e
+fetch-size=12786
+mtime=1555513867
+item-spec=41553030383A344C5A4B365120424F4F545354524150204441544554494D455049434B4552204353532D313333313033373536332E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

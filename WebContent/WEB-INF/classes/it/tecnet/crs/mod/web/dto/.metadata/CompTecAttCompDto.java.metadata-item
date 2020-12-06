@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132857930
+file-version=2
+checksum=437b24a0b6cd54b9d186ca3c42046643
+fetch-size=2116
+mtime=1561970077
+item-spec=41553030383A434F4D50544543415454434F4D5044544F204A4156412D313732303938383530382E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/mod/web/dto/CompTecAttCompDto.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

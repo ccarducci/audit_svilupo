@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132857654
+file-version=4
+checksum=c375dd593a4ead867c97d4a3948416dd
+fetch-size=6486
+mtime=1562052982
+item-spec=41553030383A344C5A4B365120414343455353494154504F414354494F4E204A4156412D313833343031393333342E412D5352433B34
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/ATPO/auditors/web/action/AccessiAtpoAction.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

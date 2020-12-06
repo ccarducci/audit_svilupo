@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132723577
+file-version=3
+checksum=811b325a5c3c0b0cc497cb4463b987f7
+fetch-size=9330
+mtime=1560237671
+item-spec=41553030383A344C5A4B3651205045524954414C454154504F414354494F4E204A4156412D313131353031313335302E412D5352433B33
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/ATPO/auditors/web/action/PeritaleAtpoAction.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722348
+file-version=1
+checksum=1978b4ee750cec205826f26faa12dd24
+fetch-size=1731
+mtime=1561025095
+item-spec=41553030383A43525354504C444F434D45444941204A4156412D313434393733363837372E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/componenti/jpa/model/CrsTplDocMedia.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

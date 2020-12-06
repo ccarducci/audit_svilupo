@@ -1,0 +1,453 @@
+ <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/jee 
+       http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+       
+       
+ 
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="loadTimeWeaver">
+    		<bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+  		</property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter" >
+                <property name="database" value="SQL_SERVER" />
+                <property name="showSql" value="#{systemProperties['app.showsql'] != null ? systemProperties['app.showsql'] : true}" />
+           
+            </bean>
+        </property>
+       
+       <property name="jpaProperties">
+	         <props>
+	             <prop key="openjpa.jdbc.DBDictionary">sqlserver(NextSequenceQuery=SELECT NEXT VALUE FOR {0})</prop>
+	         </props>
+      	</property> 
+    </bean>
+     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+	<jee:jndi-lookup id="dataSource" jndi-name="#{systemProperties['app.datasource']}" cache="true" resource-ref="true" lookup-on-startup="false" proxy-interface="javax.sql.DataSource"/>
+    
+ 
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
+	<bean id="appContext" class="it.tecnet.crs.ApplicationContextSpring"/>
+	
+	<!-- ACTIONS  -->
+	<bean id="indexAction" scope="prototype" class="it.tecnet.crs.web.action.IndexAction">
+        <constructor-arg ref="utenzeService"/>
+  	</bean>
+  		
+ 	<bean id="auditorsAction" scope="prototype" class="it.tecnet.crs.web.action.AuditorsAction">
+       <constructor-arg ref="auditService"/>
+  	</bean>
+  	
+  	<bean id="sessioneTableAction" scope="prototype" class="it.tecnet.crs.web.action.SessioneTableAction">
+       <constructor-arg ref="auditService"/>
+  	</bean>
+  	
+  	<bean id="faseDefinizioneTableAction" scope="prototype" class="it.tecnet.crs.web.action.FaseDefinizioneTableAction">
+       <constructor-arg ref="auditService"/>
+  	</bean>
+  	
+  	<bean id="faseNotificaTableAction" scope="prototype" class="it.tecnet.crs.web.action.FaseNotificaTableAction">
+       <constructor-arg ref="auditService"/>
+  	</bean>
+  	
+  	<bean id="testDaoServiceAction" scope="prototype" class="it.tecnet.crs.web.action.TestDaoServiceAction">
+       <constructor-arg ref="auditNonConformitaService"/>
+       <constructor-arg ref="auditService"/>
+       <constructor-arg ref="campagnaService"/>
+  	</bean>
+
+  	<bean id="commonUtilsAction" scope="prototype" class="it.tecnet.crs.web.action.CommonUtilsAction">
+       <constructor-arg ref="commonUtilsService"/>
+  	</bean>  	
+  	
+  	<!-- Tassonomie Inizio -->
+  	<bean id="glossarioTableAction" scope="prototype" class="it.tecnet.crs.audit.web.action.tassonomie.GlossarioTableAction">
+       <constructor-arg ref="crsTassonomiaService"/>
+  	</bean>
+  	
+  	<bean id="sinonimoTableAction" scope="prototype" class="it.tecnet.crs.audit.web.action.tassonomie.SinonimoTableAction">
+       <constructor-arg ref="crsTassonomiaService"/>
+  	</bean>
+  	
+  	<bean id="ambitoTableAction" scope="prototype" class="it.tecnet.crs.audit.web.action.tassonomie.AmbitoTableAction">
+       <constructor-arg ref="crsTassonomiaService"/>
+  	</bean>
+  	
+  	<bean id="entitaTableAction" scope="prototype" class="it.tecnet.crs.audit.web.action.tassonomie.EntitaTableAction">
+       <constructor-arg ref="crsTassonomiaService"/>
+  	</bean>
+  	
+  	<bean id="glossarioCrudAction" scope="prototype" class="it.tecnet.crs.audit.web.action.tassonomie.GlossarioCrudAction">
+       <constructor-arg ref="crsTassonomiaService"/>
+  	</bean>
+  	
+  	<bean id="sinonimoCrudAction" scope="prototype" class="it.tecnet.crs.audit.web.action.tassonomie.SinonimoCrudAction">
+       <constructor-arg ref="crsTassonomiaService"/>
+  	</bean>
+  	
+  	<bean id="ambitoCrudAction" scope="prototype" class="it.tecnet.crs.audit.web.action.tassonomie.AmbitoCrudAction">
+       <constructor-arg ref="crsTassonomiaService"/>
+  	</bean>
+  	
+  	<bean id="rntitaCrudAction" scope="prototype" class="it.tecnet.crs.audit.web.action.tassonomie.EntitaCrudAction">
+       <constructor-arg ref="crsTassonomiaService"/>
+  	</bean>
+  	<!-- Tassonomie Fine -->
+  	
+  	<bean id="indicatoriTableAction" scope="prototype" class="it.tecnet.crs.web.action.IndicatoriTableAction">
+       <constructor-arg ref="auditNonConformitaService"/>
+  	
+  	</bean>
+  		<bean id="mediaNonConformitaFaseDefinizione" scope="prototype" class="it.tecnet.crs.web.action.MediaNonConformitaFaseDefinizione">
+       <constructor-arg ref="auditNonConformitaService"/>
+  	
+  	</bean>
+  		<bean id="mediaNonConformitaFaseNotifica" scope="prototype" class="it.tecnet.crs.web.action.MediaNonConformitaFaseNotifica">
+       <constructor-arg ref="auditNonConformitaService"/>
+  	</bean>
+  	
+  	<bean id="modellazioneAction" scope="prototype" class="it.tecnet.crs.mod.web.action.ModellazioneAction">
+       <constructor-arg ref="modellazioneService"/>
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	
+  	<bean id="DominiModificaAttivitaCompTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.DominiModificaAttivitaCompTableAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	<bean id="CompTecniciModificaAttivitaCompTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.CompTecniciModificaAttivitaCompTableAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+ 	<bean id="AuAuditActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditActionTable">
+       <constructor-arg ref="AuAuditService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditDelegatiActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditDelegatiActionTable">
+       <constructor-arg ref="AuAuditService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditAuditorsActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditAuditorsActionTable">
+       <constructor-arg ref="AuAuditService"/>
+       <constructor-arg ref="utenzeService"/>
+  	</bean>
+  	<bean id="TipologicheActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.TipologicheActionTable">
+       <constructor-arg ref="tipologicheService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditFasiActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditFasiActionTable">
+       <constructor-arg ref="AuAuditService"/>
+  	</bean>
+	
+  	
+  	<bean id="AuAuditSessioniCampagnaActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditSessioniCampagnaActionTable">
+       <constructor-arg ref="AuAuditService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditCampagnaActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditCampagnaActionTable">
+       <constructor-arg ref="CampagnaService"/>
+        <constructor-arg ref="AuAuditService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditReportSediActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditReportSediActionTable">
+       <constructor-arg ref="CampagnaService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditRegoleActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditRegoleActionTable">
+       <constructor-arg ref="CampagnaService"/>
+  	</bean>
+ 
+ 	<bean id="AuAuditVerbaliActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditVerbaliActionTable">
+       <constructor-arg ref="CampagnaService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditAccessoActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditAccessoActionTable">
+       <constructor-arg ref="CampagnaService"/>
+  	</bean>
+	<bean id="gestioneComponentiAction" scope="prototype" class="it.tecnet.crs.componenti.web.action.GestioneComponentiAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	<bean id="DocumentiMediaTableAction" scope="prototype" class="it.tecnet.crs.componenti.web.action.DocumentiMediaTableAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	<bean id="DominiTableAction" scope="prototype" class="it.tecnet.crs.componenti.web.action.DominiTableAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	<bean id="ModificaDominioTableAction" scope="prototype" class="it.tecnet.crs.componenti.web.action.ModificaDominioTableAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	<bean id="ComponentiTecniciTableAction" scope="prototype" class="it.tecnet.crs.componenti.web.action.ComponentiTecniciTableAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	<bean id="ModificaComponentiTecniciTableAction" scope="prototype" class="it.tecnet.crs.componenti.web.action.ModificaComponentiTecniciTableAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	<bean id="AuAuditVerbaliCampioneActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditVerbaliCampioneActionTable">
+       <constructor-arg ref="CampagnaService"/>
+  	</bean>
+  	<bean id="AuAuditPraticheSessioneActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditPraticheSessioneActionTable">
+       <constructor-arg ref="CampagnaService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditRisultatiTabAction" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditRisultatiTabAction">
+       <constructor-arg ref="CampagnaService"/>
+  	</bean>
+  	
+
+  	<bean id="AuAuditModificaDomandaAction" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditModificaDomandaAction">
+       <constructor-arg ref="AuditService"/>
+  	</bean>
+  	
+  	<bean id="NonConformitaTableAction" scope="prototype" class="it.tecnet.crs.web.action.NonConformitaTableAction">
+       <constructor-arg ref="AuditService"/>
+  	</bean>
+  	
+  	<bean id="NonConformitaAccessiTableAction" scope="prototype" class="it.tecnet.crs.web.action.NonConformitaAccessiTableAction">
+       <constructor-arg ref="AuditService"/>
+       <constructor-arg ref="AuCalcolaIndicatoriService"/>
+  	</bean>
+  	 
+   	
+  	
+  	<!-- ACTIONS ATPO -->
+  	<bean id="AccessiAtpoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.AccessiAtpoAction">
+       <constructor-arg ref="AuditorsAccessiATPOService"/>
+  	</bean>
+  	
+  	<bean id="PianoMiglioramentoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.PianoMiglioramentoAction">
+       <constructor-arg ref="AuditorsAccessiATPOService"/>
+  	</bean>
+  	
+  	<bean id="PianoMiglioramentoWordAction" scope="prototype" class="it.tecnet.crs.report.web.action.PianoMiglioramentoWordAction">
+       <constructor-arg ref="PianoMiglioramentoWordService"/>
+  	</bean>
+  	
+  	<bean id="DatiContestoAccessiAtpoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.DatiContestoAccessiAtpoAction">
+       <constructor-arg ref="AuditorsAccessiATPOService"/>
+  	</bean>
+  	
+  	<bean id="AccessiPraticaAtpoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.AccessiPraticaAtpoAction">
+       <constructor-arg ref="AuditorsUpdPraticheATPOService"/>
+  	</bean>
+  	
+  	<bean id="AcquisizioneIstanzaAtpoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.AcquisizioneIstanzaAtpoAction">
+       <constructor-arg ref="AtpoFasiService"/>
+  	</bean>
+  	
+  	<bean id="AutotutelaResistenzaGiudizioATPOAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.AutotutelaResistenzaGiudizioATPOAction">
+       <constructor-arg ref="AtpoFasiService"/>
+  	</bean>
+  	
+  	<bean id="PeritaleAtpoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.PeritaleAtpoAction">
+       <constructor-arg ref="AtpoFasiService"/>
+  	</bean>
+  	
+  	<bean id="PostPeritaleAtpoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.PostPeritaleAtpoAction">
+       <constructor-arg ref="AtpoFasiService"/>
+  	</bean>
+  	
+
+  	
+  	
+  	<bean id="EsecuzioneProvvedimentiAtpoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.EsecuzioneProvvedimentiAtpoAction">
+       <constructor-arg ref="AtpoFasiService"/>
+  	</bean>
+  	
+  	<bean id="RiepilogoFascicoloAtpoAction" scope="prototype" class="it.tecnet.crs.ATPO.auditors.web.action.RiepilogoFascicoloAtpoAction">
+       <constructor-arg ref="AtpoFasiService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditRischiActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditRischiActionTable">
+       <constructor-arg ref="AuAuditRischiENonConformitaService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditEspressioneRischioActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditEspressioneRischioActionTable">
+       <constructor-arg ref="AuAuditRischiENonConformitaService"/>
+  	</bean>
+  	
+  	<bean id="AuAuditNonConformActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditNonConformActionTable">
+       <constructor-arg ref="AuAuditRischiENonConformitaService"/>
+  	</bean>
+  
+  
+  	<bean id="AuAuditVarComportamentaleActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditVarComportamentaleActionTable">
+       <constructor-arg ref="AuAuditRischiENonConformitaService"/>
+  	</bean>
+  	
+  	<bean id="RischiPraticheAction" scope="prototype" class="it.tecnet.crs.web.action.RischiPraticheAction">
+       <constructor-arg ref="AuditService"/>
+  	</bean>
+  
+  	<bean id="RischiAccessiAction" scope="prototype" class="it.tecnet.crs.web.action.RischiAccessiAction">
+       <constructor-arg ref="AuditService"/>
+  	</bean>
+  	<bean id="AuAuditQuestionarioActionTable" scope="prototype" class="it.tecnet.crs.audit.web.action.AuAuditQuestionarioActionTable">
+       <constructor-arg ref="AuditService"/>
+  	</bean>
+  	
+  	
+  	<bean id="ReportAccessoPDFAction" scope="prototype" class="it.tecnet.crs.report.web.action.ReportAccessoPDFAction">
+       <constructor-arg ref="reportPDFService"/>
+       <!-- constructor-arg ref="auAuditIndicatoriService"/-->
+  	</bean>
+  	
+  	<!-- OKKKOIO-->
+  	<bean id="ReportAccessoAnnualePDFAction" scope="prototype" class="it.tecnet.crs.report.web.action.ReportAccessoAnnualePDFAction">
+       <constructor-arg ref="reportPDFService"/>
+       <constructor-arg ref="calcoloIndicatoriCampagnaService"/>
+  	</bean>
+  	<!-- OKKKOIO-->
+  	
+  	
+  	<bean id="DominiModificaProcessoTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.DominiModificaProcessoTableAction">
+       <constructor-arg ref="modellazioneService"/>
+  	</bean>
+  	<bean id="CompTecniciModificaProcessoTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.CompTecniciModificaProcessoTableAction">
+       <constructor-arg ref="modellazioneService"/>
+  	</bean>
+  	
+  
+  	<bean id="DominiModificaSottoProcessoTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.DominiModificaSottoProcessoTableAction">
+       <constructor-arg ref="modellazioneService"/>
+  	</bean>
+  	<bean id="CompTecniciModificaSottoProcessoTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.CompTecniciModificaSottoProcessoTableAction">
+       <constructor-arg ref="modellazioneService"/>
+  	</bean>
+  	
+  	
+  	<bean id="DominiModificaAttivitaDettaglioTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.DominiModificaAttivitaDettaglioTableAction">
+       <constructor-arg ref="modellazioneService"/>
+  	</bean>
+  	<bean id="CompTecniciModificaAttivitaDettaglioTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.CompTecniciModificaAttivitaDettaglioTableAction">
+       <constructor-arg ref="modellazioneService"/>
+  	</bean>
+  	
+  	<bean id="DominiValoriTableAction" scope="prototype" class="it.tecnet.crs.componenti.web.action.DominiValoriTableAction">
+       <constructor-arg ref="gestioneComponentiService"/>
+  	</bean>
+  	
+  	<!-- SERVICES  -->
+ 	<bean id="utenzeService" class="it.tecnet.crs.service.UtenzeServiceImpl">
+        <property name="utenzeDao"  ref="utenzeDao"/>
+  	</bean>
+  	<!-- SERVICES  -->
+ 	<bean id="tipologicheService" class="it.tecnet.crs.service.TipologicheServiceImpl">
+        <property name="tipologicheDao"  ref="tipologicheDao"/>
+  	</bean>
+  	
+  	<bean id="AuditQuestionarioService" class="it.tecnet.crs.service.AuditQuestionarioServiceImpl">
+        <property name="auditQuestionarioDao"  ref="auditQuestionarioDao"/>
+  	</bean>
+ 
+ 	<bean id="auditService" class="it.tecnet.crs.service.AuditServiceImpl">
+        <property name="auditDao"  ref="auditDao"/>
+  	</bean>
+ 
+ 	<bean id="auditNonConformitaService" class="it.tecnet.crs.service.AuditNonConformitaServiceImpl">
+        <property name="auditNonConformitaDao"  ref="auditNonConformitaDao"/>
+  	</bean>
+  	
+    <bean id="modellazioneService" class="it.tecnet.crs.mod.service.ModellazioneServiceImpl">
+		<property name="modellazioneDao"  ref="modellazioneDao"/> 
+    </bean>
+   
+  	<bean id="auAuditService" class="it.tecnet.crs.audit.service.AuAuditServiceImpl">
+        <property name="auAuditDao"  ref="auAuditDao"/>
+  	</bean>
+  	
+  	<bean id="auCampagnaService" class="it.tecnet.crs.audit.service.AuCampagnaServiceImpl">
+        <property name="campagnaDao"  ref="auCampagnaDao"/>
+  	</bean>
+
+	<bean id="gestioneComponentiService" class="it.tecnet.crs.componenti.service.GestioneComponentiServiceImpl">
+		<property name="gestioneComponentiDao"  ref="gestioneComponentiDao"/> 
+   	</bean>
+   	
+   	<bean id="AuAuditRischiENonConformitaService" class="it.tecnet.crs.audit.service.AuAuditRischiENonConformitaServiceImpl">
+		<property name="auAuditRischiENonConformitaDao"  ref="auAuditRischiENonConformitaDao"/> 
+   	</bean>
+   	
+   	<bean id="auCalcolaIndicatoriService" class="it.tecnet.crs.audit.service.AuCalcolaIndicatoriServiceImpl">
+		<property name="auCalcolaIndicatoriDao"  ref="auCalcolaIndicatoriDao"/> 
+   	</bean>
+
+   	<bean id="crsTassonomiaService" class="it.tecnet.crs.audit.service.CrsTassonomiaServiceImpl">
+		<property name="crsTassonomiaDao"  ref="crsTassonomiaDao"/> 
+   	</bean>
+   	
+   	<bean id="commonUtilsService" class="it.tecnet.crs.audit.service.CommonUtilsServiceImpl" />
+   	
+   	<!-- SERVICES ATPO -->
+   	<bean id="auditorsAccessiATPOService" class="it.tecnet.crs.ATPO.auditors.service.AuditorsAccessiATPOServiceImpl">
+		<property name="auditorsAtpoAccessiDao"  ref="auditorsAtpoAccessiDao"/> 
+   	</bean>
+   	
+   	<bean id="auditorsUpdPraticheATPOService" class="it.tecnet.crs.ATPO.auditors.service.AuditorsUpdPraticheATPOServiceImpl">
+		<property name="auditorsAtpoUpdPraticheDao"  ref="auditorsAtpoUpdPraticheDao"/> 
+   	</bean>
+   	
+   	<bean id="atpoFasiService" class="it.tecnet.crs.ATPO.auditors.service.AtpoFasiServiceImpl">
+		<property name="atpoFasiDao"  ref="atpoFasiDao"/> 
+   	</bean>
+   	
+   	<bean id="pianoMiglioramentoWordService" class="it.tecnet.crs.report.service.PianoMiglioramentoWordServiceImpl">
+		<property name="reportPDFDao"  ref="reportPDFDao"/> 
+		<property name="pianoMiglioramentoWordDao"  ref="pianoMiglioramentoWordDao"/> 
+   	</bean>
+   	
+   	
+   	
+   	<!-- SERVICES PDF -->
+   	<bean id="reportPDFService" class="it.tecnet.crs.report.service.ReportPDFServicImpl">
+		<property name="reportPDFDao"  ref="reportPDFDao"/> 
+   	</bean>
+  
+    <bean id="calcoloIndicatoriCampagnaService" class="it.tecnet.crs.indicatori.campagna.CalcoloIndicatoriCampagnaService">
+		<property name="auCalcolaIndicatoriDao"  ref="auCalcolaIndicatoriDao"/>  
+   	</bean>
+  
+  	<!-- DAO  -->
+  	<bean id="utenzeDao" class="it.tecnet.crs.jpa.dao.UtenzeDaoImpl" />
+  	<bean id="tipologicheDao" class="it.tecnet.crs.jpa.dao.TipologicheDaoImpl" /> 
+  		
+  	<bean id="auditDao" class="it.tecnet.crs.jpa.dao.AuditDaoImpl" />
+   	<bean id="auditNonConformitaDao" class="it.tecnet.crs.jpa.dao.AuditNonConformitaDaoImpl" />
+   	<bean id="auditQuestionarioDao" class="it.tecnet.crs.jpa.dao.AuditQuestionarioDaoImpl" />
+	<bean id="modellazioneDao" class="it.tecnet.crs.mod.jpa.dao.ModellazioneDaoImpl" />
+	<bean id="auAuditDao" class="it.tecnet.crs.audit.jpa.dao.AuAuditDaoImpl" /> 
+	<bean id="auCampagnaDao" class="it.tecnet.crs.audit.jpa.dao.AuCampagnaDaoImpl" />
+	<bean id="gestioneComponentiDao" class="it.tecnet.crs.componenti.jpa.dao.GestioneComponentiDaoImpl" />
+	<bean id="auAuditRischiENonConformitaDao" class="it.tecnet.crs.audit.jpa.dao.AuAuditRischiENonConformitaDaoImpl" />
+	<bean id="auCalcolaIndicatoriDao" class="it.tecnet.crs.audit.jpa.dao.AuCalcolaIndicatoriDaoImpl" />
+	<bean id="crsTassonomiaDao" class="it.tecnet.crs.audit.jpa.dao.CrsTassonomiaDaoImpl" />
+	
+	<!-- DAO ATPO -->
+	<bean id="auditorsAtpoAccessiDao" class="it.tecnet.crs.ATPO.auditors.jpa.dao.AuditorsAtpoAccessiDaoImpl" />
+	<bean id="atpoFasiDao" class="it.tecnet.crs.ATPO.auditors.jpa.dao.AtpoFasiDaoImpl" />
+	<bean id="auditorsAtpoUpdPraticheDao" class="it.tecnet.crs.ATPO.auditors.jpa.dao.AuditorsAtpoUpdPraticheDaoImpl" />
+	
+	<!-- DAO PDF -->
+	<bean id="reportPDFDao" class="it.tecnet.crs.report.jpa.dao.ReportPDFDaoImpl" /> 
+	<bean id="pianoMiglioramentoWordDao" class="it.tecnet.crs.report.jpa.dao.PianoMiglioramentoWordDaoImpl" /> 
+	
+</beans>

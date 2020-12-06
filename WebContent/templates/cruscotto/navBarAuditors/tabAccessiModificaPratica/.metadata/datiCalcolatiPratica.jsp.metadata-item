@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132058642
+file-version=1
+checksum=b2149e5e41a20d75e6cef201b4553c8e
+fetch-size=5821
+mtime=1555513886
+item-spec=41553030383A344C5A4B3651204441544943414C434F4C41544950524154494341204A53502D313438333634383133352E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarAuditors/tabAccessiModificaPratica/datiCalcolatiPratica.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

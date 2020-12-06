@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132978243
+file-version=2
+checksum=8598e510a0ca874658550348bb440a31
+fetch-size=1472
+mtime=1562322336
+item-spec=41553030383A4D4F44454C414D4249544F444154415441424C4544544F204A4156412D313231393939313739342E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/audit/web/beans/tassonomie/ambito/ModelAmbitoDataTableDto.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

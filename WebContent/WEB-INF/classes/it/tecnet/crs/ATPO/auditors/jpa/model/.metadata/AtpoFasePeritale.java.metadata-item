@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132110617
+file-version=3
+checksum=b16d17753a9340c57e350072afe4ab91
+fetch-size=6486
+mtime=1556810876
+item-spec=41553030383A344C5A4B3651204154504F464153455045524954414C45204A4156412D313039333436323337392E412D5352433B33
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/ATPO/auditors/jpa/model/AtpoFasePeritale.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

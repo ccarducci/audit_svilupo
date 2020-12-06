@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132723084
+file-version=1
+checksum=9a272d258a6bc78e9d527518425a8095
+fetch-size=4645
+mtime=1557993957
+item-spec=41553030383A4152454150524F434553534F5441424C45204A532D313037343738353733332E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/js/modellazioneTables/areaProcessoTable.js
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

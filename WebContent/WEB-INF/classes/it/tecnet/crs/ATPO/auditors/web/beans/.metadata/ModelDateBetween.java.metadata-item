@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132721815
+file-version=1
+checksum=cebfe99b0b846c87370cfdb08060072c
+fetch-size=705
+mtime=1559289600
+item-spec=41553030383A4D4F44454C444154454245545745454E204A4156412D313638333732343031312E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/ATPO/auditors/web/beans/ModelDateBetween.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

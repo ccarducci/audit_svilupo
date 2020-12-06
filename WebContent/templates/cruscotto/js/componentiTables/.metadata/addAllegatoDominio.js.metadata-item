@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722762
+file-version=1
+checksum=791c4b474549c26b38bb537f14b260f3
+fetch-size=4000
+mtime=1559200931
+item-spec=41553030383A414444414C4C454741544F444F4D494E494F204A532D313830353137353332392E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/js/componentiTables/addAllegatoDominio.js
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

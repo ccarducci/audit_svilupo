@@ -1,0 +1,13 @@
+version=10.2
+item-uid=135249952
+file-version=6
+checksum=df220a0afcf93dbe068b4abf2627d370
+fetch-size=9835
+mtime=1573642699
+item-spec=41553030383A344C5A4B36512043414C434F4C4F494E44494341544F524950524154494341494E464F52495333204A4156412D313231363233323735382E412D5352433B36
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/indicatori/pratica/rischio/CalcoloIndicatoriPraticaInfoRis3.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

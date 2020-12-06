@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722480
+file-version=1
+checksum=c62fc7df39e410b7b82bed2a53adc0b3
+fetch-size=2755
+mtime=1559200934
+item-spec=41553030383A434F4D505445434E494349415454434F4D50504147494E41544F52204A4156412D313830373538343431342E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/mod/web/bean/CompTecniciAttCompPaginator.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

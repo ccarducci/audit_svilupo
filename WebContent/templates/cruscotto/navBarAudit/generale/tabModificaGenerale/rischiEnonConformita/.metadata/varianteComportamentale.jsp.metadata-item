@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132057813
+file-version=1
+checksum=836234e4d355ae50b30f7166dd96a2cd
+fetch-size=3870
+mtime=1555513886
+item-spec=41553030383A344C5A4B36512056415249414E5445434F4D504F5254414D454E54414C45204A53502D313431333931343032302E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarAudit/generale/tabModificaGenerale/rischiEnonConformita/varianteComportamentale.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

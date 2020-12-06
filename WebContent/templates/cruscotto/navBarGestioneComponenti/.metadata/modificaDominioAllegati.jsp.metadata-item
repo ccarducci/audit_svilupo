@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722965
+file-version=1
+checksum=7f55e82e71cf0f975f7a645115e3dd37
+fetch-size=4472
+mtime=1560958694
+item-spec=41553030383A4D4F444946494341444F4D494E494F414C4C4547415449204A53502D313233333538353632352E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarGestioneComponenti/modificaDominioAllegati.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

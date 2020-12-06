@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722070
+file-version=1
+checksum=a6e0969afc0e96442f280f8d06a531c3
+fetch-size=1317
+mtime=1559200934
+item-spec=41553030383A435253415353434F4D505445434E444F43554D454E5449204A4156412D313736353234393632392E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/componenti/jpa/model/CrsAssCompTecnDocumenti.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

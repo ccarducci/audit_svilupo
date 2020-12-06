@@ -1,0 +1,13 @@
+version=10.2
+item-uid=136065840
+file-version=2
+checksum=a91f045fb1e83617e67fb56ce9213f33
+fetch-size=1863
+mtime=1581524511
+item-spec=41553030383A344C5A4B3651204352535554454E5445204A4156412D313430373737363339312E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/jpa/model/CrsUtente.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

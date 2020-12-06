@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132056228
+file-version=1
+checksum=2282b06c2be33bf4dc7945be4e44907b
+fetch-size=2141
+mtime=1555513890
+item-spec=41553030383A344C5A4B365120415553544641534349434F4C4F204A4156412D313336383630323836372E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/src/it/tecnet/crs/jpa/model/AuSTfascicolo.java
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808

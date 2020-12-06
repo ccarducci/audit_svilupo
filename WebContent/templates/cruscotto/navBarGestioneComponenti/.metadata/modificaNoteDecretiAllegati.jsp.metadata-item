@@ -1,0 +1,13 @@
+version=10.2
+item-uid=132722632
+file-version=1
+checksum=c405e11dfa0a1b9d98fa638d4da263f0
+fetch-size=3690
+mtime=1559200932
+item-spec=41553030383A4D4F4449464943414E4F544544454352455449414C4C4547415449204A53502D313038303932333336322E412D5352433B31
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=CruscottoAuditAtpoWebWeb/WebContent/templates/cruscotto/navBarGestioneComponenti/modificaNoteDecretiAllegati.jsp
+project=41553030383A57315F43525553434F54544F41554449544154504F574542
+project-uid=132048808
