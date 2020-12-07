@@ -36,8 +36,17 @@ public class CalcoloIndicatoriCampagnaService {
 		return null;
 	}
 	
+	private SoglieDto findSglia(Long id_m_non_conf,List<SoglieDto> soglie) {
+		for (SoglieDto soglieDto : soglie) {
+			if(soglieDto.getID_M_NONCONF().equals(id_m_non_conf))return soglieDto;
+		}
+		return null;
+	}
+	
 	@Transactional
-	private void calcolaVarComp(long idCampagna){
+	private List<AU_C_VARCOMP> calcolaVarComp(long idCampagna){
+		List<AU_C_VARCOMP> lista = new ArrayList<AU_C_VARCOMP>();
+		
 		System.out.println("--------------------------------- BEGIN VARCONF --------------------------------------------------");
 		auCalcolaIndicatoriDao.deleteDatiCampagnaVarComp(idCampagna);
 		List<CampagnaMVarCompDto> listaSumIdMVarComp = auCalcolaIndicatoriDao.getSumiCampagnaByIdMVarCompDto(idCampagna);
@@ -82,23 +91,40 @@ public class CalcoloIndicatoriCampagnaService {
 		
 		for (AU_C_VARCOMP campagnaDto : listaAU_C_VARCOMP) {
 			auCalcolaIndicatoriDao.insertDatiCampagnaVarComp(campagnaDto);
+			lista.add(campagnaDto);
 		}
 		System.out.println("--------------------------------- END VARCONF --------------------------------------------------");
+		return lista;
 	}
 	
-	private SoglieDto findSglia(Long id_m_non_conf,List<SoglieDto> soglie) {
-		for (SoglieDto soglieDto : soglie) {
-			if(soglieDto.getID_M_NONCONF().equals(id_m_non_conf))return soglieDto;
-		}
-		return null;
-	}
-
-	private void  calcolaRischio(long idCampagna){
+	private void calcolaNonConf(long idCampagna, List<AU_C_VARCOMP> listaCVarComplista) {
+		System.out.println("--------------------------------- BEGIN NONCONF --------------------------------------------------");
+		auCalcolaIndicatoriDao.deleteDatiCampagnaNonCConf(idCampagna);
 		
+		List<CampagnaNonConfDto> listCampagnaDto = auCalcolaIndicatoriDao.getDatiCampagnaVNonConfDto(idCampagna);
+		
+		System.out.println("--------------------------------- END NONCONF --------------------------------------------------");
 	}
 	
-	private void calcolaNonConf(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
+	private Double getPercPesataFrom_AU_C_VARCOMP_By_ID_M_NONCONF(long ID_M_NONCONF,List<AU_C_VARCOMP> listaCVarComplista){
+		Double perRet = 0D;
+		for (AU_C_VARCOMP au_C_VARCOMP : listaCVarComplista) {
+			if(au_C_VARCOMP.getID_M_NON_CONF().equals(ID_M_NONCONF))
+					perRet += au_C_VARCOMP.getPERC_PESATA();
+		}
+		return perRet;
+	}
+	
+	private Integer getNumFrom_AU_C_VARCOMP_By_ID_M_NONCONF(long ID_M_NONCONF,List<AU_C_VARCOMP> listaCVarComplista){
+		Integer perRet = 0;
+		for (AU_C_VARCOMP au_C_VARCOMP : listaCVarComplista) {
+			if(au_C_VARCOMP.getID_M_NON_CONF().equals(ID_M_NONCONF))
+					perRet += au_C_VARCOMP.getNUM();
+		}
+		return perRet;
+	}
+	
+	private void  calcolaRischio(long idCampagna){
 		
 	}
 	
@@ -111,11 +137,11 @@ public class CalcoloIndicatoriCampagnaService {
 	public void calcolaIndicatoriCampagna(long idCampagna) {
 		log.info("FINE CALCOLI CAMPAGNA " + idCampagna);
 		
-		calcolaNonConf(idCampagna);
-		calcolaVarComp(idCampagna);
-		calcolaRischio(idCampagna);
+		List<AU_C_VARCOMP> listaCVarComplista = calcolaVarComp(idCampagna);
+		calcolaNonConf(idCampagna,listaCVarComplista);
 		calcolaRisEspr(idCampagna);
-		
+		calcolaRischio(idCampagna);
+	
 		log.info("FINE CALCOLI CAMPAGNA " + idCampagna);
 	}
 

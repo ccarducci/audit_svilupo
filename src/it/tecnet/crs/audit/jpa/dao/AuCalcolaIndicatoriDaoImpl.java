@@ -9,6 +9,7 @@ import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePeritale;
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePostPeritale;
 import it.tecnet.crs.audit.web.dto.CalcoloIndicatoriRiepilogoPraticheNonConfFasi;
 import it.tecnet.crs.indicatori.campagna.AU_C_VARCOMP;
+import it.tecnet.crs.indicatori.campagna.CampagnaNonConfDto;
 import it.tecnet.crs.indicatori.sessione.AuTotH3PerRischio;
 import it.tecnet.crs.indicatori.sessione.RiepilogoTipologica;
 import it.tecnet.crs.jpa.model.AuCampagna;
@@ -1362,5 +1363,59 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 			e.printStackTrace();
 		}
 		return listRet;
+	}
+
+	@Override
+	public void deleteDatiCampagnaNonCConf(long idCampagna) {
+		em.createNativeQuery(
+				"DELETE AU_C_NONCONF WHERE ID_C_CAMPAGNA = " + idCampagna)
+				.executeUpdate();
+	}
+
+	@Override
+	public List<CampagnaNonConfDto> getDatiCampagnaVNonConfDto(long idCampagna) {
+		String query = "select " + 
+				"	AU_SESSIONI.ID_CAMPAGNA " + 
+				",	AU_S_NONCONF.ID_M_NONCONF " + 
+				", 	AU_S_NONCONF.DATA_INIZIO " + 
+				", 	AU_S_NONCONF.DATA_FINE " + 
+				", 	AU_S_NONCONF.CODICE " + 
+				",	AU_S_NONCONF.PESO_NONCONF " + 
+				"from " + 
+				"AU_S_NONCONF " + 
+				",AU_S_SESSIONE " + 
+				",AU_S_VARCOMP " + 
+				",AU_SESSIONI " + 
+				"WHERE  " + 
+				"AU_S_NONCONF.ID_S_SESSIONE  = AU_S_SESSIONE.ID_S_SESSIONE " + 
+				"AND AU_S_VARCOMP.ID_S_NONCONF = AU_S_NONCONF.ID_S_NONCONF " + 
+				"AND AU_S_SESSIONE.ID_SESSIONE = AU_SESSIONI.ID_SESSIONE " + 
+				"AND AU_SESSIONI.ID_CAMPAGNA = " + idCampagna +  
+				"AND AU_S_SESSIONE.STATO_ESAME_SESSIONE = 'C'";
+		List<Object[]> lista = new ArrayList<Object[]>();
+		List<CampagnaNonConfDto> listRet = new ArrayList<CampagnaNonConfDto>();
+		try {
+			lista = em.createNativeQuery(query).getResultList();
+			for (Object[] row : lista) {
+				CampagnaNonConfDto item = 
+					new CampagnaNonConfDto();
+
+				item.setID_CAMPAGNA((Long)row[0]);
+				item.setID_M_NONCONF((Long)row[1]);
+				item.setDATA_INIZIO((Date)row[2]);
+				item.setDATA_FINE((Date)row[3]);
+				item.setCODICE(row[4].toString());
+				item.setPESO_NONCONF(((BigDecimal)row[5]).doubleValue());
+ 
+				listRet.add(item);
+
+			}
+		} catch (Exception e) {
+			System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			log.info("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			e.printStackTrace();
+		}
+		return listRet;
+		
 	}
 }
