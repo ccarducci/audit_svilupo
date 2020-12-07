@@ -135,6 +135,14 @@ public class CalcoloIndicatoriCampagnaService {
 		}
 		
 		for (AU_C_NONCONF nonConf : listaNonConf) {
+			// VALORE_INCC di AU_C_NONCONF * PESO_NON_CONF di AU_C_NONCONF / (somma PESO_NON_CONF di AU_C_NONCONF
+			// per ID_FASE di AU_C_NONCONF uguale)
+			Double ret = nonConf.getVALORE_INCC() * nonConf.getPESO_NONCONF();
+			
+			nonConf.setVALORE_PESATO_BASE(ret);
+		}
+		
+		for (AU_C_NONCONF nonConf : listaNonConf) {
 			auCalcolaIndicatoriDao.insertDatiCampagnaNonConf(nonConf);
 		}
 		System.out.println("--------------------------------- END NONCONF --------------------------------------------------");
