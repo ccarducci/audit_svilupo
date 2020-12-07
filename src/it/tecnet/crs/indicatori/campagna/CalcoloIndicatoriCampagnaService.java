@@ -124,7 +124,14 @@ public class CalcoloIndicatoriCampagnaService {
 		
 		for (AU_C_NONCONF nonConf : listaNonConf) {
 			// VALORE_INCC di AU_C_NONCONF * PESO_NON_CONF di AU_C_NONCONF / (somma PESO_NON_CONF di AU_C_NONCONF per ID_C_CAMPAGNA di AU_C_NONCONF uguale)
-			Double ret = ( nonConf.getVALORE_INCC() * nonConf.getPESO_NONCONF()) / totPesoNonConf;
+			try{
+				if (totPesoNonConf >0){
+					Double vALORE_Pesato = ( nonConf.getVALORE_INCC() * nonConf.getPESO_NONCONF()) / totPesoNonConf;
+					nonConf.setVALORE_PESATO(vALORE_Pesato);
+				}
+			}catch(Exception ex){
+				
+			}
 		}
 		
 		for (AU_C_NONCONF nonConf : listaNonConf) {
@@ -136,9 +143,9 @@ public class CalcoloIndicatoriCampagnaService {
 	private Long sumPesoNonConf(List<AU_C_NONCONF> listaNonConf ){
 		Long num = 0L;
 		for (AU_C_NONCONF au_c_nonconf : listaNonConf) {
-			num += au_c_nonconf.getPESO_NONCONF();
+			if(au_c_nonconf.getPESO_NONCONF()!=null)num += au_c_nonconf.getPESO_NONCONF();
 		}
-		return 0L;
+		return num;
 	}
 	
 	private AU_C_NONCONF findNonConfByID_M_NONCONF(Long ID_M_NONCONF , List<AU_C_NONCONF> listaNonConf) {
