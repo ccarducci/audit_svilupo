@@ -111,7 +111,7 @@ public class CalcoloIndicatoriCampagnaService {
 				if (item.getDATA_INIZIO()!=null)nonConf.setDATA_INIZIO(item.getDATA_INIZIO());
 				if (item.getID_CAMPAGNA()!=null)nonConf.setID_C_CAMPAGNA(item.getID_CAMPAGNA());
 				if (item.getID_M_NONCONF()!=null)nonConf.setID_M_NONCONF(item.getID_M_NONCONF());
-				if (item.setPESO_NONCONF()!=null)nonConf.setPESO_NONCONF(item.getPESO_NONCONF());
+				if (item.getPESO_NONCONF()!=null)nonConf.setPESO_NONCONF(item.getPESO_NONCONF());
 				if (item.getCODICE()!= null)nonConf.setCODICE(item.getCODICE());
 				Integer num = getNumFrom_AU_C_VARCOMP_By_ID_M_NONCONF(nonConf.getID_M_NONCONF(),listaCVarComplista);
 				nonConf.setNUM(num);
@@ -140,8 +140,9 @@ public class CalcoloIndicatoriCampagnaService {
 			// VALORE_INCC di AU_C_NONCONF * PESO_NON_CONF di AU_C_NONCONF / (somma PESO_NON_CONF di AU_C_NONCONF
 			// per ID_FASE di AU_C_NONCONF uguale)
 			Double ret = nonConf.getVALORE_INCC() * nonConf.getPESO_NONCONF();
-			Double PESO_NONCONF = 	sumPesoByIdFase(listCampagnaDto,nonConf.getID_FASE);
-			nonConf.setVALORE_PESATO_BASE(ret/PESO_NONCONF);
+			Double ret2 = sumPesoByIdFase(listCampagnaDto,nonConf.getID_FASE());
+			if(ret2 != null && ret2 != 0)ret = ret / ret2;
+			nonConf.setVALORE_PESATO_BASE(ret);
 		}
 		
 		for (AU_C_NONCONF nonConf : listaNonConf) {
@@ -152,13 +153,14 @@ public class CalcoloIndicatoriCampagnaService {
 	
 	private Double sumPesoByIdFase(List<CampagnaNonConfDto> listCampagnaDto, Long idFase) {
 		Double ret = 0D;
+		
 		for (CampagnaNonConfDto item : listCampagnaDto) {
 			if(item.getID_FASE().equals(idFase)) {
 				ret += item.getPESO_NONCONF();
 			}
 		}
 		
-		return null;
+		return ret;
 	}
 	
 	
