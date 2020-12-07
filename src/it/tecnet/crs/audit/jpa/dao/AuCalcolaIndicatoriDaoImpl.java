@@ -1404,7 +1404,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				item.setID_M_NONCONF((Long)row[1]);
 				item.setDATA_INIZIO((Date)row[2]);
 				item.setDATA_FINE((Date)row[3]);
-				item.setCODICE(row[4].toString());
+				if (row[4]!=null)item.setCODICE(row[4].toString());
 				item.setPESO_NONCONF(((BigDecimal)row[5]).doubleValue());
  
 				listRet.add(item);
