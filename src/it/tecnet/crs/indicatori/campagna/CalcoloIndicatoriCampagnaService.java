@@ -200,10 +200,14 @@ public class CalcoloIndicatoriCampagnaService {
 	
 	private void  calcolaRischio(long idCampagna){
 		auCalcolaIndicatoriDao.deleteDatiRischio(idCampagna);
+		
+		List<CampagnaRischiofDto> listCampagnaDto = auCalcolaIndicatoriDao.getDatiCampagnaRischiofDto(idCampagna);
 	}
 	
 	private void calcolaRisEspr(long idCampagna) {
 		auCalcolaIndicatoriDao.deleteDatiRisEspr(idCampagna);
+		
+		List<CampagnaRisEsprDto> listCampagnaDto = auCalcolaIndicatoriDao.getDatiCampagnaCampagnaRisEsprDto(idCampagna);
 		
 	}
 	

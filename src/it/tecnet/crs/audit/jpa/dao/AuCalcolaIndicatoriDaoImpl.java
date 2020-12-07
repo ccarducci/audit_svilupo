@@ -13,6 +13,8 @@ import it.tecnet.crs.indicatori.campagna.AU_C_RISCHIO;
 import it.tecnet.crs.indicatori.campagna.AU_C_RISESPR;
 import it.tecnet.crs.indicatori.campagna.AU_C_VARCOMP;
 import it.tecnet.crs.indicatori.campagna.CampagnaNonConfDto;
+import it.tecnet.crs.indicatori.campagna.CampagnaRisEsprDto;
+import it.tecnet.crs.indicatori.campagna.CampagnaRischiofDto;
 import it.tecnet.crs.indicatori.sessione.AuTotH3PerRischio;
 import it.tecnet.crs.indicatori.sessione.RiepilogoTipologica;
 import it.tecnet.crs.jpa.model.AuCampagna;
@@ -1453,5 +1455,18 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public void insertDatiCampagnaRischio(AU_C_RISCHIO rischio) {
 		em.persist(rischio);
+	}
+
+	@Override
+	public List<CampagnaRisEsprDto> getDatiCampagnaCampagnaRisEsprDto(
+			long idCampagna) {
+		// TODO Stub di metodo generato automaticamente
+		return null;
+	}
+
+	@Override
+	public List<CampagnaRischiofDto> getDatiCampagnaRischiofDto(long idCampagna) {
+		// TODO Stub di metodo generato automaticamente
+		return null;
 	}
 }
