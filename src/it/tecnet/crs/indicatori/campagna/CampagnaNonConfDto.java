@@ -9,6 +9,7 @@ public class CampagnaNonConfDto {
 	private Date DATA_FINE;
 	private String CODICE; 
 	private Double PESO_NONCONF;
+	private Long ID_FASE;
 	
 	public Long getID_CAMPAGNA() {
 		return ID_CAMPAGNA;
@@ -46,6 +47,13 @@ public class CampagnaNonConfDto {
 	public void setPESO_NONCONF(Double pESO_NONCONF) {
 		PESO_NONCONF = pESO_NONCONF;
 	}
+	public Long getID_FASE() {
+		return ID_FASE;
+	}
+	public void setID_FASE(Long iD_FASE) {
+		ID_FASE = iD_FASE;
+	}
+	
 	
 
 }

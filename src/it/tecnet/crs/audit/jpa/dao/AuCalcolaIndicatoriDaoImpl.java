@@ -1381,18 +1381,22 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				", 	AU_S_NONCONF.DATA_INIZIO " + 
 				", 	AU_S_NONCONF.DATA_FINE " + 
 				", 	AU_S_NONCONF.CODICE " + 
-				",	AU_S_NONCONF.PESO_NONCONF " + 
+				",	AU_S_NONCONF.PESO_NONCONF " +
+				",  AU_M_NONCONF.ID_FASE  " +
 				"from " + 
 				"AU_S_NONCONF " + 
 				",AU_S_SESSIONE " + 
 				",AU_S_VARCOMP " + 
 				",AU_SESSIONI " + 
+				",AU_M_NONCONF " + 
 				"WHERE  " + 
 				"AU_S_NONCONF.ID_S_SESSIONE  = AU_S_SESSIONE.ID_S_SESSIONE " + 
 				"AND AU_S_VARCOMP.ID_S_NONCONF = AU_S_NONCONF.ID_S_NONCONF " + 
 				"AND AU_S_SESSIONE.ID_SESSIONE = AU_SESSIONI.ID_SESSIONE " + 
 				"AND AU_SESSIONI.ID_CAMPAGNA = " + idCampagna +  
+				" AND AU_S_NONCONF.ID_M_NONCONF = AU_M_NONCONF.ID_M_NON_CONF " +
 				"AND AU_S_SESSIONE.STATO_ESAME_SESSIONE = 'C'";
+		
 		List<Object[]> lista = new ArrayList<Object[]>();
 		List<CampagnaNonConfDto> listRet = new ArrayList<CampagnaNonConfDto>();
 		try {
@@ -1407,7 +1411,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				item.setDATA_FINE((Date)row[3]);
 				if (row[4]!=null)item.setCODICE(row[4].toString());
 				item.setPESO_NONCONF(((BigDecimal)row[5]).doubleValue());
- 
+				item.setID_FASE((Long)row[6]);
 				listRet.add(item);
 
 			}
