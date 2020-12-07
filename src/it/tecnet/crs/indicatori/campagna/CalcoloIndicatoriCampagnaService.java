@@ -199,11 +199,11 @@ public class CalcoloIndicatoriCampagnaService {
 	}
 	
 	private void  calcolaRischio(long idCampagna){
-		
+		auCalcolaIndicatoriDao.deleteDatiRischio(idCampagna);
 	}
 	
 	private void calcolaRisEspr(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
+		auCalcolaIndicatoriDao.deleteDatiRisEspr(idCampagna);
 		
 	}
 	

@@ -9,6 +9,8 @@ import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePeritale;
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePostPeritale;
 import it.tecnet.crs.audit.web.dto.CalcoloIndicatoriRiepilogoPraticheNonConfFasi;
 import it.tecnet.crs.indicatori.campagna.AU_C_NONCONF;
+import it.tecnet.crs.indicatori.campagna.AU_C_RISCHIO;
+import it.tecnet.crs.indicatori.campagna.AU_C_RISESPR;
 import it.tecnet.crs.indicatori.campagna.AU_C_VARCOMP;
 import it.tecnet.crs.indicatori.campagna.CampagnaNonConfDto;
 import it.tecnet.crs.indicatori.sessione.AuTotH3PerRischio;
@@ -155,4 +157,8 @@ public interface AuCalcolaIndicatoriDao {
 	public void deleteDatiCampagnaNonCConf(long idCampagna);
 	public List<CampagnaNonConfDto> getDatiCampagnaVNonConfDto(long idCampagna);
 	public void insertDatiCampagnaNonConf(AU_C_NONCONF nonConf);
+	public void deleteDatiRischio(long idCampagna);
+	public void insertDatiCampagnaRischio(AU_C_RISCHIO nonConf);
+	public void deleteDatiRisEspr(long idCampagna);
+	public void insertDatiCampagnaRisEspr(AU_C_RISESPR nonConf);
 }

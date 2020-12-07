@@ -9,6 +9,8 @@ import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePeritale;
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoFasePostPeritale;
 import it.tecnet.crs.audit.web.dto.CalcoloIndicatoriRiepilogoPraticheNonConfFasi;
 import it.tecnet.crs.indicatori.campagna.AU_C_NONCONF;
+import it.tecnet.crs.indicatori.campagna.AU_C_RISCHIO;
+import it.tecnet.crs.indicatori.campagna.AU_C_RISESPR;
 import it.tecnet.crs.indicatori.campagna.AU_C_VARCOMP;
 import it.tecnet.crs.indicatori.campagna.CampagnaNonConfDto;
 import it.tecnet.crs.indicatori.sessione.AuTotH3PerRischio;
@@ -1427,5 +1429,29 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public void insertDatiCampagnaNonConf(AU_C_NONCONF nonConf) {
 		em.persist(nonConf);
+	}
+
+	@Override
+	public void deleteDatiRisEspr(long idCampagna) {
+		em.createNativeQuery(
+				"DELETE AU_C_RISESPR WHERE ID_C_CAMPAGNA = " + idCampagna)
+				.executeUpdate();
+	}
+
+	@Override
+	public void deleteDatiRischio(long idCampagna) {
+		em.createNativeQuery(
+				"DELETE AU_C_RISCHIO WHERE ID_C_CAMPAGNA = " + idCampagna)
+				.executeUpdate();
+	}
+
+	@Override
+	public void insertDatiCampagnaRisEspr(AU_C_RISESPR risEspr) {
+		em.persist(risEspr);
+	}
+
+	@Override
+	public void insertDatiCampagnaRischio(AU_C_RISCHIO rischio) {
+		em.persist(rischio);
 	}
 }
