@@ -92,6 +92,12 @@
   	<class>it.tecnet.crs.jpa.model.CrsSinonimo</class>
   	<class>it.tecnet.crs.jpa.model.CrsAmbito</class>
   	<class>it.tecnet.crs.jpa.model.CrsEntita</class>
+  	
+  	
+  	<class>it.tecnet.crs.indicatori.campagna.AU_C_NONCONF</class>
+  	<class>it.tecnet.crs.indicatori.campagna.AU_C_RISCHIO</class>
+  	<class>it.tecnet.crs.indicatori.campagna.AU_C_RISESPR</class>
+  	<class>it.tecnet.crs.indicatori.campagna.AU_C_VARCOMP</class>
     <properties>
       <property name="openjpa.RuntimeUnenhancedClasses" value="unsupported"/>
       <property name="openjpa.Log" value="SQL=TRACE, Enhance=TRACE, MetaData=TRACE"/> 
