@@ -105,24 +105,40 @@ public class CalcoloIndicatoriCampagnaService {
 		List<AU_C_NONCONF> listaNonConf = new ArrayList<AU_C_NONCONF>();
 		for (CampagnaNonConfDto item : listCampagnaDto) {
 			AU_C_NONCONF nonConf = findNonConfByID_M_NONCONF(item.getID_M_NONCONF(),listaNonConf);
-			if(nonConf != null) {
-				nonConf.setDATA_FINE(item.getDATA_FINE());
-				nonConf.setDATA_INIZIO(item.getDATA_INIZIO());
-				nonConf.setID_C_CAMPAGNA(item.getID_CAMPAGNA());
-				nonConf.setID_M_NONCONF(item.getID_M_NONCONF());
-				nonConf.setPESO_NONCONF(item.getPESO_NONCONF());
+			if(nonConf == null) {
+				nonConf = new AU_C_NONCONF();
+				if (item.getDATA_FINE()!=null)nonConf.setDATA_FINE(item.getDATA_FINE());
+				if (item.getDATA_INIZIO()!=null)nonConf.setDATA_INIZIO(item.getDATA_INIZIO());
+				if (item.getID_CAMPAGNA()!=null)nonConf.setID_C_CAMPAGNA(item.getID_CAMPAGNA());
+				if (item.getID_M_NONCONF()!=null)nonConf.setID_M_NONCONF(item.getID_M_NONCONF());
+				if (item.getID_M_NONCONF()!=null)nonConf.setPESO_NONCONF(item.getPESO_NONCONF());
 				if (item.getCODICE()!= null)nonConf.setCODICE(item.getCODICE());
-				nonConf.setNUM(findNonConfByID_M_NONCONF(nonConf.getID_M_NONCONF(),listaNonConf));
-				nonConf.setVALORE_INCC(getPercPesataFrom_AU_C_VARCOMP_By_ID_M_NONCONF(nonConf.getID_M_NONCONF(),listaNonConf));
+				Integer num = getNumFrom_AU_C_VARCOMP_By_ID_M_NONCONF(nonConf.getID_M_NONCONF(),listaCVarComplista);
+				nonConf.setNUM(num);
+				nonConf.setVALORE_INCC(getPercPesataFrom_AU_C_VARCOMP_By_ID_M_NONCONF(nonConf.getID_M_NONCONF(),listaCVarComplista));
+				listaNonConf.add(nonConf);
 			}
-			listaNonConf.add(nonConf);
+		}
+		
+		Long totPesoNonConf = sumPesoNonConf(listaNonConf);
+		
+		for (AU_C_NONCONF nonConf : listaNonConf) {
+			// VALORE_INCC di AU_C_NONCONF * PESO_NON_CONF di AU_C_NONCONF / (somma PESO_NON_CONF di AU_C_NONCONF per ID_C_CAMPAGNA di AU_C_NONCONF uguale)
+			Double ret = ( nonConf.getVALORE_INCC() * nonConf.getPESO_NONCONF()) / totPesoNonConf;
 		}
 		
 		for (AU_C_NONCONF nonConf : listaNonConf) {
-			
-			
+			auCalcolaIndicatoriDao.insertDatiCampagnaNonConf(nonConf);
 		}
 		System.out.println("--------------------------------- END NONCONF --------------------------------------------------");
+	}
+	
+	private Long sumPesoNonConf(List<AU_C_NONCONF> listaNonConf ){
+		Long num = 0L;
+		for (AU_C_NONCONF au_c_nonconf : listaNonConf) {
+			num += au_c_nonconf.getPESO_NONCONF();
+		}
+		return 0L;
 	}
 	
 	private AU_C_NONCONF findNonConfByID_M_NONCONF(Long ID_M_NONCONF , List<AU_C_NONCONF> listaNonConf) {
