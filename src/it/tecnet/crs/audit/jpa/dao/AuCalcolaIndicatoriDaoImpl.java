@@ -1339,4 +1339,28 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 		em.persist(itemToInsert);
 	}
 	
+
+	@Override
+	public List<SoglieDto> getSoglieTipologica() {
+		String query = "select MVC.ID_M_NONCONF, ISNC.SOGLIA from AU_M_VARCOMP MVC, AU_TPL_ISNC ISNC where MVC.PESO_VC  = isnc.ID_TPL_ISNC";
+		List<Object[]> lista = new ArrayList<Object[]>();
+		List<SoglieDto> listRet = new ArrayList<SoglieDto>();
+		try {
+			lista = em.createNativeQuery(query).getResultList();
+			for (Object[] row : lista) {
+				SoglieDto item = 
+					new SoglieDto();
+				item.setID_M_NONCONF((Long)row[0]);
+				String soglia = row[1].toString();
+				item.setSOGLIA(Double.parseDouble(soglia));
+				listRet.add(item);
+
+			}
+		} catch (Exception e) {
+			System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			log.info("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			e.printStackTrace();
+		}
+		return listRet;
+	}
 }

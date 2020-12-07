@@ -149,4 +149,5 @@ public interface AuCalcolaIndicatoriDao {
 	List<CampagnaMVarCompDto> getSumiCampagnaByIdMVarCompDto(long idCampagna);
 	void deleteDatiCampagnaVarComp(long idCampagna);
 	public void insertDatiCampagnaVarComp(AU_C_VARCOMP itemToInsert);
+	public List<SoglieDto> getSoglieTipologica();
 }
