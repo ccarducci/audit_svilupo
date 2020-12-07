@@ -72,13 +72,12 @@ public class CalcoloIndicatoriCampagnaService {
 			}else{
 				Integer num = varConf.getNUM();
 				varConf.setNUM(num + campagnaDto.getNUM());
-		
 			}
 		}
 		
 		
 		for (AU_C_VARCOMP campagnaDto : listaAU_C_VARCOMP) {
-			CampagnaMVarCompDto comp = getSumIdMVarComp(campagnaDto.getID_M_VARCONP(),listaSumIdMVarComp);
+			CampagnaMVarCompDto comp = getSumIdMVarComp(campagnaDto.getID_M_NON_CONF(),listaSumIdMVarComp);
 			campagnaDto.setPERC_SU_PS(campagnaDto.getNUM().doubleValue()/comp.getSUM().doubleValue());
 		}
 		

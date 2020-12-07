@@ -1296,7 +1296,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public List<CampagnaMVarCompDto> getSumiCampagnaByIdMVarCompDto(long idCampagna) {
 		String queryStr = "	select   " + 
-							"ID_M_VARCOMP  " + 
+							"AU_S_VARCOMP.ID_M_NONCONF    " + 
 							", Sum(AU_S_VARCOMP.NUM )   " + 
 						"	 " + 
 						"	FROM AU_S_NONCONF, AU_S_SESSIONE, AU_S_VARCOMP, AU_SESSIONI, AU_M_NONCONF   " + 
@@ -1306,7 +1306,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 						"	AND AU_S_VARCOMP.ID_M_NONCONF  = AU_M_NONCONF.ID_M_NON_CONF   " + 
 						"	AND AU_SESSIONI.ID_CAMPAGNA   =     " + idCampagna +
 						"	AND AU_S_SESSIONE.STATO_ESAME_SESSIONE   = 'C' " + 
-						"	group by ID_M_VARCOMP";
+						"	group by AU_S_VARCOMP.ID_M_NONCONF  ";
 		List<Object[]> lista = new ArrayList<Object[]>();
 		List<CampagnaMVarCompDto> listRet = new ArrayList<CampagnaMVarCompDto>();
 		try {
