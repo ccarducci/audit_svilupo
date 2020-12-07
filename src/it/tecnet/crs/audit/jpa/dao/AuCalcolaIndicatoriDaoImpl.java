@@ -1486,6 +1486,12 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 			for (Object[] row : lista) {
 				CampagnaRisEsprDto item = 
 					new CampagnaRisEsprDto();
+				
+				item.setID_C_CAMPAGNA((Long)row[0]);
+				item.setID_M_RISCHIO((Long)row[1]);
+				item.setID_M_RISESPR((Long)row[2]);
+				item.setDATA_FINE((Date)row[3]);
+				item.setDATA_FINE((Date)row[4]);
 				/*
 				item.setID_CAMPAGNA((Long)row[0]);
 				item.setID_M_NONCONF((Long)row[1]);
