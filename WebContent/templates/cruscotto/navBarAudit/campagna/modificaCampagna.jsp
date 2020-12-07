@@ -75,11 +75,22 @@
                                                     <div class="portlet-body form">
                                                         <div class="form-body">
                                                          <s:set var="idCampagna" value="%{campagnaDto.idCampagna}" />
-                                                				<input type="hidden" value="<s:property value="idCampagna" />" id="idCampagnaDaModificare">
+                                                			<input type="hidden" value="<s:property value="idCampagna" />" id="idCampagnaDaModificare">
+                                                			<div class="row" style="margin-bottom: 40px;">
+                                                            	<div class="col-md-2" style="margin-bottom: 15px;">
+                                                            		<s:set var="statoCampagnaAudit" value="%{campagnaDto.stato}" />
+                                                           		 	<s:property value="statoCampagnaAudit" />
+                                                            	</div>
+                                                          		<div class="col-md-6" style="margin-bottom: 15px;">
+                                                       				<button type="button" class="btn blue" onclick="javascript:chiudiCampagna('<s:property value="idCampagna" />')" >Salva Stato Campanga</button>
+                                                       				<button type="button" class="btn blue" onclick="javascript:aprinCampagna('<s:property value="idCampagna" />')" >Apri Campagna</button>
+                                                            	</div>
+                                                            </div>
                                                             <div class="row" style="margin-bottom: 40px;">
+
                                                                 <div class="col-md-6" style="margin-bottom: 15px;">
                                                                     
-                                                                    <s:set var="nomeAudit" value="%{campagnaDto.nomeAudit}" />
+                                                                     <s:set var="nomeAudit" value="%{campagnaDto.nomeAudit}" />
                                                                      <s:set var="idAudit" value="%{campagnaDto.idAudit}" />
                                                                      <s:set var="IdAuditSelezionato" value="%{IdAuditSelezionato}" />
                                                                 

@@ -181,6 +181,7 @@ public class AuCampagnaServiceImpl implements AuCampagnaService {
 		dto.setNome(campagna.getNome());
 		dto.setNomeAudit(audit.getNome());
 		dto.setStato(campagna.getStato());
+		if(dto.getStato()==null)dto.setStato("A");
 		return dto;
 
 	}

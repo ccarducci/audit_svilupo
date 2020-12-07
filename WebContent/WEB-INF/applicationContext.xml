@@ -311,12 +311,16 @@
        <!-- constructor-arg ref="auAuditIndicatoriService"/-->
   	</bean>
   	
-  	<!-- OKKKOIO-->
+  	<!-- OKKKOIO -->
   	<bean id="ReportAccessoAnnualePDFAction" scope="prototype" class="it.tecnet.crs.report.web.action.ReportAccessoAnnualePDFAction">
        <constructor-arg ref="reportPDFService"/>
        <constructor-arg ref="calcoloIndicatoriCampagnaService"/>
   	</bean>
-  	<!-- OKKKOIO-->
+  	
+  	<bean id="CalcolaIndicatoriCampagnaAction" scope="prototype" class="it.tecnet.crs.web.action.CalcolaIndicatoriCampagnaAction">
+       <constructor-arg ref="calcoloIndicatoriCampagnaService"/>
+  	</bean>
+  	<!--  OKKKOIO -->
   	
   	
   	<bean id="DominiModificaProcessoTableAction" scope="prototype" class="it.tecnet.crs.mod.web.action.DominiModificaProcessoTableAction">

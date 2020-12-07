@@ -2534,6 +2534,36 @@
 	        </result>
 	 	</action>
 	 		 	
+	 		 	
+	 	 <!-- -->
+	 	<action name="calcolaIndicatoriCampagna" class="it.tecnet.crs.web.action.CalcolaIndicatoriCampagnaAction" method="calcolaIndicatoriCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	
+	 	<action name="calcolaIndicatoriApriCampagna" class="it.tecnet.crs.web.action.CalcolaIndicatoriCampagnaAction" method="calcolaIndicatoriApriCampagna">
+			<interceptor-ref name="authorization">
+				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
+				<param name="disallowedRoles"></param>
+			</interceptor-ref>
+			<interceptor-ref name="jsonServiceStack" />
+	 		<result type="json">
+	          <param name="root">model</param>
+	          <param name="excludeNullProperties">false</param>
+	          <param name="noCache">true</param>
+	        </result>
+	 	</action>
+	 	<!-- -->
+	 		 	
+	 		 	
 	 	<action name="calcolaIndicatoriSessione" class="it.tecnet.crs.web.action.CalcolaIndicatoriAction" method="calcolaIndicatoriSessione">
 			<interceptor-ref name="authorization">
 				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>

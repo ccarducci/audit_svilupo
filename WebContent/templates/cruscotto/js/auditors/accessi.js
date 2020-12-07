@@ -398,5 +398,15 @@ function generaAllegatoReportAccessiAnnuale(){
 	
 }
 
+
+function chiudiCampagna(idCampangna){
+	console.log(idCampangna);
+	window.location.href= "/CruscottoAuditAtpoWebWeb/jsonATPO/v?idCampangna="+idCampangna;
+}
+
+function aprinCampagna(idCampangna){
+	console.log(idCampangna);
+	window.location.href= "/CruscottoAuditAtpoWebWeb/jsonATPO/calcolaIndicatoriApriCampagna?idCampangna="+idCampangna;
+}
 //-------------------------------------------------------------------- OKKIO FINE
 
