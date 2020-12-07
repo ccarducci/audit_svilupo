@@ -97,7 +97,7 @@ public class CalcoloIndicatoriCampagnaService {
 		return lista;
 	}
 	
-	private void calcolaNonConf(long idCampagna, List<AU_C_VARCOMP> listaCVarComplista) {
+	private List<AU_C_NONCONF> calcolaNonConf(long idCampagna, List<AU_C_VARCOMP> listaCVarComplista) {
 		System.out.println("--------------------------------- BEGIN NONCONF --------------------------------------------------");
 		auCalcolaIndicatoriDao.deleteDatiCampagnaNonCConf(idCampagna);
 		
@@ -149,6 +149,7 @@ public class CalcoloIndicatoriCampagnaService {
 			auCalcolaIndicatoriDao.insertDatiCampagnaNonConf(nonConf);
 		}
 		System.out.println("--------------------------------- END NONCONF --------------------------------------------------");
+		return listaNonConf;
 	}
 	
 	private Double sumPesoByIdFase(List<CampagnaNonConfDto> listCampagnaDto, Long idFase) {
