@@ -212,11 +212,18 @@ public class CalcoloIndicatoriCampagnaService {
 		List<CampagnaRischiofDto> listCampagnaDto = auCalcolaIndicatoriDao.getDatiCampagnaRischiofDto(idCampagna);
 	}
 	
-	private void calcolaRisEspr(long idCampagna) {
+	private List<AU_C_RISESPR>  calcolaRisEspr(long idCampagna) {
 		auCalcolaIndicatoriDao.deleteDatiRisEspr(idCampagna);
-		
 		List<CampagnaRisEsprDto> listCampagnaDto = auCalcolaIndicatoriDao.getDatiCampagnaCampagnaRisEsprDto(idCampagna);
+		List<AU_C_RISESPR> listaESPR = new ArrayList<AU_C_RISESPR>();
 		
+		auCalcolaIndicatoriDao.getDatiCampagnaRisEsprDto(idCampagna,listaESPR);
+		
+		for (AU_C_RISESPR au_c_risespr : listaESPR) {
+			auCalcolaIndicatoriDao.insertDatiCampagnaRisEspr(au_c_risespr);
+		}
+		
+		return listaESPR;
 	}
 	
 	@Transactional
@@ -225,7 +232,7 @@ public class CalcoloIndicatoriCampagnaService {
 		
 		List<AU_C_VARCOMP> listaCVarComplista = calcolaVarComp(idCampagna);
 		List<AU_C_NONCONF> listaCNonConf = calcolaNonConf(idCampagna,listaCVarComplista);
-		calcolaRisEspr(idCampagna);
+		List<AU_C_RISESPR> listaESPR = calcolaRisEspr(idCampagna);
 		calcolaRischio(idCampagna);
 	
 		log.info("FINE CALCOLI CAMPAGNA " + idCampagna);

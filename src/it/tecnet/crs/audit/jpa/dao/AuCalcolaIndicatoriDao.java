@@ -172,4 +172,7 @@ public interface AuCalcolaIndicatoriDao {
 
 	public void getDatiCampagnaVNonConfDto(long idCampagna,
 			List<AU_C_NONCONF> listaNonConf);
+
+	public void getDatiCampagnaRisEsprDto(long idCampagna,
+			List<AU_C_RISESPR> listaESPR);
 }
