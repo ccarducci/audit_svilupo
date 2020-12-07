@@ -49,6 +49,10 @@ public class CalcoloIndicatoriCampagnaService {
 		
 		System.out.println("--------------------------------- BEGIN VARCONF --------------------------------------------------");
 		auCalcolaIndicatoriDao.deleteDatiCampagnaVarComp(idCampagna);
+		List<AU_C_VARCOMP> listaAU_C_VARCOMP = new  ArrayList<AU_C_VARCOMP>();
+		auCalcolaIndicatoriDao.getSumiCampagnaByIdMVarCompDto(idCampagna,listaAU_C_VARCOMP);
+		
+		/*
 		List<CampagnaMVarCompDto> listaSumIdMVarComp = auCalcolaIndicatoriDao.getSumiCampagnaByIdMVarCompDto(idCampagna);
 		List<SoglieDto> soglie = auCalcolaIndicatoriDao.getSoglieTipologica();
 		
@@ -87,7 +91,7 @@ public class CalcoloIndicatoriCampagnaService {
 				campagnaDto.setPERC_PESATA(soglia.getSOGLIA() * campagnaDto.getPERC_SU_PS());
 			}
 		}
-		
+		*/
 		for (AU_C_VARCOMP campagnaDto : listaAU_C_VARCOMP) {
 			auCalcolaIndicatoriDao.insertDatiCampagnaVarComp(campagnaDto);
 			lista.add(campagnaDto);
@@ -192,7 +196,7 @@ public class CalcoloIndicatoriCampagnaService {
 		Integer perRet = 0;
 		for (AU_C_VARCOMP au_C_VARCOMP : listaCVarComplista) {
 			if(au_C_VARCOMP.getID_M_NON_CONF().equals(ID_M_NONCONF))
-					perRet += au_C_VARCOMP.getNUM();
+					perRet += au_C_VARCOMP.getNUM_VC();
 		}
 		return perRet;
 	}

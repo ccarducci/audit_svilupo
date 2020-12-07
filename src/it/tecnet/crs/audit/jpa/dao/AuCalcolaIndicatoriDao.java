@@ -166,4 +166,7 @@ public interface AuCalcolaIndicatoriDao {
 	public List<CampagnaRischiofDto> getDatiCampagnaRischiofDto(long idCampagna);
 	public List<CampagnaRisEsprDto> getDatiCampagnaCampagnaRisEsprDto(
 			long idCampagna);
+
+	public void getSumiCampagnaByIdMVarCompDto(long idCampagna,
+			List<AU_C_VARCOMP> listaAU_C_VARCOMP);
 }

@@ -1517,4 +1517,102 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 		// TODO Stub di metodo generato automaticamente
 		return null;
 	}
+
+	@Override
+	public void getSumiCampagnaByIdMVarCompDto(long idCampagna,
+			List<AU_C_VARCOMP> listaAU_C_VARCOMP) {
+			String queryStr = "Select t1.ID_M_NONCONF" +
+								", t1.ID_M_VARCOMP" +
+								", NUM_VC" +
+								", NUM_NC" +
+								", SOGLIA" +
+								", (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*100) AS PERC_SU_PS" +
+								", (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*100*SOGLIA) AS PERC_PESATA  " +
+								" " +
+								" from " +
+								" (Select svc2.ID_M_NONCONF, sum (svc2.num) as NUM_NC  " +
+								" 	FROM " +
+								" AU_S_SESSIONE ausess2  " +
+								" , AU_S_NONCONF snc2 " +
+								" , AU_SESSIONI sess2 " +
+								" , AU_S_VARCOMP svc2 " +
+								" , AU_M_NONCONF mnc2 " +
+								" where  " +
+								" snc2.ID_S_SESSIONE = ausess2.ID_S_SESSIONE and " +
+								" snc2.ID_S_NONCONF = svc2.ID_S_NONCONF and " +
+								" ausess2.ID_SESSIONE = sess2.ID_SESSIONE and " +
+								" svc2.ID_M_NONCONF = mnc2.ID_M_NON_CONF and " +
+								" sess2.ID_CAMPAGNA = 2 and " +
+								" ausess2.STATO_ESAME_SESSIONE = 'C' " +
+								" group by svc2.ID_M_NONCONF) as t2 " +
+								" left join  " +
+								" (Select svc1.ID_M_NONCONF, svc1.ID_M_VARCOMP, soglia, sum (svc1.num) as NUM_VC " +
+								" FROM " +
+								" AU_S_SESSIONE ausess  " +
+								" , AU_S_NONCONF snc " +
+								" , AU_SESSIONI sess " +
+								" , AU_S_VARCOMP svc1 " +
+								" , AU_M_NONCONF mnc " +
+								" , AU_M_VARCOMP mvc " +
+								" , AU_TPL_ISNC   " +
+								" where  " +
+								" snc.ID_S_SESSIONE = ausess.ID_S_SESSIONE and " +
+								" snc.ID_S_NONCONF = svc1.ID_S_NONCONF and " +
+								" ausess.ID_SESSIONE = sess.ID_SESSIONE and " +
+								" svc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and " +
+								" mvc.ID_M_NONCONF = mnc.ID_M_NON_CONF and  " +
+								" mvc.ID_M_COMP = svc1.id_m_varcomp and " +
+								" ID_TPL_ISNC = mvc.PESO_VC and " +
+								" sess.ID_CAMPAGNA = "+idCampagna + " and " +
+								" ausess.STATO_ESAME_SESSIONE = 'C' " +
+								" group by svc1.ID_M_NONCONF, svc1.ID_M_VARCOMP, soglia) as t1 on t2.ID_M_NONCONF = t1.ID_M_NONCONF ";
+			List<Object[]> lista = new ArrayList<Object[]>();
+	
+			try {
+				lista = em.createNativeQuery(queryStr).getResultList();
+				for (Object[] row : lista) {
+					AU_C_VARCOMP item = 
+						new AU_C_VARCOMP();
+					/*
+					 *  t1.ID_M_NONCONF" +
+						", t1.ID_M_VARCOMP" +
+						", NUM_VC" +
+						", NUM_NC" +
+						", SOGLIA" +
+						", (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*100) AS PERC_SU_PS" +
+						", (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*100*SOGLIA) AS PERC_PESATA  " +
+						" " +
+					 */
+					item.setID_C_CAMPAGNA(idCampagna);
+					item.setID_M_NON_CONF((Long)row[0]);
+					item.setID_M_VARCONP((Long)row[1]);
+					item.setNUM_VC((Integer)row[2]);
+					item.setNUM_NC((Integer)row[3]);
+					item.setSOGLIA(((String)row[4]));
+					item.setPERC_SU_PS(((BigDecimal)row[5]).doubleValue());
+					item.setPERC_PESATA(((BigDecimal)row[6]).doubleValue());
+					
+					/*
+					item.setIdCampagna((Integer)row[0]);
+					item.setID_M_NONCONF((Long)row[1]);
+					item.setID_M_VARCOMP((Long)row[2]);
+					item.setDATA_INIZIO((Date)row[3]);
+					item.setDATA_FINE((Date)row[4]);
+					item.setID_FASE((Long)row[5]);
+					item.setNUM((Integer)row[6]);
+					item.setValorePesato(((BigDecimal)row[2]).doubleValue());
+					item.setPERC_PESATA(((BigDecimal)row[7]).doubleValue());
+					*/
+					listaAU_C_VARCOMP.add(item);
+			
+				}
+			} catch (Exception e) {
+				System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+				log.info("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+				e.printStackTrace();
+			}
+	}
+	
+	
+	
 }
