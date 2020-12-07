@@ -102,8 +102,34 @@ public class CalcoloIndicatoriCampagnaService {
 		auCalcolaIndicatoriDao.deleteDatiCampagnaNonCConf(idCampagna);
 		
 		List<CampagnaNonConfDto> listCampagnaDto = auCalcolaIndicatoriDao.getDatiCampagnaVNonConfDto(idCampagna);
+		List<AU_C_NONCONF> listaNonConf = new ArrayList<AU_C_NONCONF>();
+		for (CampagnaNonConfDto item : listCampagnaDto) {
+			AU_C_NONCONF nonConf = findNonConfByID_M_NONCONF(item.getID_M_NONCONF(),listaNonConf);
+			if(nonConf != null) {
+				nonConf.setDATA_FINE(item.getDATA_FINE());
+				nonConf.setDATA_INIZIO(item.getDATA_INIZIO());
+				nonConf.setID_C_CAMPAGNA(item.getID_CAMPAGNA());
+				nonConf.setID_M_NONCONF(item.getID_M_NONCONF());
+				nonConf.setPESO_NONCONF(item.getPESO_NONCONF());
+				if (item.getCODICE()!= null)nonConf.setCODICE(item.getCODICE());
+				nonConf.setNUM(findNonConfByID_M_NONCONF(nonConf.getID_M_NONCONF(),listaNonConf));
+				nonConf.setVALORE_INCC(getPercPesataFrom_AU_C_VARCOMP_By_ID_M_NONCONF(nonConf.getID_M_NONCONF(),listaNonConf));
+			}
+			listaNonConf.add(nonConf);
+		}
 		
+		for (AU_C_NONCONF nonConf : listaNonConf) {
+			
+			
+		}
 		System.out.println("--------------------------------- END NONCONF --------------------------------------------------");
+	}
+	
+	private AU_C_NONCONF findNonConfByID_M_NONCONF(Long ID_M_NONCONF , List<AU_C_NONCONF> listaNonConf) {
+		for (AU_C_NONCONF item : listaNonConf) {
+			if(item.getID_M_NONCONF().equals(ID_M_NONCONF)) return item;
+		}
+		return null;
 	}
 	
 	private Double getPercPesataFrom_AU_C_VARCOMP_By_ID_M_NONCONF(long ID_M_NONCONF,List<AU_C_VARCOMP> listaCVarComplista){

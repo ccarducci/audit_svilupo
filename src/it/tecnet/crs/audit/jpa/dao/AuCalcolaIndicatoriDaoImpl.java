@@ -1374,7 +1374,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 
 	@Override
 	public List<CampagnaNonConfDto> getDatiCampagnaVNonConfDto(long idCampagna) {
-		String query = "select " + 
+		String query = "select DISTINCT " + 
 				"	AU_SESSIONI.ID_CAMPAGNA " + 
 				",	AU_S_NONCONF.ID_M_NONCONF " + 
 				", 	AU_S_NONCONF.DATA_INIZIO " + 
