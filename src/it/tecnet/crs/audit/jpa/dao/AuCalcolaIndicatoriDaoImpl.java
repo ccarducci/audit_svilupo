@@ -1325,8 +1325,8 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				*/
 			}
 		} catch (Exception e) {
-			System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
-			log.info("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			System.out.println("EERRORE getSumiCampagnaByIdMVarCompDto: " + e.getStackTrace());
+			log.info("EERRORE getSumiCampagnaByIdMVarCompDto: " + e.getStackTrace());
 			e.printStackTrace();
 		}
 		
@@ -1363,8 +1363,8 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 
 			}
 		} catch (Exception e) {
-			System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
-			log.info("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			System.out.println("EERRORE getSoglieTipologica: " + e.getStackTrace());
+			log.info("EERRORE getSoglieTipologica: " + e.getStackTrace());
 			e.printStackTrace();
 		}
 		return listRet;
@@ -1420,8 +1420,8 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 
 			}
 		} catch (Exception e) {
-			System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
-			log.info("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+			System.out.println("EERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
+			log.info("EERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
 			e.printStackTrace();
 		}
 		return listRet;
@@ -1460,8 +1460,50 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public List<CampagnaRisEsprDto> getDatiCampagnaCampagnaRisEsprDto(
 			long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		String query = "select " +
+						"	AU_SESSIONI.ID_CAMPAGNA  " +
+						"	, AU_M_RISCHIO.ID_M_RISCHIO " +
+						"	, AU_S_RISESPR.ID_M_RISESPR  " +
+						"	, AU_S_RISESPR.DATA_INIZIO  " +
+						"	, AU_S_RISESPR.DATA_FINE  " +
+						"FROM  " +
+						"	AU_S_RISCHIO " +
+						"	, AU_S_SESSIONE " +
+						"	, AU_S_RISESPR " +
+						"	, AU_SESSIONI " +
+						"	, AU_M_RISCHIO " +
+						"WHERE AU_S_RISCHIO.ID_S_SESSIONE  = AU_S_SESSIONE.ID_S_SESSIONE  " +
+						" AND AU_S_RISCHIO.ID_S_RISCHIO = AU_S_RISESPR.ID_S_RISCHIO  " +
+						" AND AU_S_SESSIONE.ID_SESSIONE = AU_SESSIONI.ID_SESSIONE  " +
+						" AND AU_S_RISESPR.ID_M_RISCHIO = AU_M_RISCHIO.ID_M_RISCHIO " +
+						" AND AU_SESSIONI.ID_CAMPAGNA = " + idCampagna +
+						 "AND AU_S_SESSIONE.STATO_ESAME_SESSIONE = 'C'"; 
+		
+		List<Object[]> lista = new ArrayList<Object[]>();
+		List<CampagnaRisEsprDto> listRet = new ArrayList<CampagnaRisEsprDto>();
+		try {
+			lista = em.createNativeQuery(query).getResultList();
+			for (Object[] row : lista) {
+				CampagnaRisEsprDto item = 
+					new CampagnaRisEsprDto();
+				/*
+				item.setID_CAMPAGNA((Long)row[0]);
+				item.setID_M_NONCONF((Long)row[1]);
+				item.setDATA_INIZIO((Date)row[2]);
+				item.setDATA_FINE((Date)row[3]);
+				if (row[4]!=null)item.setCODICE(row[4].toString());
+				item.setPESO_NONCONF(((BigDecimal)row[5]).doubleValue());
+				item.setID_FASE((Long)row[6]);
+				*/
+				listRet.add(item);
+
+			}
+		} catch (Exception e) {
+			System.out.println("EERRORE getDatiCampagnaCampagnaRisEsprDto: " + e.getStackTrace());
+			log.info("EERRORE getDatiCampagnaCampagnaRisEsprDto: " + e.getStackTrace());
+			e.printStackTrace();
+		}
+		return listRet;
 	}
 
 	@Override
