@@ -103,9 +103,13 @@ public class CalcoloIndicatoriCampagnaService {
 	private List<AU_C_NONCONF> calcolaNonConf(long idCampagna, List<AU_C_VARCOMP> listaCVarComplista) {
 		System.out.println("--------------------------------- BEGIN NONCONF --------------------------------------------------");
 		auCalcolaIndicatoriDao.deleteDatiCampagnaNonCConf(idCampagna);
-		
-		List<CampagnaNonConfDto> listCampagnaDto = auCalcolaIndicatoriDao.getDatiCampagnaVNonConfDto(idCampagna);
 		List<AU_C_NONCONF> listaNonConf = new ArrayList<AU_C_NONCONF>();
+		
+		auCalcolaIndicatoriDao.getDatiCampagnaVNonConfDto(idCampagna,listaNonConf);
+		
+		/*
+		List<CampagnaNonConfDto> 
+		
 		for (CampagnaNonConfDto item : listCampagnaDto) {
 			AU_C_NONCONF nonConf = findNonConfByID_M_NONCONF(item.getID_M_NONCONF(),listaNonConf);
 			if(nonConf == null) {
@@ -147,10 +151,11 @@ public class CalcoloIndicatoriCampagnaService {
 			if(ret2 != null && ret2 != 0)ret = ret / ret2;
 			nonConf.setVALORE_PESATO_BASE(ret);
 		}
-		
+		*/
 		for (AU_C_NONCONF nonConf : listaNonConf) {
 			auCalcolaIndicatoriDao.insertDatiCampagnaNonConf(nonConf);
 		}
+		
 		System.out.println("--------------------------------- END NONCONF --------------------------------------------------");
 		return listaNonConf;
 	}
@@ -171,7 +176,7 @@ public class CalcoloIndicatoriCampagnaService {
 	private Long sumPesoNonConf(List<AU_C_NONCONF> listaNonConf ){
 		Long num = 0L;
 		for (AU_C_NONCONF au_c_nonconf : listaNonConf) {
-			if(au_c_nonconf.getPESO_NONCONF()!=null)num += au_c_nonconf.getPESO_NONCONF();
+			//if(au_c_nonconf.getPESO_NONCONF()!=null)num += au_c_nonconf.getPESO_NONCONF();
 		}
 		return num;
 	}

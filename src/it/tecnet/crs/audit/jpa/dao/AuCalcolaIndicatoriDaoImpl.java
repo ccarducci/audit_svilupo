@@ -1612,6 +1612,62 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				e.printStackTrace();
 			}
 	}
+
+	@Override
+	public void getDatiCampagnaVNonConfDto(long idCampagna,
+			List<AU_C_NONCONF> listaNonConf) {
+				String query = " Select " + 
+					" 	t1.ID_M_NONCONF " + 
+					" 	, t1.PESO_NON_CONF " + 
+					" 	, t2.INCC " + 
+					" 	, (cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.VALORE_PESATO) as decimal (7,2))*100) AS PERC_SU_PS   " + 
+					" from " + 
+					" (Select cvc2.ID_M_NONCONF, sum (PERC_SU_PS) as INCC  " + 
+					" FROM AU_C_VARCOMP cvc2 " + 
+					" , AU_M_NONCONF  " + 
+					" where  " + 
+					" cvc2.ID_C_CAMPAGNA =  " + idCampagna + 
+					" group by cvc2.ID_M_NONCONF) as t2 " + 
+					" left join  " + 
+					" (Select cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, sum (mnc.PESO_NON_CONF) as VALORE_PESATO  " + 
+					" FROM " + 
+					" AU_C_VARCOMP cvc1  " + 
+					" , AU_M_NONCONF mnc " + 
+					" where  " + 
+					" cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and " + 
+					" cvc1.ID_C_CAMPAGNA = " + idCampagna + 
+					" group by cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF) as t1  " + 
+					" on t2.ID_M_NONCONF = t1.ID_M_NONCONF  " ;
+		
+		List<Object[]> lista = new ArrayList<Object[]>();
+
+		try {
+			lista = em.createNativeQuery(query).getResultList();
+			for (Object[] row : lista) {
+				AU_C_NONCONF item = 
+					new AU_C_NONCONF();
+				/*
+				 * " Select " + 
+					" 	t1.ID_M_NONCONF " + 
+					" 	, t1.PESO_NON_CONF " + 
+					" 	, t2.INCC " + 
+					" 	, (cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.VALORE_PESATO) as decimal (7,2))*100) AS PERC_SU_PS   "
+				 */
+				item.setID_C_CAMPAGNA(idCampagna);
+				item.setID_M_NONCONF((Long)row[0]);
+				if(row[1]!=null)item.setPESO_NON_CONF(((BigDecimal)row[1]).doubleValue());
+				if(row[2]!=null)item.setINCC(((BigDecimal)row[2]).doubleValue());
+				if(row[3]!=null)item.setPERC_SU_PS(((BigDecimal)row[3]).doubleValue());
+				listaNonConf.add(item);
+		
+			}
+		} catch (Exception e) {
+			System.out.println("EERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
+			log.info("EERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	

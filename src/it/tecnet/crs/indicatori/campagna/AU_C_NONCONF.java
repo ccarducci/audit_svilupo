@@ -25,32 +25,14 @@ public class AU_C_NONCONF {
 	@Column(name = "ID_M_NONCONF")
 	private Long ID_M_NONCONF;
 	
-	@Column(name = "ID_FASE")
-	private Long ID_FASE;
+	@Column(name = "PESO_NON_CONF")
+	private Double PESO_NON_CONF;
 	
-	@Column(name = "DATA_INIZIO")
-	private Date DATA_INIZIO;
+	@Column(name = "INCC")
+	private Double INCC;
 	
-	@Column(name = "DATA_FINE")
-	private Date DATA_FINE;
-	
-	@Column(name = "CODICE")
-	private String CODICE;
-	
-	@Column(name = "PESO_NONCONF")
-	private Double PESO_NONCONF;
-	
-	@Column(name = "NUM")
-	private Integer NUM;
-	
-	@Column(name = "VALORE_INCC")
-	private Double VALORE_INCC;
-	
-	@Column(name = "VALORE_PESATO")
-	private Double VALORE_PESATO;
-	
-	@Column(name = "VALORE_PESATO_BASE")
-	private Double VALORE_PESATO_BASE;
+	@Column(name = "PERC_SU_PS")
+	private Double PERC_SU_PS;
 
 	public Long getId() {
 		return id;
@@ -64,90 +46,45 @@ public class AU_C_NONCONF {
 		return ID_C_CAMPAGNA;
 	}
 
-	public void setID_C_CAMPAGNA(Long iD_C_CAMPAGNA) {
-		ID_C_CAMPAGNA = iD_C_CAMPAGNA;
+	public void setID_C_CAMPAGNA(Long id_c_campagna) {
+		ID_C_CAMPAGNA = id_c_campagna;
 	}
 
 	public Long getID_M_NONCONF() {
 		return ID_M_NONCONF;
 	}
 
-	public void setID_M_NONCONF(Long iD_M_NONCONF) {
-		ID_M_NONCONF = iD_M_NONCONF;
+	public void setID_M_NONCONF(Long id_m_nonconf) {
+		ID_M_NONCONF = id_m_nonconf;
 	}
 
-	public Long getID_FASE() {
-		return ID_FASE;
+	public Double getPESO_NON_CONF() {
+		return PESO_NON_CONF;
 	}
 
-	public void setID_FASE(Long iD_FASE) {
-		ID_FASE = iD_FASE;
+	public void setPESO_NON_CONF(Double peso_non_conf) {
+		PESO_NON_CONF = peso_non_conf;
 	}
 
-	public Date getDATA_INIZIO() {
-		return DATA_INIZIO;
+	public Double getINCC() {
+		return INCC;
 	}
 
-	public void setDATA_INIZIO(Date dATA_INIZIO) {
-		DATA_INIZIO = dATA_INIZIO;
+	public void setINCC(Double incc) {
+		INCC = incc;
 	}
 
-	public Date getDATA_FINE() {
-		return DATA_FINE;
+	public Double getPERC_SU_PS() {
+		return PERC_SU_PS;
 	}
 
-	public void setDATA_FINE(Date dATA_FINE) {
-		DATA_FINE = dATA_FINE;
+	public void setPERC_SU_PS(Double perc_su_ps) {
+		PERC_SU_PS = perc_su_ps;
 	}
 
-	public String getCODICE() {
-		return CODICE;
-	}
 
-	public void setCODICE(String cODICE) {
-		CODICE = cODICE;
-	}
-
-	public Double getPESO_NONCONF() {
-		return PESO_NONCONF;
-	}
-
-	public void setPESO_NONCONF(Double pESO_NONCONF) {
-		PESO_NONCONF = pESO_NONCONF;
-	}
-
-	public Integer getNUM() {
-		return NUM;
-	}
-
-	public void setNUM(Integer nUM) {
-		NUM = nUM;
-	}
-
-	public Double getVALORE_INCC() {
-		return VALORE_INCC;
-	}
-
-	public void setVALORE_INCC(Double vALORE_INCC) {
-		VALORE_INCC = vALORE_INCC;
-	}
-
-	public Double getVALORE_PESATO() {
-		return VALORE_PESATO;
-	}
-
-	public void setVALORE_PESATO(Double vALORE_PESATO) {
-		VALORE_PESATO = vALORE_PESATO;
-	}
-
-	public Double getVALORE_PESATO_BASE() {
-		return VALORE_PESATO_BASE;
-	}
-
-	public void setVALORE_PESATO_BASE(Double vALORE_PESATO_BASE) {
-		VALORE_PESATO_BASE = vALORE_PESATO_BASE;
-	}
 	
+
 	
 	
 }

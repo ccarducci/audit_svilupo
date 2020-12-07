@@ -169,4 +169,7 @@ public interface AuCalcolaIndicatoriDao {
 
 	public void getSumiCampagnaByIdMVarCompDto(long idCampagna,
 			List<AU_C_VARCOMP> listaAU_C_VARCOMP);
+
+	public void getDatiCampagnaVNonConfDto(long idCampagna,
+			List<AU_C_NONCONF> listaNonConf);
 }
