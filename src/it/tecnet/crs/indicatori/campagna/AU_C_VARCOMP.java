@@ -44,54 +44,79 @@ public class AU_C_VARCOMP {
 	@Column(name="PERC_PESATA")
 	private Double PERC_PESATA;
 	
+	@Column(name="ID_FASE")
+	private Long ID_FASE;
+
 	public Long getID_C_CAMPAGNA() {
 		return ID_C_CAMPAGNA;
 	}
-	public void setID_C_CAMPAGNA(Long id_c_campagna) {
-		ID_C_CAMPAGNA = id_c_campagna;
+
+	public void setID_C_CAMPAGNA(Long iD_C_CAMPAGNA) {
+		ID_C_CAMPAGNA = iD_C_CAMPAGNA;
 	}
+
 	public Long getID_M_NON_CONF() {
 		return ID_M_NON_CONF;
 	}
-	public void setID_M_NON_CONF(Long id_m_non_conf) {
-		ID_M_NON_CONF = id_m_non_conf;
+
+	public void setID_M_NON_CONF(Long iD_M_NON_CONF) {
+		ID_M_NON_CONF = iD_M_NON_CONF;
 	}
-	public Long getID_M_VARCONF() {
+
+	public Long getID_M_VARCONP() {
 		return ID_M_VARCONP;
 	}
-	public void setID_M_VARCONP(Long id_m_varconf) {
-		ID_M_VARCONP = id_m_varconf;
+
+	public void setID_M_VARCONP(Long iD_M_VARCONP) {
+		ID_M_VARCONP = iD_M_VARCONP;
 	}
+
 	public Date getDATA_INIZIO() {
 		return DATA_INIZIO;
 	}
-	public void setDATA_INIZIO(Date data_inizio) {
-		DATA_INIZIO = data_inizio;
+
+	public void setDATA_INIZIO(Date dATA_INIZIO) {
+		DATA_INIZIO = dATA_INIZIO;
 	}
+
 	public Date getDATA_FINE() {
 		return DATA_FINE;
 	}
-	public void setDATA_FINE(Date data_fine) {
-		DATA_FINE = data_fine;
+
+	public void setDATA_FINE(Date dATA_FINE) {
+		DATA_FINE = dATA_FINE;
 	}
+
 	public Integer getNUM() {
 		return NUM;
 	}
-	public void setNUM(Integer num) {
-		NUM = num;
+
+	public void setNUM(Integer nUM) {
+		NUM = nUM;
 	}
+
 	public Double getPERC_SU_PS() {
 		return PERC_SU_PS;
 	}
-	public void setPERC_SU_PS(Double perc_su_ps) {
-		PERC_SU_PS = perc_su_ps;
+
+	public void setPERC_SU_PS(Double pERC_SU_PS) {
+		PERC_SU_PS = pERC_SU_PS;
 	}
+
 	public Double getPERC_PESATA() {
 		return PERC_PESATA;
 	}
-	public void setPERC_PESATA(Double perc_pesata) {
-		PERC_PESATA = perc_pesata;
+
+	public void setPERC_PESATA(Double pERC_PESATA) {
+		PERC_PESATA = pERC_PESATA;
 	}
-	
+
+	public Long getID_FASE() {
+		return ID_FASE;
+	}
+
+	public void setID_FASE(Long iD_FASE) {
+		ID_FASE = iD_FASE;
+	}
 	
 }

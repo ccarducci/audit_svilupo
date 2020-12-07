@@ -24,7 +24,7 @@ public class CalcoloIndicatoriCampagnaService {
 	
 	private AU_C_VARCOMP getAU_C_VARCOMP(Long idMVarConf,List<AU_C_VARCOMP> listaAU_C_VARCOMP){
 		for (AU_C_VARCOMP au_c_varcomp : listaAU_C_VARCOMP) {
-			if(au_c_varcomp.getID_M_VARCONF().equals(idMVarConf))return au_c_varcomp;
+			if(au_c_varcomp.getID_M_VARCONP().equals(idMVarConf))return au_c_varcomp;
 		}
 		return null;
 	}
@@ -58,6 +58,7 @@ public class CalcoloIndicatoriCampagnaService {
 				item.setNUM(campagnaDto.getNUM());
 				item.setPERC_PESATA(campagnaDto.getPERC_PESATA().doubleValue());
 				item.setPERC_SU_PS(0D);
+				item.setID_FASE(campagnaDto.getID_FASE());
 				listaAU_C_VARCOMP.add(item);
 			}else{
 				Integer num = varConf.getNUM();
@@ -68,7 +69,7 @@ public class CalcoloIndicatoriCampagnaService {
 		
 		
 		for (AU_C_VARCOMP campagnaDto : listaAU_C_VARCOMP) {
-			CampagnaMVarCompDto comp = getSumIdMVarComp(campagnaDto.getID_M_VARCONF(),listaSumIdMVarComp);
+			CampagnaMVarCompDto comp = getSumIdMVarComp(campagnaDto.getID_M_VARCONP(),listaSumIdMVarComp);
 			campagnaDto.setPERC_SU_PS(campagnaDto.getNUM().doubleValue()/comp.getSUM().doubleValue());
 		}
 		
