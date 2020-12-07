@@ -215,7 +215,7 @@ public class CalcoloIndicatoriCampagnaService {
 		log.info("FINE CALCOLI CAMPAGNA " + idCampagna);
 		
 		List<AU_C_VARCOMP> listaCVarComplista = calcolaVarComp(idCampagna);
-		calcolaNonConf(idCampagna,listaCVarComplista);
+		List<AU_C_NONCONF> listaCNonConf = calcolaNonConf(idCampagna,listaCVarComplista);
 		calcolaRisEspr(idCampagna);
 		calcolaRischio(idCampagna);
 	
