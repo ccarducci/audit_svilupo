@@ -338,7 +338,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		tableInner.getDefaultCell().setBorder(Rectangle.BOX);
 		    
 		tableInner.addCell(getCellWithtBordersColor("Esito",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
-		tableInner.addCell(getCellWithtBordersColor("Quantit?",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
+		tableInner.addCell(getCellWithtBordersColor("Quantità",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
 		
 		BaseColor baseColor = alternaviteColorRow; 
 		for (ReportAccessoPDFDto item : rows) {
@@ -358,7 +358,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	public void creaIntestazioneCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
         String testo = 	"L' accesso di Audit, effettuato dal " + report.getDataInizio() + " al " +  report.getDataFine() +
 		" riguarda un campione costituito da n. " + report.getNumeroPraticheEsaminate() + " istanze " +
-		"di ATPO dell' invalidit? civile definite dal " + report.getDataInizioOsservazione() + 
+		"di ATPO dell' invalidità civile definite dal " + report.getDataInizioOsservazione() + 
 		" al " + report.getDataFineOsservazione() + ". Nei seguenti esiti: \n\n";
 		document.add(sezione1(testo,""));
 		List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdSSessione());
@@ -368,8 +368,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	/* OK */
 	public void creaConformitaProcessoCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
 
-		document.add(intestazione2("\nSezione 1 - Conformit? del Processo"));		
-		String testo = 	"Lo stato di conformità del processo ? " + report.getINCCDescrizione() +" con un valore dell?indicatore INCC* pari a " + formatMigliaia.format(report.getINCC()) + ". Di seguito vengono riportate le fasi del processo a cui prestare maggiore attenzione:";
+		document.add(intestazione2("\nSezione 1 - Conformità del Processo"));		
+		String testo = 	"Lo stato di conformità del processo è " + report.getINCCDescrizione() +" con un valore dell'indicatore INCC* pari a " + formatMigliaia.format(report.getINCC()) + ". Di seguito vengono riportate le fasi del processo a cui prestare maggiore attenzione:";
 		document.add(sezione1(testo,""));
 		
 		PdfPTable table = new PdfPTable(1);
@@ -384,22 +384,22 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	    int count = 1;
 	    for (ReportAccessoPDFDto it : listaOrder) {
 	    	if (count > 3) continue;
-	    	table.addCell(getCellWithoutBorders("? " + it.getDescrizioneFase() + " ( INCC "+it.getRiepilogoINCC().toString()+" );",testoFont,Element.ALIGN_LEFT));
+	    	table.addCell(getCellWithoutBorders("• " + it.getDescrizioneFase() + " ( INCC "+it.getRiepilogoINCC().toString()+" );",testoFont,Element.ALIGN_LEFT));
 	    	count++;
 		}
 	    
 	    document.add(table);
 	    document.add(new Paragraph("\n"));
-		String testo2 = "Di seguito viene illustrato il grado di conformit? del processo per fasi ? sintesi. ";
+		String testo2 = "Di seguito viene illustrato il grado di conformità del processo per fasi – sintesi. ";
 		document.add(sezione1(testo2,""));
 		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoFasiAnnuale(report.getIdSSessione());
 		document.add(creaConformitaProcessoCorpo( lista ));
 		//document.add(new Paragraph("\n"));
-		String finale = "Nella sezione 7 ? presentata la conformit? del processo nel dettaglio\n";
+		String finale = "Nella sezione 7 è presentata la conformità del processo nel dettaglio\n";
 		document.add(sezione1(finale,""));
 		document.add(new Paragraph("\n"));
 		Paragraph ps = new Paragraph(
-				"*Indicatore di conformit? del processo INCC = indicatore di conformit? dei comportamenti del processo, misurato da 0 a 1 (1 piena conformit?, 0 nessuna conformit?). "
+				"*Indicatore di conformità del processo INCC = indicatore di conformità dei comportamenti del processo, misurato da 0 a 1 (1 piena conformità, 0 nessuna conformità). "
 				, testoPs);
 		document.add(ps);
 	}
@@ -439,7 +439,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	/* OK */
 	public void creaRischioCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
 		document.add(intestazione2("\nSezione 2 - I rischi"));		
-		String testo = 	"Si illustrano di seguito i rischi del processo con l?impatto degli eventi dannosi verificati:";
+		String testo = 	"Si illustrano di seguito i rischi del processo con l'impatto degli eventi dannosi verificati:";
 		document.add(sezione1(testo,""));
 		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoRischiAnnuale(report.getIdSSessione());
 		document.add(creaRischioCorpo( lista , report));
@@ -461,7 +461,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		tableInner.getDefaultCell().setBorder(Rectangle.BOX);
 		    
 		tableInner.addCell(getCellWithtBordersColor("Rischio e Espressione di Rischio",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
-		tableInner.addCell(getCellWithtBordersColor("qt?",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
+		tableInner.addCell(getCellWithtBordersColor("qtà",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
 		tableInner.addCell(getCellWithtBordersColor("%",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
 		tableInner.addCell(getCellWithtBordersColor("Impatto",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
 		
@@ -484,7 +484,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 			//2) estraggo le espressioni rischio per il rischio corrente
 			List<ReportAccessoPDFDto> listaRisEspr = reportPDFService.getRisEsprByIdMNonConfAnnuale(idMRischio, report.getIdSSessione());
 			for (ReportAccessoPDFDto reportAccessoPDFDto : listaRisEspr) {
-				descrizioneRischio += "\n ? " + reportAccessoPDFDto.getDescrizioneRisEspr();
+				descrizioneRischio += "\n • " + reportAccessoPDFDto.getDescrizioneRisEspr();
 				quantita += "\n" + reportAccessoPDFDto.getNumSRischio();
 				suPs += "\n" + formatMigliaia.format(reportAccessoPDFDto.getSuPsPerc().multiply(new BigDecimal(100)))+"%";
 				impatto += "\n" + decimalFormatter.format(reportAccessoPDFDto.getImporto());
@@ -788,9 +788,9 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		tableInner.getDefaultCell().setBorder(Rectangle.BOX);
 		    
 		tableInner.addCell(getCellWithtBordersColor("Difesa",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
-		tableInner.addCell(getCellWithtBordersColor("N? giudizi",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
+		tableInner.addCell(getCellWithtBordersColor("N° giudizi",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
 		tableInner.addCell(getCellWithtBordersColor("%",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
-		tableInner.addCell(getCellWithtBordersColor("N? prestazioni",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
+		tableInner.addCell(getCellWithtBordersColor("N° prestazioni",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
 		tableInner.addCell(getCellWithtBordersColor("Imp. prestazioni",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
 		tableInner.addCell(getCellWithtBordersColor("Spese legali",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
 		tableInner.addCell(getCellWithtBordersColor("Spese CTU",testoFont,Element.ALIGN_CENTER,coloreIntestazioniTab));
@@ -844,7 +844,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	/* OK */
 	public void creaRisultatiInRelTempoCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
 		document.add(intestazione2("\nSezione 5 - Risultati in relazione al tempo"));		
-		String testo = 	"I risultati della sezione sono espressi come media degli intervalli temporali. Gli elementi in rosso indicano il superamento dei termini stabiliti nelle disposizioni per lo svolgimento delle attivit?. ";
+		String testo = 	"I risultati della sezione sono espressi come media degli intervalli temporali. Gli elementi in rosso indicano il superamento dei termini stabiliti nelle disposizioni per lo svolgimento delle attività. ";
 		document.add(sezione1(testo,""));
 		
 		List<ReportAccessoPDFDto> lista = reportPDFService.getRisultatiByTempoAnnuale(report.getIdSSessione());
@@ -916,8 +916,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	
 	/* OK */
 	public void creaNonConformitaCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
-		document.add(intestazione2("\nSezione 6 ? Conformit? del processo nel dettaglio"));		
-		//String testo = 	"I risultati della sezione sono espressi come media degli intervalli temporali tra le date considerate rilevanti ai fini della correttezza del processo. Gli elementi in rosso indicano il superamento dei tempi stabiliti nelle disposizioni per lo svolgimento delle attivit?. ";
+		document.add(intestazione2("\nSezione 6 – Conformità del processo nel dettaglio"));		
+		//String testo = 	"I risultati della sezione sono espressi come media degli intervalli temporali tra le date considerate rilevanti ai fini della correttezza del processo. Gli elementi in rosso indicano il superamento dei tempi stabiliti nelle disposizioni per lo svolgimento delle attività. ";
 		//document.add(sezione1(testo,""));
 		//document.add(new Paragraph("\n"));
 		
@@ -958,7 +958,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 				
 				PdfPCell cellSubHeader1 = getCellWithtBordersColor("",testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 				PdfPCell cellSubHeader2 = getCellWithtBordersColor("",testoFont,Element.ALIGN_LEFT,BaseColor.WHITE);
-				PdfPCell cellSubHeader3 = getCellWithtBordersColor("qt?",testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
+				PdfPCell cellSubHeader3 = getCellWithtBordersColor("qtà",testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 				PdfPCell cellSubHeader4 = getCellWithtBordersColor("%",testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 				tableInner.addCell(cellSubHeader1);
 				tableInner.addCell(cellSubHeader2);
@@ -1001,7 +1001,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 					}
 					
 					PdfPCell field1 = getCellWithtBordersColor("",testoFont,Element.ALIGN_CENTER,colore);
-					PdfPCell field2 = getCellWithtBordersColor(" ? " +  varComp.getDescrizioneVarComp() ,testoFont,Element.ALIGN_LEFT,BaseColor.WHITE);
+					PdfPCell field2 = getCellWithtBordersColor(" • " +  varComp.getDescrizioneVarComp() ,testoFont,Element.ALIGN_LEFT,BaseColor.WHITE);
 					PdfPCell field3 = getCellWithtBordersColor(varComp.getNumSVarComp().toString(),testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 					//PdfPCell field3 = getCellWithtBordersColor(TotaleListaVC.toString(),testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 					PdfPCell field4 = getCellWithtBordersColor(decimalFormatter.format(varComp.getPercentuale()) + "%" ,testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
@@ -1048,7 +1048,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		
 		PdfPCell cellSubHeader1 = getCellWithtBordersColor("",testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 		PdfPCell cellSubHeader2 = getCellWithtBordersColor("",testoFont,Element.ALIGN_LEFT,BaseColor.WHITE);
-		PdfPCell cellSubHeader3 = getCellWithtBordersColor("qt?",testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
+		PdfPCell cellSubHeader3 = getCellWithtBordersColor("qtà",testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 		PdfPCell cellSubHeader4 = getCellWithtBordersColor("%",testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 		tableInner.addCell(cellSubHeader1);
 		tableInner.addCell(cellSubHeader2);
@@ -1130,7 +1130,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	private void addField(PdfPTable tableInner,BaseColor colore,String descrizione,String num,String percent){
 //		presenti pareri su bozza relazione e dissenso/accettazione
 		PdfPCell field1 = getCellWithtBordersColor("",testoFont,Element.ALIGN_CENTER,colore);
-		PdfPCell field2 = getCellWithtBordersColor(" ? " +  descrizione ,testoFont,Element.ALIGN_LEFT,BaseColor.WHITE);
+		PdfPCell field2 = getCellWithtBordersColor(" • " +  descrizione ,testoFont,Element.ALIGN_LEFT,BaseColor.WHITE);
 		PdfPCell field3 = getCellWithtBordersColor(""+num,testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 		//PdfPCell field3 = getCellWithtBordersColor(TotaleListaVC.toString(),testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
 		PdfPCell field4 = getCellWithtBordersColor(percent+" %" ,testoFont,Element.ALIGN_CENTER,BaseColor.WHITE);
@@ -1184,7 +1184,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		
 		capoverso1 = "L' accesso di Audit, effettuato in data " + report.getDataInizio() +
 							" riguarda un campione costituito da n. " + report.getNumeroPraticheEsaminate() + " istanze\n" +
-							"di ATPO dell' invalidit? civile definite dal " + report.getDataInizioOsservazione() + 
+							"di ATPO dell' invalidità civile definite dal " + report.getDataInizioOsservazione() + 
 							" al " + report.getDataFineOsservazione() + ".\n" +
 							"Le Pratiche sono state selezionate tra le seguenti: \n\n";
 							
@@ -1214,10 +1214,10 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		
 		paragrafo.add("INCC: " + report.getINCC() + "\n");
 		
-		capoverso1 = "Indicatore di Conformit? del Processo \n";
-		capoverso2 = "INCC = indicatore di conformit? dei comportamenti del processo, misurato da 0 a 1 \n" +
-					"(valore 1 - piena conformit?, valore 0 - nessuna conformit?). \n" + 
-					"Di seguito viene illustrato il grado di conformit? del processo per fasi. \n" +
+		capoverso1 = "Indicatore di Conformità del Processo \n";
+		capoverso2 = "INCC = indicatore di conformità dei comportamenti del processo, misurato da 0 a 1 \n" +
+					"(valore 1 - piena conformità, valore 0 - nessuna conformità). \n" + 
+					"Di seguito viene illustrato il grado di conformità del processo per fasi. \n" +
 					"Riepilogo\n\n";
 					
 		
@@ -1228,7 +1228,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		
 		createTableRiepilogoFasi(lista, paragrafo);
 		
-		// Stampo il dettaglio delle non conformit? per singola fase.
+		// Stampo il dettaglio delle non conformità per singola fase.
 		paragrafo.add(new Paragraph("\n\nDettaglio Fasi", titoloSezione));
 		for(ReportAccessoPDFDto currFase : lista){
 			
@@ -1237,7 +1237,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 			//1) Stampo titolo fase
 			createTableRiepilogoFasiDettaglio(currFase, paragrafo);
 			
-			//2) estraggo le non conformit? per la fase corrente
+			//2) estraggo le non conformità per la fase corrente
 			List<ReportAccessoPDFDto> listaNC = reportPDFService.getMNonConfByIdFaseAnnuale(idFase,report.getIdSSessione());
 			
 			paragrafo.add("NON CONFORMITA'");
@@ -1398,7 +1398,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		
 		capoverso1 = "i risultati in relazione al tempo sono espressi come media degli intervalli temporali di \n" +
 					"periodo considerati rilevanti ai fini della correttezza del processo. Gli elementi in rosso \n" +
-					"indicano il superamento dei tempi stabiliti nelle disposizioni per lo svolgimento delle attivit?.\n\n";
+					"indicano il superamento dei tempi stabiliti nelle disposizioni per lo svolgimento delle attività.\n\n";
 		
 		paragrafo.add(capoverso1);
 		paragrafo.setAlignment(Element.ALIGN_LEFT);
@@ -1819,7 +1819,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		for(ReportAccessoPDFDto curr : listaReport){
 			
 			descrizione = "- " + curr.getDescrizioneRisEspr().trim() + " (pratiche: " + curr.getNumSRischio() + ")\n" +
-							"? " + curr.getImporto();
+							"€ " + curr.getImporto();
 			
 			PdfPCell cella1 = new PdfPCell(new Phrase(descrizione, descrizioneVarComp));
 			cella1.setHorizontalAlignment(Element.ALIGN_LEFT);
