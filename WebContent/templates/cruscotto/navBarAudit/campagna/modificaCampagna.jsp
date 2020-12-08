@@ -94,12 +94,12 @@
                                                             	</div>
                                                           		<div class="col-md-6" style="margin-bottom: 15px;">
  																		<s:if test='%{#statoCampagnaAudit == "A"}'>
-                                                       						<button type="button" class="btn blue" onclick="javascript:chiudiCampagna('<s:property value="idCampagna" />')" >Salva Stato Campanga</button>
-                                                       						<button type="button" disabled class="btn blue" onclick="javascript:aprinCampagna('<s:property value="idCampagna" />')" >Apri Campagna</button>
+                                                       						<button id='chiudiCampagna'  type="button" class="btn blue" onclick="javascript:chiudiCampagna('<s:property value="idCampagna" />')" >Salva Stato Campanga</button>
+                                                       						<button id='apriCampagna' type="button" disabled class="btn blue" onclick="javascript:aprinCampagna('<s:property value="idCampagna" />')" >Apri Campagna</button>
                                                             			</s:if>
                                                             			<s:else>
-                                                            				<button type="button" disabled class="btn blue" onclick="javascript:chiudiCampagna('<s:property value="idCampagna" />')" >Salva Stato Campanga</button>
-                                                       						<button type="button"  class="btn blue" onclick="javascript:aprinCampagna('<s:property value="idCampagna" />')" >Apri Campagna</button>
+                                                            				<button id='chiudiCampagna' type="button" disabled class="btn blue" onclick="javascript:chiudiCampagna('<s:property value="idCampagna" />')" >Salva Stato Campanga</button>
+                                                       						<button id='apriCampagna' type="button"  class="btn blue" onclick="javascript:aprinCampagna('<s:property value="idCampagna" />')" >Apri Campagna</button>
                                                             			</s:else>
                                                             	</div>
                                                             </div>

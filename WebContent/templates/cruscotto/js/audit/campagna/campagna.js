@@ -34,6 +34,24 @@ function generaAllegatoReportAccessiAnnualeIDCampagna(){
 	Metronic.stopPageLoading();
 }
 
+function apriCampagnaPulsanti(){
+	// statusCampagna
+	$('#statusCampagna')[0].value='Aperta';
+	// chiudiCampagna
+	$('#chiudiCampagna').prop('disabled', false);
+	// apriCampagna
+	$('#apriCampagna').prop('disabled', true);
+}
+
+function chiudiCampagnaPulsanti(){
+	// statusCampagna
+	$('#statusCampagna')[0].value='Chiusa';
+	// chiudiCampagna
+	$('#chiudiCampagna').prop('disabled', true);
+	// apriCampagna
+	$('#apriCampagna').prop('disabled', false);
+}
+
 function aprinCampagna(idCampangna){
 
 	Metronic.startPageLoading();
@@ -45,6 +63,7 @@ function aprinCampagna(idCampangna){
 		success : function(data) {
 			Metronic.stopPageLoading();
 			//$('#indicatori').DataTable().ajax.reload();
+			apriCampagnaPulsanti();
 			return;
 		},error: function(data){
 			Metronic.stopPageLoading();
@@ -74,6 +93,7 @@ function chiudiCampagna(idCampangna){
 		success : function(data) {
 			Metronic.stopPageLoading();
 			//$('#indicatori').DataTable().ajax.reload();
+			chiudiCampagnaPulsanti()
 			return;
 		},error: function(data){
 			Metronic.stopPageLoading();
