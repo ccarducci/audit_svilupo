@@ -47,6 +47,9 @@ public class CalcolaIndicatoriCampagnaAction extends BaseAction implements
 		
 		long idCampagna = Long.parseLong(idCampagnaS);
 		idCampagna = 2;
+		
+		calcoloIndicatoriCampagnaService.aggiornaStatoCampagna(idCampagna, "A");
+		
 		model = "{status:'OK',description:''}";
 		return SUCCESS;
 	}

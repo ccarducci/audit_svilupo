@@ -1741,13 +1741,21 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 		
 			}
 		} catch (Exception e) {
-			System.out.println("EERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
-			log.info("EERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
+			System.out.println("EERRORE getDatiCampagnaRisEsprDto: " + e.getStackTrace());
+			log.info("EERRORE getDatiCampagnaRisEsprDto: " + e.getStackTrace());
 			e.printStackTrace();
 		}
 		
 	}
 	
-	
+	@Override
+	public void aggiornaStatoCampagna(long idCampagna, String Stato){
+		if (Stato != null
+			&&	( Stato.equals("C") || Stato.equals("A") )
+			)
+		em.createNativeQuery(
+				"UPDATE  AU_CAMPAGNA set STATO = '" + Stato.trim().toUpperCase() + "' WHERE ID_CAMPAGNA = " + idCampagna)
+				.executeUpdate();
+	}
 	
 }

@@ -235,10 +235,13 @@ public class CalcoloIndicatoriCampagnaService {
 		List<AU_C_RISESPR> listaESPR = calcolaRisEspr(idCampagna);
 		calcolaRischio(idCampagna);
 	
+		auCalcolaIndicatoriDao.aggiornaStatoCampagna(idCampagna, "C");
 		log.info("FINE CALCOLI CAMPAGNA " + idCampagna);
 	}
 
-
-
+	@Transactional
+	public void aggiornaStatoCampagna(long idCampagna, String Stato) {
+		auCalcolaIndicatoriDao.aggiornaStatoCampagna(idCampagna, Stato);
+	}
 
 }
