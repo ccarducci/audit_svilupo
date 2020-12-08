@@ -2580,7 +2580,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		
 		idCampagna = 2;
 		 
-		calcoloIndicatoriCampagnaService.calcolaIndicatoriCampagna(idCampagna);
+		//calcoloIndicatoriCampagnaService.calcolaIndicatoriCampagna(idCampagna);
 		//long idSSessione = user.getIdSSessione();
 		
 		try {

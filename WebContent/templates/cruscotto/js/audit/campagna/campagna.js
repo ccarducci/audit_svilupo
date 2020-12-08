@@ -1,4 +1,96 @@
 
+function generaReportAccessiAnnualeIDCampagna(){
+	window.location.href= "/CruscottoAuditAtpoWebWeb/jsonATPO/getReportAccessoPDFAnnuale";
+}
+
+function generaAllegatoReportAccessiAnnualeIDCampagna(){
+	
+	Metronic.startPageLoading();
+	/*
+	$.ajax( {
+		type : 'GET',
+		url : '/CruscottoAuditAtpoWebWeb/jsonATPO/getAllegatoReportAccessoPDFAnnuale',
+		//data :{ 'idCampangna' : idCampangna},
+		success : function(data) {
+			Metronic.stopPageLoading();
+			//$('#indicatori').DataTable().ajax.reload();
+			return;
+		},error: function(data){
+			Metronic.stopPageLoading();
+			var settings = {
+					theme: 'teal',
+					sticky: false,
+					horizontalEdge: 'top',
+					verticalEdge: 'right',
+					life: 3000
+				};
+					$.notific8('zindex', 11500);
+					$.notific8('Errore durante il salvataggio ', settings);
+					return; 
+		}
+	});
+	*/
+	window.location.href= "/CruscottoAuditAtpoWebWeb/jsonATPO/getAllegatoReportAccessoPDFAnnuale";
+	Metronic.stopPageLoading();
+}
+
+function aprinCampagna(idCampangna){
+
+	Metronic.startPageLoading();
+	
+	$.ajax( {
+		type : 'GET',
+		url : '/CruscottoAuditAtpoWebWeb/json/calcolaIndicatoriApriCampagna?idCampangna=' + idCampangna,
+		data :{ 'idCampangna' : idCampangna},
+		success : function(data) {
+			Metronic.stopPageLoading();
+			//$('#indicatori').DataTable().ajax.reload();
+			return;
+		},error: function(data){
+			Metronic.stopPageLoading();
+			var settings = {
+					theme: 'teal',
+					sticky: false,
+					horizontalEdge: 'top',
+					verticalEdge: 'right',
+					life: 3000
+				};
+					$.notific8('zindex', 11500);
+					$.notific8('Errore durante il salvataggio ', settings);
+					return; 
+		}
+	});
+	//window.location.href= "/CruscottoAuditAtpoWebWeb/json/calcolaIndicatoriApriCampagna?idCampangna="+idCampangna;
+}
+
+function chiudiCampagna(idCampangna){
+
+	Metronic.startPageLoading();
+	
+	$.ajax( {
+		type : 'GET',
+		url : '/CruscottoAuditAtpoWebWeb/json/calcolaIndicatoriCampagna?idCampangna=' + idCampangna,
+		data :{ 'idCampangna' : idCampangna},
+		success : function(data) {
+			Metronic.stopPageLoading();
+			//$('#indicatori').DataTable().ajax.reload();
+			return;
+		},error: function(data){
+			Metronic.stopPageLoading();
+			var settings = {
+					theme: 'teal',
+					sticky: false,
+					horizontalEdge: 'top',
+					verticalEdge: 'right',
+					life: 3000
+				};
+					$.notific8('zindex', 11500);
+					$.notific8('Errore durante il salvataggio ', settings);
+					return; 
+		}
+	});
+	//window.location.href= "/CruscottoAuditAtpoWebWeb/json/calcolaIndicatoriApriCampagna?idCampangna="+idCampangna;
+}
 
 
 function salvaCampagna(){

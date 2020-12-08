@@ -2535,7 +2535,7 @@
 	 	</action>
 	 		 	
 	 		 	
-	 	 <!-- -->
+	 	 
 	 	<action name="calcolaIndicatoriCampagna" class="it.tecnet.crs.web.action.CalcolaIndicatoriCampagnaAction" method="calcolaIndicatoriCampagna">
 			<interceptor-ref name="authorization">
 				<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT , amministratore</param>
