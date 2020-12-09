@@ -743,6 +743,9 @@ public static ReportAccessoPDFDto modelToReportAccessoPDFDto(Object[] o) {
 	if(o[13] != null){
 		dto.setDataAggiornamentoDatiSessione((String)o[13]);
 	}
+	if(o[14] != null){
+		dto.setIdCampagna((Long)o[14]);
+	}
 		
 	return dto;
 }
