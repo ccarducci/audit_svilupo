@@ -151,7 +151,8 @@ public interface AuCalcolaIndicatoriDao {
 	public List<CalcoloIndicatoriRiepilogoPraticheNonConfFasi> getRiepilogoFasiNonConf(long idSSessione);
     
 	// ----------------------------------------------------------------------------
-	public List<CampagnaDto> getDatiCampagnaVarCompDto(long idCampagna);
+	public void getDatiCampagnaVarCompDto(long idCampagna, List<AU_C_VARCOMP> listaAU_C_VARCOMP);
+	public List<CampagnaDto> getDatiCampagnaVarCompDto_old(long idCampagna);
 	List<CampagnaMVarCompDto> getSumiCampagnaByIdMVarCompDto(long idCampagna);
 	void deleteDatiCampagnaVarComp(long idCampagna);
 	public void insertDatiCampagnaVarComp(AU_C_VARCOMP itemToInsert);
@@ -167,8 +168,8 @@ public interface AuCalcolaIndicatoriDao {
 	public List<CampagnaRisEsprDto> getDatiCampagnaCampagnaRisEsprDto(
 			long idCampagna);
 
-	public void getSumiCampagnaByIdMVarCompDto(long idCampagna,
-			List<AU_C_VARCOMP> listaAU_C_VARCOMP);
+	//public void getSumiCampagnaByIdMVarCompDto(long idCampagna,
+	//		List<AU_C_VARCOMP> listaAU_C_VARCOMP);
 
 	public void getDatiCampagnaVNonConfDto(long idCampagna,
 			List<AU_C_NONCONF> listaNonConf);

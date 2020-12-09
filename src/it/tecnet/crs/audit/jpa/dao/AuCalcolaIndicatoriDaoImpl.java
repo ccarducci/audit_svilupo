@@ -1249,7 +1249,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	}
  
 	@Override
-	public List<CampagnaDto> getDatiCampagnaVarCompDto(long idCampagna) {
+	public List<CampagnaDto> getDatiCampagnaVarCompDto_old(long idCampagna) {
 		String queryStr = "select  " + idCampagna 
 				+", AU_S_NONCONF.ID_M_NONCONF" +
 				", ID_M_VARCOMP" +
@@ -1519,7 +1519,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	}
 
 	@Override
-	public void getSumiCampagnaByIdMVarCompDto(long idCampagna,
+	public void getDatiCampagnaVarCompDto(long idCampagna,
 			List<AU_C_VARCOMP> listaAU_C_VARCOMP) {
 			String queryStr = " Select  "
 				+ " 	t1.ID_FASE "
@@ -1577,50 +1577,24 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				for (Object[] row : lista) {
 					AU_C_VARCOMP item = 
 						new AU_C_VARCOMP();
-					/*
-						+ " 	t1.ID_FASE "
-						+ " 	, t1.ID_M_NONCONF "
-						+ " 	, t1.ID_M_VARCOMP "
-						+ " 	, t1.DATA_INIZIO "
-						+ " 	, t1.DATA_FINE "
-						+ " 	, NUM_VC "
-						+ " 	, NUM_NC "
-						+ " 	, SOGLIA "
-						+ " 	, (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))) AS PERC_SU_PS "
-						+ " 	, (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*SOGLIA) AS PERC_PESATA   "
-					 */
-					item.setID_C_CAMPAGNA(idCampagna);
 					
-					item.setID_FASE((Long)row[0]);
-					item.setID_M_NON_CONF((Long)row[1]);
-					item.setID_M_VARCONP((Long)row[2]);
-					item.setDATA_INIZIO((Date)row[3]);
-					item.setDATA_FINE((Date)row[4]);
+					item.setID_C_CAMPAGNA(idCampagna);					
+					if(row[0]!=null)item.setID_FASE((Long)row[0]);
+					if(row[1]!=null)item.setID_M_NON_CONF((Long)row[1]);
+					if(row[2]!=null)item.setID_M_VARCONP((Long)row[2]);
+					if(row[3]!=null)item.setDATA_INIZIO((Date)row[3]);
+					if(row[4]!=null)item.setDATA_FINE((Date)row[4]);					
+					if(row[5]!=null)item.setNUM_VC((Integer)row[5]);
+					if(row[6]!=null)item.setNUM_NC((Integer)row[6]);
+					if(row[7]!=null)item.setSOGLIA(((String)row[7]));
+					if(row[8]!=null)item.setPERC_SU_PS(((BigDecimal)row[8]).doubleValue());
+					if(row[9]!=null)item.setPERC_PESATA(((BigDecimal)row[9]).doubleValue());					
 					
-					item.setNUM_VC((Integer)row[5]);
-					item.setNUM_NC((Integer)row[6]);
-					item.setSOGLIA(((String)row[7]));
-					item.setPERC_SU_PS(((BigDecimal)row[8]).doubleValue());
-					item.setPERC_PESATA(((BigDecimal)row[9]).doubleValue());
-
-					
-					/*
-					item.setIdCampagna((Integer)row[0]);
-					item.setID_M_NONCONF((Long)row[1]);
-					item.setID_M_VARCOMP((Long)row[2]);
-					item.setDATA_INIZIO((Date)row[3]);
-					item.setDATA_FINE((Date)row[4]);
-					item.setID_FASE((Long)row[5]);
-					item.setNUM((Integer)row[6]);
-					item.setValorePesato(((BigDecimal)row[2]).doubleValue());
-					item.setPERC_PESATA(((BigDecimal)row[7]).doubleValue());
-					*/
-					listaAU_C_VARCOMP.add(item);
-			
+					listaAU_C_VARCOMP.add(item);			
 				}
 			} catch (Exception e) {
-				System.out.println("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
-				log.info("EERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+				System.out.println("ERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
+				log.info("ERRORE getDatiCampagnaVarCompDto: " + e.getStackTrace());
 				e.printStackTrace();
 			}
 	}

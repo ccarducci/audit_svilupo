@@ -30,7 +30,7 @@ public class CalcoloIndicatoriCampagnaService {
 		System.out.println("--------------------------------- BEGIN VARCONF --------------------------------------------------");
 		auCalcolaIndicatoriDao.deleteDatiCampagnaVarComp(idCampagna);
 		List<AU_C_VARCOMP> listaAU_C_VARCOMP = new  ArrayList<AU_C_VARCOMP>();
-		auCalcolaIndicatoriDao.getSumiCampagnaByIdMVarCompDto(idCampagna,listaAU_C_VARCOMP);
+		auCalcolaIndicatoriDao.getDatiCampagnaVarCompDto(idCampagna,listaAU_C_VARCOMP);
 
 		for (AU_C_VARCOMP campagnaDto : listaAU_C_VARCOMP) {
 			auCalcolaIndicatoriDao.insertDatiCampagnaVarComp(campagnaDto);
