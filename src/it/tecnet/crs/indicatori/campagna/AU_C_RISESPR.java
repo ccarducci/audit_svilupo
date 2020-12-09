@@ -29,7 +29,7 @@ public class AU_C_RISESPR {
 	private Long ID_M_RISESPR;
 	
 	@Column(name = "RAGGRUPPAMENTO_RISCHIO")
-	private Integer RAGGRUPPAMENTO_RISCHIO;
+	private String RAGGRUPPAMENTO_RISCHIO;
 	
 	@Column(name = "NUM")
 	private Integer NUM;
@@ -118,11 +118,11 @@ public class AU_C_RISESPR {
 		return DESCRIZIONE;
 	}
 
-	public void setRAGGRUPPAMENTO_RISCHIO(Integer rAGGRUPPAMENTO_RISCHIO) {
+	public void setRAGGRUPPAMENTO_RISCHIO(String rAGGRUPPAMENTO_RISCHIO) {
 		RAGGRUPPAMENTO_RISCHIO = rAGGRUPPAMENTO_RISCHIO;
 	}
 
-	public Integer getRAGGRUPPAMENTO_RISCHIO() {
+	public String getRAGGRUPPAMENTO_RISCHIO() {
 		return RAGGRUPPAMENTO_RISCHIO;
 	}
 

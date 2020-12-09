@@ -1720,7 +1720,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				if(row[1]!=null) item.setID_M_RISCHIO((Long)row[1]);
 				if(row[2]!=null) item.setID_M_RISESPR((Long)row[2]);
 				if(row[3]!=null) item.setDESCRIZIONE((String) row[3]);
-				if(row[4]!=null) item.setRAGGRUPPAMENTO_RISCHIO((Integer) row[4]);
+				if(row[4]!=null) item.setRAGGRUPPAMENTO_RISCHIO((String) row[4]);
 				if(row[5]!=null) item.setNUM((Integer) row[5]);
 				if(row[6]!=null) item.setNUM_RS((Integer) row[6]);
 				if(row[7]!=null) item.setSU_TOT(((BigDecimal)row[7]).doubleValue());

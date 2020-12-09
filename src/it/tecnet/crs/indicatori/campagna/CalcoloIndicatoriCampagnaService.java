@@ -27,7 +27,7 @@ public class CalcoloIndicatoriCampagnaService {
 	private List<AU_C_VARCOMP> calcolaVarComp(long idCampagna){
 		List<AU_C_VARCOMP> lista = new ArrayList<AU_C_VARCOMP>();
 		
-		System.out.println("--------------------------------- BEGIN VARCONF --------------------------------------------------");
+		System.out.println("--------------------------------- BEGIN VARCOMP --------------------------------------------------");
 		auCalcolaIndicatoriDao.deleteDatiCampagnaVarComp(idCampagna);
 		List<AU_C_VARCOMP> listaAU_C_VARCOMP = new  ArrayList<AU_C_VARCOMP>();
 		auCalcolaIndicatoriDao.getDatiCampagnaVarCompDto(idCampagna,listaAU_C_VARCOMP);
@@ -36,7 +36,7 @@ public class CalcoloIndicatoriCampagnaService {
 			auCalcolaIndicatoriDao.insertDatiCampagnaVarComp(campagnaDto);
 			lista.add(campagnaDto);
 		}
-		System.out.println("--------------------------------- END VARCONF --------------------------------------------------");
+		System.out.println("--------------------------------- END VARCOMP --------------------------------------------------");
 		return lista;
 	}
 	
@@ -51,7 +51,7 @@ public class CalcoloIndicatoriCampagnaService {
 			auCalcolaIndicatoriDao.insertDatiCampagnaNonConf(nonConf);
 		}
 		
-		auCalcolaIndicatoriDao.updateNonConf(idCampagna);
+		//auCalcolaIndicatoriDao.updateNonConf(idCampagna);
 		System.out.println("--------------------------------- END NONCONF --------------------------------------------------");
 		return listaNonConf;
 	}
@@ -81,12 +81,12 @@ public class CalcoloIndicatoriCampagnaService {
 	
 	@Transactional
 	public void calcolaIndicatoriCampagna(long idCampagna) {
-		log.info("FINE CALCOLI CAMPAGNA " + idCampagna);
+		log.info("INIZIO CALCOLI CAMPAGNA " + idCampagna);
 		
 		List<AU_C_VARCOMP> listaCVarComplista = calcolaVarComp(idCampagna);
 		List<AU_C_NONCONF> listaCNonConf = calcolaNonConf(idCampagna,listaCVarComplista);
 		List<AU_C_RISESPR> listaESPR = calcolaRisEspr(idCampagna);
-		calcolaRischio(idCampagna);
+	//	calcolaRischio(idCampagna);
 	
 		auCalcolaIndicatoriDao.aggiornaStatoCampagna(idCampagna, "C");
 		log.info("FINE CALCOLI CAMPAGNA " + idCampagna);
