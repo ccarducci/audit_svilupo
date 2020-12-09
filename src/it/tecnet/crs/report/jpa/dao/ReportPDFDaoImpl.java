@@ -1162,14 +1162,44 @@ try {
 	}
 	@Override
 	public List<Object[]> getRiepilogoRischiAnnuale(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String queryStr = "select r.ID_M_RISCHIO, 0 as ID_S_RISCHIO, m.DESCRIZIONE_RISCHIO ,0 as importo, 0 as SU_PS_PERC, 0 as NUM from AU_C_RISESPR as r"
+						+ " join AU_S_RISCHIO as s on r.ID_M_RISCHIO = s.ID_M_RISCHIO"
+						+ " join AU_M_RISCHIO as m on r.ID_M_RISCHIO = m.ID_M_RISCHIO"
+						+ " where r.ID_C_CAMPAGNA = " + idCampagna
+						+ " and RAGGRUPPAMENTO_RISCHIO not in (3,4)"
+						+ " group by r.ID_M_RISCHIO, m.DESCRIZIONE_RISCHIO";
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getRisEsprByIdMNonConfAnnuale(Long idMRischio,
 			long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String queryStr = "select DESCRIZIONE, NUM, SU_TOT, IMPORTO from AU_C_RISESPR"
+							+ " where ID_C_CAMPAGNA = " + idCampagna
+							+ " and ID_M_RISCHIO = " + idMRischio;	
+ 		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getRisultatiByTempoAnnuale(long idCampagna) {
