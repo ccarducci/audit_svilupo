@@ -1521,51 +1521,43 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public void getSumiCampagnaByIdMVarCompDto(long idCampagna,
 			List<AU_C_VARCOMP> listaAU_C_VARCOMP) {
-			String queryStr = "Select t1.ID_M_NONCONF" +
-								", t1.ID_M_VARCOMP" +
-								", NUM_VC" +
-								", NUM_NC" +
-								", SOGLIA" +
-								", (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*100) AS PERC_SU_PS" +
-								", (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*100*SOGLIA) AS PERC_PESATA  " +
-								" " +
-								" from " +
-								" (Select svc2.ID_M_NONCONF, sum (svc2.num) as NUM_NC  " +
-								" 	FROM " +
-								" AU_S_SESSIONE ausess2  " +
-								" , AU_S_NONCONF snc2 " +
-								" , AU_SESSIONI sess2 " +
-								" , AU_S_VARCOMP svc2 " +
-								" , AU_M_NONCONF mnc2 " +
-								" where  " +
-								" snc2.ID_S_SESSIONE = ausess2.ID_S_SESSIONE and " +
-								" snc2.ID_S_NONCONF = svc2.ID_S_NONCONF and " +
-								" ausess2.ID_SESSIONE = sess2.ID_SESSIONE and " +
-								" svc2.ID_M_NONCONF = mnc2.ID_M_NON_CONF and " +
-								" sess2.ID_CAMPAGNA = 2 and " +
-								" ausess2.STATO_ESAME_SESSIONE = 'C' " +
-								" group by svc2.ID_M_NONCONF) as t2 " +
-								" left join  " +
-								" (Select svc1.ID_M_NONCONF, svc1.ID_M_VARCOMP, soglia, sum (svc1.num) as NUM_VC " +
-								" FROM " +
-								" AU_S_SESSIONE ausess  " +
-								" , AU_S_NONCONF snc " +
-								" , AU_SESSIONI sess " +
-								" , AU_S_VARCOMP svc1 " +
-								" , AU_M_NONCONF mnc " +
-								" , AU_M_VARCOMP mvc " +
-								" , AU_TPL_ISNC   " +
-								" where  " +
-								" snc.ID_S_SESSIONE = ausess.ID_S_SESSIONE and " +
-								" snc.ID_S_NONCONF = svc1.ID_S_NONCONF and " +
-								" ausess.ID_SESSIONE = sess.ID_SESSIONE and " +
-								" svc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and " +
-								" mvc.ID_M_NONCONF = mnc.ID_M_NON_CONF and  " +
-								" mvc.ID_M_COMP = svc1.id_m_varcomp and " +
-								" ID_TPL_ISNC = mvc.PESO_VC and " +
-								" sess.ID_CAMPAGNA = "+idCampagna + " and " +
-								" ausess.STATO_ESAME_SESSIONE = 'C' " +
-								" group by svc1.ID_M_NONCONF, svc1.ID_M_VARCOMP, soglia) as t1 on t2.ID_M_NONCONF = t1.ID_M_NONCONF ";
+			String queryStr = " Select t1.ID_FASE, t1.ID_M_NONCONF, t1.ID_M_VARCOMP, t1.DATA_INIZIO, t1.DATA_FINE, NUM_VC, NUM_NC, SOGLIA, (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))) AS PERC_SU_PS, (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*SOGLIA) AS PERC_PESATA  from  "
+							+ " (Select svc2.ID_M_NONCONF, sum (svc2.num) as NUM_NC  "
+							+ " FROM "
+							+ " AU_S_SESSIONE ausess2  "
+							+ " , AU_S_NONCONF snc2 "
+							+ " , AU_SESSIONI sess2 "
+							+ " , AU_S_VARCOMP svc2 "
+							+ " , AU_M_NONCONF mnc2 "
+							+ " where  "
+							+ " snc2.ID_S_SESSIONE = ausess2.ID_S_SESSIONE and "
+							+ " snc2.ID_S_NONCONF = svc2.ID_S_NONCONF and "
+							+ " ausess2.ID_SESSIONE = sess2.ID_SESSIONE and "
+							+ " svc2.ID_M_NONCONF = mnc2.ID_M_NON_CONF and "
+							+ " sess2.ID_CAMPAGNA = " +  idCampagna  + " and "
+							+ " ausess2.STATO_ESAME_SESSIONE = 'C' "
+							+ " group by svc2.ID_M_NONCONF) as t2 "
+							+ " left join  "
+							+ " (Select svc1.ID_M_NONCONF, svc1.ID_M_VARCOMP, mnc.ID_FASE, svc1.DATA_INIZIO, svc1.DATA_FINE, soglia, sum (svc1.num) as NUM_VC "
+							+ " FROM "
+							+ " AU_S_SESSIONE ausess  "
+							+ " , AU_S_NONCONF snc "
+							+ " , AU_SESSIONI sess "
+							+ " , AU_S_VARCOMP svc1 "
+							+ " , AU_M_NONCONF mnc "
+							+ " , AU_M_VARCOMP mvc "
+							+ " , AU_TPL_ISNC   "
+							+ " where  "
+							+ " snc.ID_S_SESSIONE = ausess.ID_S_SESSIONE and "
+							+ " snc.ID_S_NONCONF = svc1.ID_S_NONCONF and "
+							+ " ausess.ID_SESSIONE = sess.ID_SESSIONE and "
+							+ " svc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and "
+							+ " mvc.ID_M_NONCONF = mnc.ID_M_NON_CONF and  "
+							+ " mvc.ID_M_COMP = svc1.id_m_varcomp and "
+							+ " ID_TPL_ISNC = mvc.PESO_VC and "
+							+ " sess.ID_CAMPAGNA = " +  idCampagna  + " and "
+							+ " ausess.STATO_ESAME_SESSIONE = 'C' "
+							+ " group by svc1.ID_M_NONCONF, svc1.ID_M_VARCOMP, mnc.ID_FASE, svc1.DATA_INIZIO, svc1.DATA_FINE, soglia) as t1 on t2.ID_M_NONCONF = t1.ID_M_NONCONF ";
 			List<Object[]> lista = new ArrayList<Object[]>();
 	
 			try {
@@ -1574,23 +1566,31 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 					AU_C_VARCOMP item = 
 						new AU_C_VARCOMP();
 					/*
-					 *  t1.ID_M_NONCONF" +
-						", t1.ID_M_VARCOMP" +
-						", NUM_VC" +
-						", NUM_NC" +
-						", SOGLIA" +
-						", (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*100) AS PERC_SU_PS" +
-						", (cast((NUM_VC) as decimal (7,2))/cast((NUM_NC) as decimal (7,2))*100*SOGLIA) AS PERC_PESATA  " +
-						" " +
+ 						t1.ID_FASE
+ 						, t1.ID_M_NONCONF
+ 						, t1.ID_M_VARCOMP
+ 						, t1.DATA_INIZIO
+ 						, t1.DATA_FINE
+ 						, NUM_VC
+ 						, NUM_NC
+ 						, SOGLIA
+ 						, PERC_SU_PS
+ 						, PERC_PESATA  
 					 */
 					item.setID_C_CAMPAGNA(idCampagna);
-					item.setID_M_NON_CONF((Long)row[0]);
-					item.setID_M_VARCONP((Long)row[1]);
-					item.setNUM_VC((Integer)row[2]);
-					item.setNUM_NC((Integer)row[3]);
-					item.setSOGLIA(((String)row[4]));
-					item.setPERC_SU_PS(((BigDecimal)row[5]).doubleValue());
-					item.setPERC_PESATA(((BigDecimal)row[6]).doubleValue());
+					
+					item.setID_FASE((Long)row[0]);
+					item.setID_M_NON_CONF((Long)row[1]);
+					item.setID_M_VARCONP((Long)row[2]);
+					item.setDATA_INIZIO((Date)row[3]);
+					item.setDATA_FINE((Date)row[4]);
+					
+					item.setNUM_VC((Integer)row[5]);
+					item.setNUM_NC((Integer)row[6]);
+					item.setSOGLIA(((String)row[7]));
+					item.setPERC_SU_PS(((BigDecimal)row[8]).doubleValue());
+					item.setPERC_PESATA(((BigDecimal)row[9]).doubleValue());
+
 					
 					/*
 					item.setIdCampagna((Integer)row[0]);
@@ -1616,28 +1616,42 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public void getDatiCampagnaVNonConfDto(long idCampagna,
 			List<AU_C_NONCONF> listaNonConf) {
-				String query = " Select " + 
-					" 	t1.ID_M_NONCONF " + 
-					" 	, t1.PESO_NON_CONF " + 
-					" 	, t2.INCC " + 
-					" 	, (cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.VALORE_PESATO) as decimal (7,2))*100) AS PERC_SU_PS   " + 
-					" from " + 
-					" (Select cvc2.ID_M_NONCONF, sum (PERC_SU_PS) as INCC  " + 
-					" FROM AU_C_VARCOMP cvc2 " + 
-					" , AU_M_NONCONF  " + 
-					" where  " + 
-					" cvc2.ID_C_CAMPAGNA =  " + idCampagna + 
-					" group by cvc2.ID_M_NONCONF) as t2 " + 
-					" left join  " + 
-					" (Select cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, sum (mnc.PESO_NON_CONF) as VALORE_PESATO  " + 
-					" FROM " + 
-					" AU_C_VARCOMP cvc1  " + 
-					" , AU_M_NONCONF mnc " + 
-					" where  " + 
-					" cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and " + 
-					" cvc1.ID_C_CAMPAGNA = " + idCampagna + 
-					" group by cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF) as t1  " + 
-					" on t2.ID_M_NONCONF = t1.ID_M_NONCONF  " ;
+				String query =  " Select "
+					+ " t1.ID_M_NONCONF "
+					+ " , t1.PESO_NON_CONF "
+					+ " , t2.INCC "
+					+ " , t1.DATA_INIZIO "
+					+ " , t1.DATA_FINE "
+					+ " , t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t3.TOT_PESO_FS) as decimal (7,2))) AS VALORE_PESATO_FASE   "
+					+ " , t1.ID_FASE "
+					+ " , TOT_PESO_NC "
+					+ " , TOT_PESO_FS "
+					+ " , t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.TOT_PESO_NC) as decimal (7,2))) AS VALORE_PESATO "
+					+ " from "
+					+ " (Select cvc2.ID_M_NONCONF, sum (cvc2.PERC_PESATA) as INCC  "
+					+ " FROM AU_C_VARCOMP cvc2 "
+					+ " where  "
+					+ " cvc2.ID_C_CAMPAGNA =  " +  idCampagna  
+					+ " group by cvc2.ID_M_NONCONF) as t2  "
+					+ " left join   "
+					+ " (Select cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, mnc.ID_FASE, cvc1.data_inizio, cvc1.data_fine, sum (mnc.PESO_NON_CONF) as TOT_PESO_NC  "
+					+ " FROM "
+					+ " AU_C_VARCOMP cvc1  "
+					+ " , AU_M_NONCONF mnc "
+					+ " where  "
+					+ " cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and "
+					+ " cvc1.ID_C_CAMPAGNA =  " + idCampagna
+					+ " group by cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, mnc.ID_FASE, cvc1.data_inizio, cvc1.data_fine) as t1 on t2.ID_M_NONCONF = t1.ID_M_NONCONF "
+					+ " left join  "
+					+ " (Select cvc1.ID_FASE, mnc.PESO_NON_CONF, sum (mnc.PESO_NON_CONF) as TOT_PESO_FS  "
+					+ " FROM "
+					+ " AU_C_VARCOMP cvc1  "
+					+ " , AU_M_NONCONF mnc "
+					+ " where  "
+					+ " cvc1.ID_C_CAMPAGNA =  " + idCampagna
+					+ " group by cvc1.ID_FASE, mnc.PESO_NON_CONF) as t3  "
+					+ " on t1.ID_FASE = t3.ID_FASE ";
+					
 		
 		List<Object[]> lista = new ArrayList<Object[]>();
 
@@ -1647,17 +1661,28 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				AU_C_NONCONF item = 
 					new AU_C_NONCONF();
 				/*
-				 * " Select " + 
-					" 	t1.ID_M_NONCONF " + 
-					" 	, t1.PESO_NON_CONF " + 
-					" 	, t2.INCC " + 
-					" 	, (cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.VALORE_PESATO) as decimal (7,2))*100) AS PERC_SU_PS   "
+					+ " t1.ID_M_NONCONF "
+					+ " , t1.PESO_NON_CONF "
+					+ " , t2.INCC "
+					+ " , t1.DATA_INIZIO "
+					+ " , t1.DATA_FINE "
+					+ " , t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t3.TOT_PESO_FS) as decimal (7,2))) AS VALORE_PESATO_FASE   "
+					+ " , t1.ID_FASE "
+					+ " , TOT_PESO_NC "
+					+ " , TOT_PESO_FS "
+					+ " , t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.TOT_PESO_NC) as decimal (7,2))) AS VALORE_PESATO "
 				 */
 				item.setID_C_CAMPAGNA(idCampagna);
 				item.setID_M_NONCONF((Long)row[0]);
 				if(row[1]!=null)item.setPESO_NON_CONF(((BigDecimal)row[1]).doubleValue());
 				if(row[2]!=null)item.setINCC(((BigDecimal)row[2]).doubleValue());
-				if(row[3]!=null)item.setPERC_SU_PS(((BigDecimal)row[3]).doubleValue());
+				if(row[2]!=null)item.setDATA_INIZIO((Date)row[3]);
+				if(row[2]!=null)item.setDATA_FINE((Date)row[4]);
+				if(row[2]!=null)item.setVALORE_PESATO_FASE(((BigDecimal)row[5]).doubleValue());
+				if(row[2]!=null)item.setID_FASE((Long)row[6]);
+				if(row[2]!=null)item.setTOT_PESO_NC(((BigDecimal)row[7]).doubleValue());
+				if(row[2]!=null)item.setTOT_PESO_FS(((BigDecimal)row[8]).doubleValue());
+				if(row[2]!=null)item.setVALORE_PESATO(((BigDecimal)row[9]).doubleValue());
 				listaNonConf.add(item);
 		
 			}

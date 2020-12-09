@@ -44,6 +44,15 @@ public class AU_C_VARCOMP {
 	@Column(name="PERC_PESATA")
 	private Double PERC_PESATA;
 
+	@Column(name="DATA_INIZIO")
+	private Date DATA_INIZIO;
+	
+	@Column(name="DATA_FINE")
+	private Date DATA_FINE;
+	
+	@Column(name="ID_FASE")
+	private Long ID_FASE;
+	
 	public Long getId() {
 		return id;
 	}
@@ -116,7 +125,27 @@ public class AU_C_VARCOMP {
 		PERC_PESATA = perc_pesata;
 	}
 
+	public Date getDATA_INIZIO() {
+		return DATA_INIZIO;
+	}
 
-	
-	
+	public void setDATA_INIZIO(Date data_inizio) {
+		DATA_INIZIO = data_inizio;
+	}
+
+	public Date getDATA_FINE() {
+		return DATA_FINE;
+	}
+
+	public void setDATA_FINE(Date data_fine) {
+		DATA_FINE = data_fine;
+	}
+
+	public Long getID_FASE() {
+		return ID_FASE;
+	}
+
+	public void setID_FASE(Long id_fase) {
+		ID_FASE = id_fase;
+	}
 }
