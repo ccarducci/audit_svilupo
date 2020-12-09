@@ -1775,7 +1775,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				item.setID_C_CAMPAGNA(idCampagna);
 				item.setID_M_RISCHIO((Long)row[0]);
 				item.setID_M_RISESPR((Long)row[1]);
-				item.setNUM1((Integer) row[2]);
+				item.setNUM((Integer) row[2]);
 				item.setNUM_RS((Integer) row[3]);
 				item.setSU_TOT(((BigDecimal)row[4]).doubleValue());
 				item.setIMPORTO(((BigDecimal)row[5]).doubleValue());

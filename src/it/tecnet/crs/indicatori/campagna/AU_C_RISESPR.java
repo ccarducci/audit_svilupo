@@ -28,8 +28,11 @@ public class AU_C_RISESPR {
 	@Column(name = "ID_M_RISESPR")
 	private Long ID_M_RISESPR;
 	
-	@Column(name = "NUM1")
-	private Integer NUM1;
+	@Column(name = "RAGGRUPPAMENTO_RISCHIO")
+	private Integer RAGGRUPPAMENTO_RISCHIO;
+	
+	@Column(name = "NUM")
+	private Integer NUM;
 	
 	@Column(name = "NUM_RS")
 	private Integer NUM_RS;
@@ -39,6 +42,9 @@ public class AU_C_RISESPR {
 	
 	@Column(name = "IMPORTO")
 	private Double IMPORTO;
+	
+	@Column(name = "DESCRIZIONE")
+	private String DESCRIZIONE;
 
 	public Long getId() {
 		return id;
@@ -72,12 +78,12 @@ public class AU_C_RISESPR {
 		ID_M_RISESPR = id_m_risespr;
 	}
 
-	public Integer getNUM1() {
-		return NUM1;
+	public Integer getNUM() {
+		return NUM;
 	}
 
-	public void setNUM1(Integer num1) {
-		NUM1 = num1;
+	public void setNUM(Integer num) {
+		NUM = num;
 	}
 
 	public Integer getNUM_RS() {
@@ -102,6 +108,22 @@ public class AU_C_RISESPR {
 
 	public void setIMPORTO(Double importo) {
 		IMPORTO = importo;
+	}
+
+	public void setDESCRIZIONE(String dESCRIZIONE) {
+		DESCRIZIONE = dESCRIZIONE;
+	}
+
+	public String getDESCRIZIONE() {
+		return DESCRIZIONE;
+	}
+
+	public void setRAGGRUPPAMENTO_RISCHIO(Integer rAGGRUPPAMENTO_RISCHIO) {
+		RAGGRUPPAMENTO_RISCHIO = rAGGRUPPAMENTO_RISCHIO;
+	}
+
+	public Integer getRAGGRUPPAMENTO_RISCHIO() {
+		return RAGGRUPPAMENTO_RISCHIO;
 	}
 
 
