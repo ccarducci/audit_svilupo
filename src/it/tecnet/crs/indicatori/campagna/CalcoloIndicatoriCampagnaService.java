@@ -51,6 +51,7 @@ public class CalcoloIndicatoriCampagnaService {
 			auCalcolaIndicatoriDao.insertDatiCampagnaNonConf(nonConf);
 		}
 		
+		auCalcolaIndicatoriDao.updateNonConf(idCampagna);
 		System.out.println("--------------------------------- END NONCONF --------------------------------------------------");
 		return listaNonConf;
 	}

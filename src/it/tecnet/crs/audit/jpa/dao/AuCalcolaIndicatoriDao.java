@@ -177,4 +177,6 @@ public interface AuCalcolaIndicatoriDao {
 			List<AU_C_RISESPR> listaESPR);
 
 	void aggiornaStatoCampagna(long idCampagna, String Stato);
+
+	void updateNonConf(long idCampagna);
 }

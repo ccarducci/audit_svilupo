@@ -52,6 +52,10 @@ public class AU_C_NONCONF {
 	@Column(name = "VALORE_PESATO")
 	private Double VALORE_PESATO;
 
+	@Column(name = "NUM_NC")
+	private Integer NUM_NC;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -147,9 +151,13 @@ public class AU_C_NONCONF {
 	public void setVALORE_PESATO(Double valore_pesato) {
 		VALORE_PESATO = valore_pesato;
 	}
-	
 
-	
+	public Integer getNUM_NC() {
+		return NUM_NC;
+	}
 
+	public void setNUM_NC(Integer num_nc) {
+		NUM_NC = num_nc;
+	}
 	
 }
