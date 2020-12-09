@@ -65,7 +65,8 @@ public class CampagnaDto implements Serializable {
 	}
 
 	public String getStato() {
-		return this.stato;
+		if (this.stato == null) return "A";
+		return this.stato.trim().toUpperCase();
 	}
 
 	public void setStato(String stato) {

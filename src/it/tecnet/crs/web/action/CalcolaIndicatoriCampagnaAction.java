@@ -32,17 +32,25 @@ public class CalcolaIndicatoriCampagnaAction extends BaseAction implements
 	public String calcolaIndicatoriCampagna() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
-		String idCampagnaS = (String)request.getParameter("idCampagna");
+		String idCampagnaS = (String)request.getParameter("idCampangna");
 		long idCampagna = Long.parseLong(idCampagnaS);
+		idCampagna = 2;
+		calcoloIndicatoriCampagnaService.calcolaIndicatoriCampagna(idCampagna);
+		model = "{status:'OK',description:''}";
 		return SUCCESS;
 	}
 
 	public String calcolaIndicatoriApriCampagna() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
-		String idCampagnaS = (String)request.getParameter("idCampagna");
-		long idCampagna = Long.parseLong(idCampagnaS);
+		String idCampagnaS = (String)request.getParameter("idCampangna");
 		
+		long idCampagna = Long.parseLong(idCampagnaS);
+		idCampagna = 2;
+		
+		calcoloIndicatoriCampagnaService.aggiornaStatoCampagna(idCampagna, "A");
+		
+		model = "{status:'OK',description:''}";
 		return SUCCESS;
 	}
 }

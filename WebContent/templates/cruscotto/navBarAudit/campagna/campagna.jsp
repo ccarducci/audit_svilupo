@@ -47,6 +47,7 @@
                      	
                      	
 				        <div class="row">
+				        <!-- - 
 				        	<div class="col-lg-6 col-lg-offset-4 col-xs-12">
 				        		<div class="actions add-action">
 				        		</div> 
@@ -60,6 +61,7 @@
 				        		<br/>
 				        		</div>
 				        	</div>
+				        	-->
 				        	<div class="col-lg-6 col-lg-offset-4 col-xs-12">
 				        		<br/>
 				        	</div>

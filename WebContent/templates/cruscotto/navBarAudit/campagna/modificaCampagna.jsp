@@ -79,11 +79,28 @@
                                                 			<div class="row" style="margin-bottom: 40px;">
                                                             	<div class="col-md-2" style="margin-bottom: 15px;">
                                                             		<s:set var="statoCampagnaAudit" value="%{campagnaDto.stato}" />
-                                                           		 	<s:property value="statoCampagnaAudit" />
+                                                           		 	<s:hidden value="statoCampagnaAudit"  />
+                                                           		 	<s:if test='%{#statoCampagnaAudit == "A"}'>
+																			<div class="form-group form-md-line-input">
+                                                                            	<input id="statusCampagna" type="text" class="form-control" id="form_control_1" value="Aperta" style="height: 38px;" readonly>
+                                                                            	<label for="form_control_1">Stato Campagna</label>
+                                                                        	</div>
+                                                          			</s:if>
+                                                          			<s:else>
+                                                          				<input id="statusCampagna" type="text" class="form-control" id="form_control_1" value="Chiusa" style="height: 38px;" readonly>
+	    																<label for="form_control_1">Stato Campagna</label>
+        															</s:else>
+                                                           		 	
                                                             	</div>
                                                           		<div class="col-md-6" style="margin-bottom: 15px;">
-                                                       				<button type="button" class="btn blue" onclick="javascript:chiudiCampagna('<s:property value="idCampagna" />')" >Salva Stato Campanga</button>
-                                                       				<button type="button" class="btn blue" onclick="javascript:aprinCampagna('<s:property value="idCampagna" />')" >Apri Campagna</button>
+ 																		<s:if test='%{#statoCampagnaAudit == "A"}'>
+                                                       						<button id='chiudiCampagna'  type="button" class="btn blue" onclick="javascript:chiudiCampagna('<s:property value="idCampagna" />')" >Salva Stato Campanga</button>
+                                                       						<button id='apriCampagna' type="button" disabled class="btn blue" onclick="javascript:aprinCampagna('<s:property value="idCampagna" />')" >Apri Campagna</button>
+                                                            			</s:if>
+                                                            			<s:else>
+                                                            				<button id='chiudiCampagna' type="button" disabled class="btn blue" onclick="javascript:chiudiCampagna('<s:property value="idCampagna" />')" >Salva Stato Campanga</button>
+                                                       						<button id='apriCampagna' type="button"  class="btn blue" onclick="javascript:aprinCampagna('<s:property value="idCampagna" />')" >Apri Campagna</button>
+                                                            			</s:else>
                                                             	</div>
                                                             </div>
                                                             <div class="row" style="margin-bottom: 40px;">

@@ -1,4 +1,131 @@
 
+function generaReportAccessiAnnualeIDCampagna(){
+	var statusCmapagnaForCheck =  $('#statusCampagna')[0].value;
+	
+	if (statusCmapagnaForCheck === 'Aperta' ){
+		var settings = {
+				theme: 'teal',
+				sticky: false,
+				horizontalEdge: 'top',
+				verticalEdge: 'right',
+				life: 3000
+			};
+		$.notific8('zindex', 11500);
+		$.notific8('Non è possibile generare il report a campagna aperta', settings);
+		return; 
+	}
+	
+	Metronic.startPageLoading();
+    setTimeout(function () {
+    	window.location.href= "/CruscottoAuditAtpoWebWeb/jsonATPO/getReportAccessoPDFAnnuale";
+    	Metronic.stopPageLoading();
+    }, 500);
+	
+	
+}
+
+function generaAllegatoReportAccessiAnnualeIDCampagna(){
+	
+	var statusCmapagnaForCheck =  $('#statusCampagna')[0].value;
+	
+	if (statusCmapagnaForCheck === 'Aperta' ){
+		var settings = {
+				theme: 'teal',
+				sticky: false,
+				horizontalEdge: 'top',
+				verticalEdge: 'right',
+				life: 3000
+			};
+		$.notific8('zindex', 11500);
+		$.notific8('Non è possibile generare il report a campagna aperta', settings);
+		return; 
+	}
+	
+	Metronic.startPageLoading();
+    setTimeout(function () {
+    	window.location.href= "/CruscottoAuditAtpoWebWeb/jsonATPO/getAllegatoReportAccessoPDFAnnuale";
+    	Metronic.stopPageLoading();
+    }, 500);
+	
+}
+
+function apriCampagnaPulsanti(){
+	// statusCampagna
+	$('#statusCampagna')[0].value='Aperta';
+	// chiudiCampagna
+	$('#chiudiCampagna').prop('disabled', false);
+	// apriCampagna
+	$('#apriCampagna').prop('disabled', true);
+}
+
+function chiudiCampagnaPulsanti(){
+	// statusCampagna
+	$('#statusCampagna')[0].value='Chiusa';
+	// chiudiCampagna
+	$('#chiudiCampagna').prop('disabled', true);
+	// apriCampagna
+	$('#apriCampagna').prop('disabled', false);
+}
+
+function aprinCampagna(idCampangna){
+
+	Metronic.startPageLoading();
+	
+	$.ajax( {
+		type : 'GET',
+		url : '/CruscottoAuditAtpoWebWeb/json/calcolaIndicatoriApriCampagna?idCampangna=' + idCampangna,
+		data :{ 'idCampangna' : idCampangna},
+		success : function(data) {
+			Metronic.stopPageLoading();
+			//$('#indicatori').DataTable().ajax.reload();
+			apriCampagnaPulsanti();
+			return;
+		},error: function(data){
+			Metronic.stopPageLoading();
+			var settings = {
+					theme: 'teal',
+					sticky: false,
+					horizontalEdge: 'top',
+					verticalEdge: 'right',
+					life: 3000
+				};
+					$.notific8('zindex', 11500);
+					$.notific8('Errore durante il salvataggio ', settings);
+					return; 
+		}
+	});
+	//window.location.href= "/CruscottoAuditAtpoWebWeb/json/calcolaIndicatoriApriCampagna?idCampangna="+idCampangna;
+}
+
+function chiudiCampagna(idCampangna){
+
+	Metronic.startPageLoading();
+	
+	$.ajax( {
+		type : 'GET',
+		url : '/CruscottoAuditAtpoWebWeb/json/calcolaIndicatoriCampagna?idCampangna=' + idCampangna,
+		data :{ 'idCampangna' : idCampangna},
+		success : function(data) {
+			Metronic.stopPageLoading();
+			//$('#indicatori').DataTable().ajax.reload();
+			chiudiCampagnaPulsanti()
+			return;
+		},error: function(data){
+			Metronic.stopPageLoading();
+			var settings = {
+					theme: 'teal',
+					sticky: false,
+					horizontalEdge: 'top',
+					verticalEdge: 'right',
+					life: 3000
+				};
+					$.notific8('zindex', 11500);
+					$.notific8('Errore durante il salvataggio ', settings);
+					return; 
+		}
+	});
+	//window.location.href= "/CruscottoAuditAtpoWebWeb/json/calcolaIndicatoriApriCampagna?idCampangna="+idCampangna;
+}
 
 
 function salvaCampagna(){

@@ -17,8 +17,8 @@ public class AU_C_NONCONF {
 	@Id
 	@SequenceGenerator(name = "AU_ASS_VERBALE_CAMPAGNA_GENERATOR", sequenceName = "ID_ASS_VERB_CMPGN_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AU_ASS_VERBALE_CAMPAGNA_GENERATOR")
-	private Long id;
-
+	private Long id;	
+	
 	@Column(name = "ID_C_CAMPAGNA")
 	private Long ID_C_CAMPAGNA;
 
@@ -30,10 +30,32 @@ public class AU_C_NONCONF {
 	
 	@Column(name = "INCC")
 	private Double INCC;
-	
-	@Column(name = "PERC_SU_PS")
-	private Double PERC_SU_PS;
 
+	@Column(name="DATA_INIZIO")
+	private Date DATA_INIZIO;
+	
+	@Column(name="DATA_FINE")
+	private Date DATA_FINE;
+	
+	@Column(name="VALORE_PESATO_FASE")
+	private Double VALORE_PESATO_FASE;
+	
+	@Column(name="ID_FASE")
+	private Long ID_FASE;
+	
+	@Column(name = "TOT_PESO_NC")
+	private Double TOT_PESO_NC;
+
+	@Column(name = "TOT_PESO_FS")
+	private Double TOT_PESO_FS;
+	
+	@Column(name = "VALORE_PESATO")
+	private Double VALORE_PESATO;
+
+	@Column(name = "NUM_NC")
+	private Integer NUM_NC;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -74,17 +96,68 @@ public class AU_C_NONCONF {
 		INCC = incc;
 	}
 
-	public Double getPERC_SU_PS() {
-		return PERC_SU_PS;
+	public Date getDATA_INIZIO() {
+		return DATA_INIZIO;
 	}
 
-	public void setPERC_SU_PS(Double perc_su_ps) {
-		PERC_SU_PS = perc_su_ps;
+	public void setDATA_INIZIO(Date data_inizio) {
+		DATA_INIZIO = data_inizio;
 	}
 
+	public Date getDATA_FINE() {
+		return DATA_FINE;
+	}
 
-	
+	public void setDATA_FINE(Date data_fine) {
+		DATA_FINE = data_fine;
+	}
 
-	
+	public Double getVALORE_PESATO_FASE() {
+		return VALORE_PESATO_FASE;
+	}
+
+	public void setVALORE_PESATO_FASE(Double valore_pesato_fase) {
+		VALORE_PESATO_FASE = valore_pesato_fase;
+	}
+
+	public Long getID_FASE() {
+		return ID_FASE;
+	}
+
+	public void setID_FASE(Long id_fase) {
+		ID_FASE = id_fase;
+	}
+
+	public Double getTOT_PESO_NC() {
+		return TOT_PESO_NC;
+	}
+
+	public void setTOT_PESO_NC(Double tot_peso_nc) {
+		TOT_PESO_NC = tot_peso_nc;
+	}
+
+	public Double getTOT_PESO_FS() {
+		return TOT_PESO_FS;
+	}
+
+	public void setTOT_PESO_FS(Double tot_peso_fs) {
+		TOT_PESO_FS = tot_peso_fs;
+	}
+
+	public Double getVALORE_PESATO() {
+		return VALORE_PESATO;
+	}
+
+	public void setVALORE_PESATO(Double valore_pesato) {
+		VALORE_PESATO = valore_pesato;
+	}
+
+	public Integer getNUM_NC() {
+		return NUM_NC;
+	}
+
+	public void setNUM_NC(Integer num_nc) {
+		NUM_NC = num_nc;
+	}
 	
 }
