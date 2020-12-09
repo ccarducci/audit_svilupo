@@ -1628,44 +1628,35 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public void getDatiCampagnaVNonConfDto(long idCampagna,
 			List<AU_C_NONCONF> listaNonConf) {
-				String query =  " Select "
-					+ " 	t1.ID_C_CAMPAGNA "
-					+ " 	, t1.ID_M_NONCONF "
-					+ " 	, t1.PESO_NON_CONF "
-					+ " 	, t2.INCC "
-					+ " 	, t1.DATA_INIZIO "
-					+ " 	, t1.DATA_FINE "
-					+ " 	, t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t3.TOT_PESO_FS) as decimal (7,2))) AS VALORE_PESATO_FASE   "
-					+ " 	, t1.ID_FASE "
-					+ " 	, TOT_PESO_NC "
-					+ " 	, TOT_PESO_FS "
-					+ " 	, t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.TOT_PESO_NC) as decimal (7,2))) AS VALORE_PESATO "
-					+ " 	, t1.NUM_NC "
-					+ " from "
-					+ " (Select cvc2.ID_M_NONCONF, sum (cvc2.PERC_PESATA) as INCC  "
-					+ " FROM AU_C_VARCOMP cvc2 "
-					+ " where  "
-					+ " cvc2.ID_C_CAMPAGNA =  " +   idCampagna
-					+ " group by cvc2.ID_M_NONCONF) as t2 "
-					+ " left join  "
-					+ " (Select cvc1.id_c_campagna, cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, mnc.ID_FASE, cvc1.data_inizio, cvc1.data_fine, sum (mnc.PESO_NON_CONF) as TOT_PESO_NC, sum (cvc1.num_vc) as NUM_NC  "
-					+ " FROM "
-					+ " AU_C_VARCOMP cvc1  "
-					+ " , AU_M_NONCONF mnc "
-					+ " where  "
-					+ " cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and "
-					+ " cvc1.ID_C_CAMPAGNA =  " + idCampagna
-					+ " group by cvc1.id_c_campagna, cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, mnc.ID_FASE, cvc1.data_inizio, cvc1.data_fine) as t1 on t2.ID_M_NONCONF = t1.ID_M_NONCONF "
-					+ " left join  "
-					+ " (Select cvc1.ID_FASE, sum (mnc.PESO_NON_CONF) as TOT_PESO_FS  "
-					+ " FROM "
-					+ " AU_C_VARCOMP cvc1  "
-					+ " , AU_M_NONCONF mnc "
-					+ " where  "
-					+ " cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and "
-					+ " cvc1.ID_C_CAMPAGNA =  " + idCampagna
-					+ " group by cvc1.ID_FASE) as t3  "
-					+ " on t1.ID_FASE = t3.ID_FASE ";
+				String query =  "Select t1.ID_C_CAMPAGNA, t1.ID_M_NONCONF, t1.PESO_NON_CONF, t1.ID_FASE, t1.DATA_INIZIO, t1.DATA_FINE, t1.NUM_NC, "
+								+ "	case when t1.PESO_NON_CONF = 0 then null else t2.INCC end AS INCC, TOT_PESO_NC, TOT_PESO_FS, "
+								+ "	case when t1.PESO_NON_CONF = 0 then null else t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.TOT_PESO_NC) as decimal (7,2))) end AS VALORE_PESATO, "
+								+ "	case when t1.PESO_NON_CONF = 0 then null else t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t3.TOT_PESO_FS) as decimal (7,2))) end AS VALORE_PESATO_FASE  from"
+								+ "	(Select cvc2.ID_M_NONCONF,"
+								+ "	case when sum (cvc2.PERC_PESATA) < 0 then 0 else sum (cvc2.PERC_PESATA) end  as INCC "
+								+ "	FROM AU_C_VARCOMP cvc2"
+								+ "	where "
+								+ "	cvc2.ID_C_CAMPAGNA = " + idCampagna
+								+ "	group by cvc2.ID_M_NONCONF) as t2"
+								+ "	left join "
+								+ "	(Select cvc1.id_c_campagna, cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, mnc.ID_FASE, cvc1.data_inizio, cvc1.data_fine, sum (mnc.PESO_NON_CONF) as TOT_PESO_NC, sum (cvc1.num_vc) as NUM_NC" 
+								+ "	FROM"
+								+ "	AU_C_VARCOMP cvc1 "
+								+ "	, AU_M_NONCONF mnc"
+								+ "	where "
+								+ "	cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and"
+								+ "	cvc1.ID_C_CAMPAGNA = " + idCampagna
+								+ "	group by cvc1.id_c_campagna, cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, mnc.ID_FASE, cvc1.data_inizio, cvc1.data_fine) as t1 on t2.ID_M_NONCONF = t1.ID_M_NONCONF"
+								+ "	left join "
+								+ "	(Select cvc1.ID_FASE, sum (mnc.PESO_NON_CONF) as TOT_PESO_FS "
+								+ "	FROM"
+								+ "	AU_C_VARCOMP cvc1 "
+								+ "	, AU_M_NONCONF mnc"
+								+ "	where "
+								+ "	cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and"
+								+ "	cvc1.ID_C_CAMPAGNA = " + idCampagna
+								+ "	group by cvc1.ID_FASE) as t3"
+								+ "	on t1.ID_FASE = t3.ID_FASE";
 					
 		
 		List<Object[]> lista = new ArrayList<Object[]>();
@@ -1675,38 +1666,25 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 			for (Object[] row : lista) {
 				AU_C_NONCONF item = 
 					new AU_C_NONCONF();
-				/*
-					+ " 	t1.ID_C_CAMPAGNA "
-					+ " 	, t1.ID_M_NONCONF "
-					+ " 	, t1.PESO_NON_CONF "
-					+ " 	, t2.INCC "
-					+ " 	, t1.DATA_INIZIO "
-					+ " 	, t1.DATA_FINE "
-					+ " 	, t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t3.TOT_PESO_FS) as decimal (7,2))) AS VALORE_PESATO_FASE   "
-					+ " 	, t1.ID_FASE "
-					+ " 	, TOT_PESO_NC "
-					+ " 	, TOT_PESO_FS "
-					+ " 	, t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.TOT_PESO_NC) as decimal (7,2))) AS VALORE_PESATO "
-					+ " 	, t1.NUM_NC "
-				 */
+				
 				item.setID_C_CAMPAGNA(idCampagna);
 				item.setID_M_NONCONF((Long)row[1]);
-				if(row[1]!=null)item.setPESO_NON_CONF(((BigDecimal)row[2]).doubleValue());
-				if(row[2]!=null)item.setINCC(((BigDecimal)row[3]).doubleValue());
-				if(row[3]!=null)item.setDATA_INIZIO((Date)row[4]);
-				if(row[4]!=null)item.setDATA_FINE((Date)row[5]);
-				if(row[5]!=null)item.setVALORE_PESATO_FASE(((BigDecimal)row[6]).doubleValue());
-				if(row[6]!=null)item.setID_FASE((Long)row[7]);
-				if(row[7]!=null)item.setTOT_PESO_NC(((BigDecimal)row[8]).doubleValue());
-				if(row[8]!=null)item.setTOT_PESO_FS(((BigDecimal)row[9]).doubleValue());
-				if(row[9]!=null)item.setVALORE_PESATO(((BigDecimal)row[10]).doubleValue());
-				if(row[9]!=null)item.setNUM_NC((Integer)row[11]);
-				listaNonConf.add(item);
-		
+				if(row[2]!=null)item.setPESO_NON_CONF(((BigDecimal)row[2]).doubleValue());
+				if(row[3]!=null)item.setID_FASE((Long)row[3]);
+				if(row[4]!=null)item.setDATA_INIZIO((Date)row[4]);
+				if(row[5]!=null)item.setDATA_FINE((Date)row[5]);
+				if(row[6]!=null)item.setNUM_NC((Integer)row[6]);
+				if(row[7]!=null)item.setINCC(((BigDecimal)row[7]).doubleValue());
+				if(row[8]!=null)item.setTOT_PESO_NC(((BigDecimal)row[8]).doubleValue());
+				if(row[9]!=null)item.setTOT_PESO_FS(((BigDecimal)row[9]).doubleValue());
+				if(row[10]!=null)item.setVALORE_PESATO(((BigDecimal)row[10]).doubleValue());
+				if(row[11]!=null)item.setVALORE_PESATO_FASE(((BigDecimal)row[11]).doubleValue());		
+				
+				listaNonConf.add(item);		
 			}
 		} catch (Exception e) {
-			System.out.println("EERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
-			log.info("EERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
+			System.out.println("ERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
+			log.info("ERRORE getDatiCampagnaVNonConfDto: " + e.getStackTrace());
 			e.printStackTrace();
 		}
 		
