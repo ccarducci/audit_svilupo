@@ -1693,48 +1693,47 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public void getDatiCampagnaRisEsprDto(long idCampagna,
 			List<AU_C_RISESPR> listaESPR) {
-		String query = "Select t1.ID_M_RISCHIO " + 
-						" , t1.ID_M_RISESPR " + 
-					" , NUM1 " + 
-					" , NUM_RS " + 
-					" 	, (cast((NUM1) as decimal (7,2))/cast((NUM_RS) as decimal (7,2))*100) AS SU_TOT " + 
-					" 	, IMPORTO " +
-					" from " + 
-					" (Select svc.ID_M_RISCHIO, sum (svc.num) as NUM_RS " + 
-					" 	FROM " + 
-					" 	AU_S_SESSIONE ausess  " + 
-					" 		, AU_S_RISCHIO snc " + 
-					" 		, AU_SESSIONI sess " + 
-					" 		, AU_S_RISESPR svc " + 
-					" 		, AU_M_RISCHIO mnc " + 
-					" 		, AU_TPL_ISNC   " + 
-					" 		where  " + 
-					" 		snc.ID_S_SESSIONE = ausess.ID_S_SESSIONE and " + 
-					" 		snc.ID_S_RISCHIO = svc.ID_S_RISCHIO and " + 
-					" 		ausess.ID_SESSIONE = sess.ID_SESSIONE and " + 
-					" 		svc.ID_M_RISCHIO = mnc.ID_M_RISCHIO and " + 
-					" 		sess.ID_CAMPAGNA = " + idCampagna +"  and " + 
-					" 		ausess.STATO_ESAME_SESSIONE = 'C' " + 
-					" 		group by svc.ID_M_RISCHIO) as t2 " + 
-					" 		left join  " + 
-					" 		(Select svc.ID_M_RISCHIO, svc.ID_M_RISESPR, sum (svc.num) as NUM1, sum (svc.importo) as IMPORTO " + 
-					" 		FROM " + 
-					" 		AU_S_SESSIONE ausess  " + 
-					" 		, AU_S_RISCHIO snc " + 
-					" 		, AU_SESSIONI sess " + 
-					" 		, AU_S_RISESPR svc " + 
-					" 		, AU_M_RISCHIO mnc " + 
-					" 		, AU_TPL_ISNC   " + 
-					" 		where  " + 
-					" 		snc.ID_S_SESSIONE = ausess.ID_S_SESSIONE and " + 
-					" 		snc.ID_S_RISCHIO = svc.ID_S_RISCHIO and " + 
-					" 		ausess.ID_SESSIONE = sess.ID_SESSIONE and " + 
-					" 		svc.ID_M_RISCHIO = mnc.ID_M_RISCHIO and " + 
-					" 		sess.ID_CAMPAGNA = " + idCampagna + "  and " + 
-					" 		ausess.STATO_ESAME_SESSIONE = 'C' " + 
-					" 		group by svc.ID_M_RISCHIO, svc.ID_M_RISESPR) as t1 on t2.ID_M_RISCHIO = t1.ID_M_RISCHIO ";
-		
-		
+		String query = "Select t1.ID_CAMPAGNA, t1.ID_M_RISCHIO, t1.ID_M_RISESPR, t1.DESCRIZIONE, t1.RAGGRUPPAMENTO_RISCHIO, NUM, NUM_RS, (cast((NUM) as decimal (7,2))/cast((NUM_RS) as decimal (7,2))*100) AS SU_TOT, IMPORTO from"
+					+ " (Select svc.ID_M_RISCHIO, sum (svc.num) as NUM_RS"
+					+ "	FROM"
+					+ "	AU_S_SESSIONE ausess" 
+					+ " , AU_S_RISCHIO snc"
+					+ "	, AU_SESSIONI sess"
+					+ "	, AU_S_RISESPR svc"
+					+ "	, AU_M_RISESPR mrise"
+					+ "	, AU_M_RISCHIO mnc"
+					+ "	, AU_TPL_ISNC"  
+					+ "	where" 
+					+ "	snc.ID_S_SESSIONE = ausess.ID_S_SESSIONE and"
+					+ " snc.ID_S_RISCHIO = svc.ID_S_RISCHIO and"
+					+ "	ausess.ID_SESSIONE = sess.ID_SESSIONE and"
+					+ "	svc.ID_M_RISCHIO = mnc.ID_M_RISCHIO and"
+					+ "	mrise.ID_M_RISCHIO = svc.ID_M_RISCHIO AND"
+					+ "	mrise.ID_M_RISESPR = svc.ID_M_RISESPR and"
+					+ "	sess.ID_CAMPAGNA = " + idCampagna  + " and"
+					+ "	ausess.STATO_ESAME_SESSIONE = 'C'"
+					+ "	group by svc.ID_M_RISCHIO) as t2"
+					+ "	left join"
+					+ "	(Select sess.id_campagna, svc.ID_M_RISCHIO, svc.ID_M_RISESPR, mrise.DESCRIZIONE, mrise.RAGGRUPPAMENTO_RISCHIO, sum (svc.num) as NUM, sum (svc.importo) as IMPORTO"
+					+ "	FROM"
+					+ "	AU_S_SESSIONE ausess"
+					+ "	, AU_S_RISCHIO snc"
+					+ "	, AU_SESSIONI sess"
+					+ "	, AU_S_RISESPR svc"
+					+ "	, AU_M_RISESPR mrise"
+					+ "	, AU_M_RISCHIO mnc"
+					+ "	, AU_TPL_ISNC"
+					+ "	where "
+					+ "	snc.ID_S_SESSIONE = ausess.ID_S_SESSIONE and"
+					+ "	snc.ID_S_RISCHIO = svc.ID_S_RISCHIO and"
+					+ "	ausess.ID_SESSIONE = sess.ID_SESSIONE and"
+					+ "	svc.ID_M_RISCHIO = mnc.ID_M_RISCHIO and"
+					+ "	mrise.ID_M_RISCHIO = svc.ID_M_RISCHIO AND"
+					+ "	mrise.ID_M_RISESPR = svc.ID_M_RISESPR AND"
+					+ "	sess.ID_CAMPAGNA = " + idCampagna  + " and"
+					+ "	ausess.STATO_ESAME_SESSIONE = 'C'"
+					+ "	group by sess.id_campagna, svc.ID_M_RISCHIO, svc.ID_M_RISESPR, mrise.DESCRIZIONE, mrise.RAGGRUPPAMENTO_RISCHIO) as t1 on t2.ID_M_RISCHIO = t1.ID_M_RISCHIO";
+							
 		List<Object[]> lista = new ArrayList<Object[]>();
 
 		try {
@@ -1742,31 +1741,24 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 			for (Object[] row : lista) {
 				AU_C_RISESPR item = 
 					new AU_C_RISESPR();
-				/*
-					t1.ID_M_RISCHIO " + 
-					" , t1.ID_M_RISESPR " + 
-					" , NUM1 " + 
-					" , NUM_RS " + 
-					" 	, (cast((NUM1) as decimal (7,2))/cast((NUM_RS) as decimal (7,2))*100) AS SU_TOT " + 
-					" 	, IMPORTO " 
-				 */
+				
 				item.setID_C_CAMPAGNA(idCampagna);
-				item.setID_M_RISCHIO((Long)row[0]);
-				item.setID_M_RISESPR((Long)row[1]);
-				item.setNUM((Integer) row[2]);
-				item.setNUM_RS((Integer) row[3]);
-				item.setSU_TOT(((BigDecimal)row[4]).doubleValue());
-				item.setIMPORTO(((BigDecimal)row[5]).doubleValue());
+				if(row[1]!=null) item.setID_M_RISCHIO((Long)row[1]);
+				if(row[2]!=null) item.setID_M_RISESPR((Long)row[2]);
+				if(row[3]!=null) item.setDESCRIZIONE((String) row[3]);
+				if(row[4]!=null) item.setRAGGRUPPAMENTO_RISCHIO((Integer) row[4]);
+				if(row[5]!=null) item.setNUM((Integer) row[5]);
+				if(row[6]!=null) item.setNUM_RS((Integer) row[6]);
+				if(row[7]!=null) item.setSU_TOT(((BigDecimal)row[7]).doubleValue());
+				if(row[8]!=null) item.setIMPORTO(((BigDecimal)row[8]).doubleValue());
 
-				listaESPR.add(item);
-		
+				listaESPR.add(item);		
 			}
 		} catch (Exception e) {
-			System.out.println("EERRORE getDatiCampagnaRisEsprDto: " + e.getStackTrace());
-			log.info("EERRORE getDatiCampagnaRisEsprDto: " + e.getStackTrace());
+			System.out.println("ERRORE getDatiCampagnaRisEsprDto: " + e.getStackTrace());
+			log.info("ERRORE getDatiCampagnaRisEsprDto: " + e.getStackTrace());
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 	
 	@Override
