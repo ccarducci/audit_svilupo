@@ -1294,4 +1294,23 @@ try {
 		}
 		return null;
 	}
+	@Override
+	public String getCampagnaAnno(long idCampanga) {
+		String anno = "";
+		List<Object[]> lista = new ArrayList<Object[]>();
+		String queryStr = "SELECT cast(DATEPART(year, [DATA_INIZIO]) as varchar) AS Anno  FROM AU_CAMPAGNA where ID_CAMPAGNA  = " + idCampanga;	
+ 		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}		
+		return anno;
+	}
+	@Override
+	public List<String> getSediByCampagna(long idCampanga) {
+		// TODO Stub di metodo generato automaticamente
+		return null;
+	}
 }
