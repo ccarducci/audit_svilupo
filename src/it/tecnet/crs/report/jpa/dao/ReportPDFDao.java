@@ -94,4 +94,5 @@ public interface ReportPDFDao {
 	public String calcolaIndicatoriCampagna(long idCampanga);
 	public String getCampagnaAnno(long idCampanga);
 	public List<String> getSediByCampagna(long idCampanga);
+	public List<CampagnaInfoDto> getCampagnaInfoForReport(long idCampanga);
 }

@@ -3,6 +3,7 @@ package it.tecnet.crs.report.web.action;
 
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoPratiche;
 import it.tecnet.crs.indicatori.campagna.CalcoloIndicatoriCampagnaService;
+import it.tecnet.crs.report.jpa.dao.CampagnaInfoDto;
 import it.tecnet.crs.report.service.ReportPDFService;
 import it.tecnet.crs.report.web.bean.ReportPDFBean;
 import it.tecnet.crs.report.web.dto.ReportAccessoPDFDto;
@@ -358,6 +359,17 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	public void creaIntestazioneCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
 		String anno = reportPDFService.getCampagnaAnno(report.getIdCampagna());
 		List<String> listaSedi = reportPDFService.getSediByCampagna(report.getIdCampagna());
+		List<CampagnaInfoDto> info = reportPDFService.getCampagnaInfoForReport(report.getIdCampagna());
+		
+		String testo = "Gli accessi di Audit  effettuati dal 01/01/" + anno + " al 31/12/" + anno + " riguardano le seguenti sedi: \n\n";
+		for (String sede : listaSedi) {
+			testo += "    -    " + sede + "\n";
+		}
+		testo += "\n\ne sono costituiti da un campione di n. " + info.get(0).getNumPratiche() + " istanze di ATPO dell'invalidità civile definite dal " + info.get(0).getDataInzio() + " al " + info.get(0).getDataFine() + ". Nei seguenti esiti:" ;
+		document.add(sezione1(testo,""));
+		//List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdSSessione());
+		//document.add(sezione1Corpo(rowsRiepilogoIstanzelista));
+		/*
         String testo = 	"L' accesso di Audit, effettuato dal " + report.getDataInizio() + " al " +  report.getDataFine() +
 		" riguarda un campione costituito da n. " + report.getNumeroPraticheEsaminate() + " istanze " +
 		"di ATPO dell' invalidità civile definite dal " + report.getDataInizioOsservazione() + 
@@ -365,6 +377,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		document.add(sezione1(testo,""));
 		List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdSSessione());
 		document.add(sezione1Corpo(rowsRiepilogoIstanzelista));
+		*/
 	}
 	
 	/* OK */
@@ -1151,7 +1164,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	        createIntestazione(document,report);
 	        document.add(intestazione2("Report Audit sede di " + report.getSede() + "\n\n"));
 	        creaIntestazioneCompleta(document,report);
-	        creaConformitaProcessoCompleta(document,report);
+	        //creaConformitaProcessoCompleta(document,report);
+	        /*
 	        creaRischioCompleta(document,report);
 	        creaStatoFascicoloCompleta(document,report);
 	        document.newPage();
@@ -1172,6 +1186,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	        Paragraph p = new Paragraph("DIRETTORE DELLA SEDE                                   IL DIRIGENTE DI AUDIT");
 	        p.setAlignment(Paragraph.ALIGN_CENTER);
 	        document.add(p);
+	        */
 		}catch(Exception ex){
 			log.error(ex.getMessage());
 		}

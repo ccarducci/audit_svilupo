@@ -1,6 +1,7 @@
 package it.tecnet.crs.report.service;
 
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoPratiche;
+import it.tecnet.crs.report.jpa.dao.CampagnaInfoDto;
 import it.tecnet.crs.report.web.dto.ReportAccessoPDFDto;
 
 import java.util.List;
@@ -97,5 +98,6 @@ public interface ReportPDFService {
 	public List<String> getSediByCampagna(long idCampanga);
 	
 	public String getCampagnaAnno(long idCampanga);
+	public List<CampagnaInfoDto> getCampagnaInfoForReport(long idCampanga);
 	
 }

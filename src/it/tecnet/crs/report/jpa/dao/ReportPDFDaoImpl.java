@@ -5,6 +5,7 @@ import it.tecnet.crs.report.web.dto.ReportAccessoPDFDto;
 
 import java.sql.CallableStatement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -1314,6 +1315,7 @@ try {
 		}		
 		return anno;
 	}
+	
 	@Override
 	public List<String> getSediByCampagna(long idCampanga) {
 		
@@ -1346,4 +1348,41 @@ try {
 		
 		return listaSedi;
 	}
+	
+	@Override
+	public List<CampagnaInfoDto> getCampagnaInfoForReport(long idCampanga) {
+		List<CampagnaInfoDto> listaRet = new ArrayList<CampagnaInfoDto>();
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String query = " select "
+						+ " 	ac.ID_CAMPAGNA ,ac.DATA_INIZIO, ac.DATA_FINE , sum( ass.NR_PRATICHE )  "
+						+ " from "
+						+ " 	AU_SESSIONI assi, "
+						+ " 	AU_S_SESSIONE ass , "
+						+ " 	AU_CAMPAGNA ac "
+						+ " WHERE "
+						+ " 	assi.ID_SESSIONE = ass.ID_SESSIONE "
+						+ " 	AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA "
+						+ " 	AND ac.ID_CAMPAGNA =  " + idCampanga
+						+ " 	and ass.STATO_ESAME_SESSIONE = 'C' "
+						+ " group by ac.ID_CAMPAGNA ,ac.DATA_INIZIO, ac.DATA_FINE ";
+		try {
+			lista = em.createNativeQuery(query).getResultList();
+			
+			for (Object[]  row : lista) {
+				CampagnaInfoDto itemToAdd = new CampagnaInfoDto();
+				itemToAdd.setIdCampagna((Long) row[0]);
+				itemToAdd.setDataInzio((Date) row[1]);
+				itemToAdd.setDataFine((Date) row[2]);
+				itemToAdd.setNumPratiche((Integer) row[3]);
+				listaRet.add(itemToAdd);
+			}
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	
+		return listaRet;
+	}
+	
 }
