@@ -367,8 +367,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		}
 		testo += "\n\ne sono costituiti da un campione di n. " + info.get(0).getNumPratiche() + " istanze di ATPO dell'invalidità civile definite dal " + info.get(0).getDataInzio() + " al " + info.get(0).getDataFine() + ". Nei seguenti esiti:" ;
 		document.add(sezione1(testo,""));
-		//List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdSSessione());
-		//document.add(sezione1Corpo(rowsRiepilogoIstanzelista));
+		List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdCampagna());
+		document.add(sezione1Corpo(rowsRiepilogoIstanzelista));
 		/*
         String testo = 	"L' accesso di Audit, effettuato dal " + report.getDataInizio() + " al " +  report.getDataFine() +
 		" riguarda un campione costituito da n. " + report.getNumeroPraticheEsaminate() + " istanze " +
