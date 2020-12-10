@@ -744,7 +744,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 				descrizione = "Difesa Incompleta";
 			
 			tableInner.addCell(getCellWithtBordersColorAndRowsSpan( descrizione ,testoFont,Element.ALIGN_LEFT,baseColor,3));
-			List<ReportAccessoPDFDto> listaDifesaIncompleta = reportPDFService.getTipoDifesaIncompletaAnnuale(report.getIdSSessione(), item.getTipoDifesa());
+			List<ReportAccessoPDFDto> listaDifesaIncompleta = reportPDFService.getTipoDifesaIncompletaAnnuale(report.getIdCampagna(), item.getTipoDifesa());
 			for (ReportAccessoPDFDto reportAccessoPDFDto : listaDifesaIncompleta) {
 				
 				tableInner.addCell(getCellWithtBordersColor(reportAccessoPDFDto.getDescrizioneEsito() ,testoFont,Element.ALIGN_CENTER,baseColor));
@@ -788,7 +788,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		row8[2].setBackgroundColor(BaseColor.WHITE);
 		row8[3].setBackgroundColor(BaseColor.WHITE);
 		row9[1].setBackgroundColor(BaseColor.WHITE);
-		row9[2].setBackgroundColor(BaseColor.WHITE);
+		row9[2].setBackgroundColor(BaseColor.WHITE); // DA RIVEDERE
 		row9[3].setBackgroundColor(BaseColor.WHITE);
 		
 		
@@ -870,7 +870,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		String testo = 	"I risultati della sezione sono espressi come media degli intervalli temporali. Gli elementi in rosso indicano il superamento dei termini stabiliti nelle disposizioni per lo svolgimento delle attività. ";
 		document.add(sezione1(testo,""));
 		
-		List<ReportAccessoPDFDto> lista = reportPDFService.getRisultatiByTempoAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> lista = reportPDFService.getRisultatiByTempoAnnuale(report.getIdCampagna());
 		document.add(creaRisultatiInRelTempoCorpo(lista));
 	}
 	
@@ -1178,8 +1178,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	        creaStatoFascicoloCompleta(document,report);
 	        document.newPage();
 	        creaGiudiziCompleta(document,report);
-	        /* creaRisultatiInRelTempoCompleta(document,report);
-	        creaNonConformitaCompleta(document,report);
+	        creaRisultatiInRelTempoCompleta(document,report);
+	        // creaNonConformitaCompleta(document,report);
 	        document.add(new Paragraph("\n"));
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        String dataStr = sdf.format(new Date());
@@ -1194,7 +1194,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	        Paragraph p = new Paragraph("DIRETTORE DELLA SEDE                                   IL DIRIGENTE DI AUDIT");
 	        p.setAlignment(Paragraph.ALIGN_CENTER);
 	        document.add(p);
-	        */
+	        
 		}catch(Exception ex){
 			log.error(ex.getMessage());
 		}

@@ -1245,8 +1245,106 @@ try {
 	}
 	@Override
 	public List<Object[]> getRiepilogoGiudiziAnnuale(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+		/*
+		String queryStr = "select " + 
+							"A.DESCRIZIONE, " + 
+						  	"isnull(A.QUANTITA,0) as nr_giudizi, " +
+						  	"isnull(A.PERC_QUANTITA,0) as percentuale, " +
+						  	"isnull(A.NUM_PRESTAZIONI, 0) as num_prestazioni, " +
+						  	"isnull(A.IMPORTO_PRESTAZIONE, 0) as importo_prestazioni, " + 
+						  	"isnull(A.SPESE_LEGALI, 0) as spese_legali " + 
+						  	"from( " +
+							"(select " +
+							"'U02' as esito, " +
+							"'COMPLETA + ESSENZIALE' AS DESCRIZIONE, " +
+							"sum(QUANTITA) as quantita, sum(PERC_QUANTITA) as perc_quantita, " +
+							"sum(NUM_PRESTAZIONI) as num_prestazioni, sum(IMPORTO_PRESTAZIONE) as importo_prestazione, sum(SPESE_LEGALI) as spese_legali " +
+							"from " +
+							"AU_S_TESITO " +
+							"where ID_S_SESSIONE = " + idSSessione + " and TIPO_DIFESA in ('U02', 'U03') " +
+							"union all " +
+							"select " +
+							"TIPO_DIFESA, 'INCOMPLETA' AS DESCRIZIONE, QUANTITA, PERC_QUANTITA, NUM_PRESTAZIONI, IMPORTO_PRESTAZIONE, SPESE_LEGALI " +
+							"from " +
+							"AU_S_TESITO " +
+							"where ID_S_SESSIONE = " + idSSessione + " and TIPO_DIFESA in ('U04')) as A right join " +
+							"(select TIPO, CODIFICA " +
+							"from AU_TPL_TIPOLOGICHE where tipo = 'V009') as B on A.ESITO = B.CODIFICA) " +
+							"where ESITO <> 'NULL'";
+		*/					
+		String queryStr =  "SELECT tab.descrizione, " +
+						    "    Sum(TAB.quantita)            AS nr_giudizi, " +
+						    "    Sum(TAB.perc_quantita)  * 100     AS perc_quantita, " +
+						    "    Sum(TAB.num_prestazioni)     AS num_prestazioni, " +
+						    "    Sum(TAB.importo_prestazione) AS importo_prestazione, " +
+						    "    Sum(TAB.spese_legali)        AS spese_legali, " +
+						    "    Sum(TAB.spese_ctu)        AS spese_legali_ctu " +
+							"FROM   (SELECT * " +
+							"        FROM   (SELECT 'U02'                            AS esito, " +
+							"                       'COMPLETA + ESSENZIALE'          AS DESCRIZIONE, " +
+							"                       Isnull(a.quantita, 0)            AS quantita, " +
+							"                       Isnull(a.perc_quantita, 0)       AS perc_quantita, " +
+							"                       Isnull(a.num_prestazioni, 0)     AS num_prestazioni, " +
+							"                       Isnull(a.importo_prestazione, 0) AS importo_prestazione, " +
+							"                       Isnull(a.spese_legali, 0)        AS spese_legali, " +
+							"                       Isnull(a.spese_legali_ctu, 0)        AS spese_ctu " +
+							"                FROM   (select * from au_s_tesito where COD_CHIUSURA_CORRETTO in (2,3) AND ID_S_SESSIONE in ( " +
+					  		  " 				select  " +
+					  		  " 				ass.ID_S_SESSIONE  " +
+					  		  " 			from " +
+					  		  " 					AU_SESSIONI assi, " +
+					  		  " 				AU_S_SESSIONE ass , " +
+					  		  " 					AU_CAMPAGNA ac " +
+					  		  " 				WHERE " +
+					  		  " 					assi.ID_SESSIONE = ass.ID_SESSIONE " +
+					  		  " 				AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " +
+					  		  " 				AND ac.ID_CAMPAGNA =  " + idCampagna +
+					  		  " 				AND ass.STATO_ESAME_SESSIONE = 'C' " +
+					  		  " 			) " 
+							+ " ) a " +
+							"                       RIGHT JOIN (SELECT * " +
+							"                                   FROM   au_tpl_tipologiche b " +
+							"                                   WHERE  tipo = 'V009' " +
+							"                                          AND b.codifica IN ( 'U02', 'U03' )) b " +
+							"                               ON a.tipo_difesa = B.codifica) AS A " +
+							"        UNION ALL " +
+							"        SELECT * " +
+							"        FROM   (SELECT b.codifica                       AS esito, " +
+							"                       'INCOMPLETA'                     AS DESCRIZIONE, " +
+							"                       Isnull(a.quantita, 0)            AS quantita, " +
+							"                       Isnull(a.perc_quantita, 0)       AS perc_quantita, " +
+							"                       Isnull(a.num_prestazioni, 0)     AS num_prestazioni, " +
+							"                       Isnull(a.importo_prestazione, 0) AS importo_prestazione, " +
+							"                       Isnull(a.spese_legali, 0)        AS spese_legali, " +
+							"                       Isnull(a.spese_legali_ctu, 0)        AS spese_ctu " +
+							"                FROM   (select * from au_s_tesito where COD_CHIUSURA_CORRETTO in (2,3) AND ID_S_SESSIONE  in ( " +
+					  		  " 				select  " +
+					  		  " 				ass.ID_S_SESSIONE  " +
+					  		  " 			from " +
+					  		  " 					AU_SESSIONI assi, " +
+					  		  " 				AU_S_SESSIONE ass , " +
+					  		  " 					AU_CAMPAGNA ac " +
+					  		  " 				WHERE " +
+					  		  " 					assi.ID_SESSIONE = ass.ID_SESSIONE " +
+					  		  " 				AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " +
+					  		  " 				AND ac.ID_CAMPAGNA =  " + idCampagna +
+					  		  " 				AND ass.STATO_ESAME_SESSIONE = 'C' " +
+					  		  " 			) " +
+							" ) a " +
+							"                       RIGHT JOIN (SELECT * " +
+							"                                   FROM   au_tpl_tipologiche b " +
+							"                                   WHERE  tipo = 'V009' " +
+							"                                          AND b.codifica IN ( 'U04' )) b " +
+							"                               ON a.tipo_difesa = B.codifica) AS A) AS TAB " +
+							"GROUP  BY tab.descrizione   ";
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getRiepilogoIstanzeAnnuale(long idCampagna) {
@@ -1336,14 +1434,88 @@ try {
 	}
 	@Override
 	public List<Object[]> getRisultatiByTempoAnnuale(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String queryStr = "select " + 
+							"B.descrizione, " + 
+						  	"isnull(A.media_gg, 0) as giorni, " +
+						  	"isnull(A.NC, 0) as nc " +
+						  	"  , ORDINAMENTO " +
+						  	"from( " +
+							"(select " +
+							"TIPO, " +
+							"CODIFICA, " +
+							"MEDIA_GG, " +
+							"NC, " +
+							"ORDINAMENTO " +
+							"from " +
+							"au_s_tempi " +
+							"where ID_S_SESSIONE in ( " +
+					  		  " 				select  " +
+					  		  " 				ass.ID_S_SESSIONE  " +
+					  		  " 			from " +
+					  		  " 					AU_SESSIONI assi, " +
+					  		  " 				AU_S_SESSIONE ass , " +
+					  		  " 					AU_CAMPAGNA ac " +
+					  		  " 				WHERE " +
+					  		  " 					assi.ID_SESSIONE = ass.ID_SESSIONE " +
+					  		  " 				AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " +
+					  		  " 				AND ac.ID_CAMPAGNA =  " + idCampagna +
+					  		  " 				AND ass.STATO_ESAME_SESSIONE = 'C' " +
+					  		  " 			)) as A right join " +
+							"(select TIPO, CODIFICA, DESCRIZIONE " +
+							"from AU_TPL_TIPOLOGICHE where tipo = 'V008' and LTRIM(RTRIM(CODIFICA)) in ( 'E06','E07','E08','E09','E10','E01','E04','E02' )) as B on A.tipo = B.tipo and A.codifica = B.codifica) order by ORDINAMENTO";
+							
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}
+		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getTipoDifesaIncompletaAnnuale(long idCampagna,
 			String tipoDifesa) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String queryStr = "select " + 
+							"B.DESCRIZIONE, " + 
+						  	"isnull(A.QUANTITA,0) as quantita, " +
+						  	"isnull(A.PERC_QUANTITA, 0) as perc_quantita " +
+						  	"from( " +
+							"(select " +
+							"COD_CHIUSURA_CORRETTO, " +
+							"quantita, " +
+							"PERC_QUANTITA " +
+							"from AU_S_TESITO " +
+							"where ID_S_SESSIONE  in ( " +
+					  		  " 				select  " +
+					  		  " 				ass.ID_S_SESSIONE  " +
+					  		  " 			from " +
+					  		  " 					AU_SESSIONI assi, " +
+					  		  " 				AU_S_SESSIONE ass , " +
+					  		  " 					AU_CAMPAGNA ac " +
+					  		  " 				WHERE " +
+					  		  " 					assi.ID_SESSIONE = ass.ID_SESSIONE " +
+					  		  " 				AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " +
+					  		  " 				AND ac.ID_CAMPAGNA =  " + idCampagna +
+					  		  " 				AND ass.STATO_ESAME_SESSIONE = 'C' " +
+					  		  " 			) and tipo_difesa = '" + tipoDifesa +"') as A right join " +
+							"(select TIPO, CODIFICA, DESCRIZIONE " +
+							"from AU_TPL_TIPOLOGICHE where codifica in ('1', '2', '3', '4') and TIPO = 'V019') as B on A.COD_CHIUSURA_CORRETTO = B.CODIFICA) ";
+							
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getVarCompByIdMNonConfAnnuale(Long idMNonConf) {
