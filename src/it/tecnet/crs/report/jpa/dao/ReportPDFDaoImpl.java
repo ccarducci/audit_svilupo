@@ -1174,7 +1174,7 @@ try {
 		String queryStr = "SELECT t.ID_FASE, crs.DESCRIZIONE, SUM(t.VALORE_PESATO_FASE) as INCC FROM AU_C_NONCONF AS t"
 					+ "	join CRS_SOTTOPROCESSO crs on t.ID_FASE = crs.ID_SOTTOPROCESSO"
 					+ "	where t.ID_C_CAMPAGNA = " + idCampagna
-					+ "	group by t.ID_C_CAMPAGNA, t.ID_FASE, crs.DESCRIZIONE";
+					+ "	group by t.ID_FASE, crs.DESCRIZIONE";
 		
 		try {
 			lista = em.createNativeQuery(queryStr).getResultList();
