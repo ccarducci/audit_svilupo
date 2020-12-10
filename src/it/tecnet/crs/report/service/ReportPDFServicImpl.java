@@ -538,6 +538,6 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	}
 	@Override
 	public List<String> getSediByCampagna(long idCampanga) {
-		return reportPDFDao.getSediByCampagna(idCampanga);;
+		return reportPDFDao.getSediByCampagna(idCampanga);
 	}
 }

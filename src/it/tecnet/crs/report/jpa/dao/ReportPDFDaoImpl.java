@@ -1294,6 +1294,7 @@ try {
 		}
 		return null;
 	}
+	
 	@Override
 	public String getCampagnaAnno(long idCampanga) {
 		String anno = "";
@@ -1302,6 +1303,11 @@ try {
  		
 		try {
 			lista = em.createNativeQuery(queryStr).getResultList();
+			
+			for (Object row : lista) {
+				anno = (String)row;
+			}
+			
 		} catch (Throwable e) {
 			e.printStackTrace();
 
@@ -1310,7 +1316,34 @@ try {
 	}
 	@Override
 	public List<String> getSediByCampagna(long idCampanga) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		
+		List<String> listaSedi = new ArrayList<String>();
+		
+		String query = " select " 
+						+ " 	SEDE " 
+						+ " from " 
+						+ " 	AU_SESSIONI assi, " 
+						+ " 	AU_S_SESSIONE ass , " 
+						+ " 	AU_CAMPAGNA ac " 
+						+ " WHERE " 
+						+ " 	assi.ID_SESSIONE = ass.ID_SESSIONE " 
+						+ " 	AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " 
+						+ " 	AND ac.ID_CAMPAGNA = " + idCampanga
+						+ " 	AND ass.STATO_ESAME_SESSIONE = 'C'";
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		try {
+			lista = em.createNativeQuery(query).getResultList();
+			
+			for (Object  row : lista) {
+				 String sede = (String)row;
+				 listaSedi.add(sede);
+			}
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}	
+		
+		return listaSedi;
 	}
 }

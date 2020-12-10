@@ -356,6 +356,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	
 	/* OK */
 	public void creaIntestazioneCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
+		String anno = reportPDFService.getCampagnaAnno(report.getIdCampagna());
+		List<String> listaSedi = reportPDFService.getSediByCampagna(report.getIdCampagna());
         String testo = 	"L' accesso di Audit, effettuato dal " + report.getDataInizio() + " al " +  report.getDataFine() +
 		" riguarda un campione costituito da n. " + report.getNumeroPraticheEsaminate() + " istanze " +
 		"di ATPO dell' invalidità civile definite dal " + report.getDataInizioOsservazione() + 
@@ -2530,6 +2532,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		if (idCampagnaS != null )
 			idCampagna = Long.parseLong(idCampagnaS);
 		
+		idCampagna = 2; // OKKIO DA LEVARE PER TEST
+		
 		try {
 			
 			//PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));
@@ -2538,7 +2542,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 			writer.setPageEvent(new BaseReportBuilder());
 			// Eseguo la query che estrae i dati da visualizzare in stampa
 			report = reportPDFService.getReportAccessoAnnualePDF(idCampagna);
-
+			report.setIdCampagna(idCampagna);
+			
 			// Apro il documento
 			document.open();
 			// Imposto e implemento il pdf
