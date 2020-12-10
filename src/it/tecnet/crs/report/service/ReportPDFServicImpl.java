@@ -450,9 +450,9 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	}
 	
 	@Override
-	public List<ReportAccessoPDFDto> getRisultatiByTempoAnnuale(long idSSessione) {
+	public List<ReportAccessoPDFDto> getRisultatiByTempoAnnuale(long idCampagna) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
-		List<Object[]> objList = reportPDFDao.getRisultatiByTempoAnnuale(idSSessione);
+		List<Object[]> objList = reportPDFDao.getRisultatiByTempoAnnuale(idCampagna);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToRisultatiByTempoPDF(obj));

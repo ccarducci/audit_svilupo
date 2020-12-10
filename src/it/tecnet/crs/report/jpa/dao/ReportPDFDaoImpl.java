@@ -1203,8 +1203,39 @@ try {
 	}
 	@Override
 	public List<Object[]> getRisultatiByTempoAnnuale(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String queryStr =  "select"   
+							+ " B.descrizione,"   
+						  	+ " isnull(A.media_gg, 0) as giorni,"  
+						  	+ " isnull(A.NC, 0) as nc"  
+						  	+ " , ORDINAMENTO"  
+						  	+ " from("  
+							+ " (select"  
+							+ " aut.TIPO,"  
+							+ " aut.CODIFICA,"  
+							+ " aut.MEDIA_GG,"  
+							+ " aut.NC,"  
+							+ " aut.ORDINAMENTO" 
+							+ " from"  
+							+ " au_s_tempi aut,"
+							+ " AU_S_SESSIONE ausess,"
+							+ " AU_SESSIONI sess"
+							+ " where"
+							+ " aut.ID_S_SESSIONE = ausess.ID_S_SESSIONE"
+							+ " and ausess.ID_SESSIONE = sess.ID_SESSIONE"
+							+ " and sess.ID_CAMPAGNA = " + idCampagna
+							+ " and ausess.STATO_ESAME_SESSIONE = 'C' ) as A right join" 
+							+ " (select TIPO, CODIFICA, DESCRIZIONE"  
+							+ " from AU_TPL_TIPOLOGICHE where tipo = 'V008' and LTRIM(RTRIM(CODIFICA)) in ( 'E06','E07','E08','E09','E10','E01','E04','E02' )) as B on A.tipo = B.tipo and A.codifica = B.codifica) order by ORDINAMENTO";		
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getTipoDifesaIncompletaAnnuale(long idCampagna,

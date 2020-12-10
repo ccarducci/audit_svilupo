@@ -847,7 +847,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		String testo = 	"I risultati della sezione sono espressi come media degli intervalli temporali. Gli elementi in rosso indicano il superamento dei termini stabiliti nelle disposizioni per lo svolgimento delle attività. ";
 		document.add(sezione1(testo,""));
 		
-		List<ReportAccessoPDFDto> lista = reportPDFService.getRisultatiByTempoAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> lista = reportPDFService.getRisultatiByTempoAnnuale(report.getIdCampagna());
 		document.add(creaRisultatiInRelTempoCorpo(lista));
 	}
 	
