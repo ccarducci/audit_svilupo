@@ -1100,8 +1100,38 @@ try {
 	@Override
 	public List<Object[]> getEsitoByTipoDifesaWithDissensoAnnuale(
 			long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+	
+		String queryStr =" select t.DESCRIZIONE , t.CODIFICA, cast(sum(isnull(e.QUANTITA,0)) as int) as quantita " +
+							"	from  AU_TPL_TIPOLOGICHE t  left join " +
+							" (select * from AU_S_TESITO where  COD_CHIUSURA_CORRETTO in ('1', '2', '3') and  ID_S_SESSIONE in (" +
+						  	"		select " + 
+							"		ass.ID_S_SESSIONE  " + 
+							"	from " + 
+							"		AU_SESSIONI assi, " + 
+							"		AU_S_SESSIONE ass , " + 
+							"		AU_CAMPAGNA ac " + 
+							"	WHERE " + 
+							"		assi.ID_SESSIONE = ass.ID_SESSIONE " + 
+							"		AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " + 
+							"		AND ac.ID_CAMPAGNA =  " + idCampagna + 
+							"		AND ass.STATO_ESAME_SESSIONE = 'C' " + 
+				  			") ) e  on t.CODIFICA = e.TIPO_DIFESA " +
+							"	where tipo = 'V009' " +
+							" group by  t.DESCRIZIONE, t.CODIFICA";
+		
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}
+		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getGiudiziDefinitiviEtichetteAnnuale() {

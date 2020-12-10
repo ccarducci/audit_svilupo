@@ -613,7 +613,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		String testo = 	"La sezione analizza gli esiti dei giudizi del campione per tipo di difesa.";
 		document.add(sezione1(testo,""));
 		
-		List<ReportAccessoPDFDto> giudizi1WithDissensoRows = reportPDFService.getEsitoByTipoDifesaWithCodeAndDissensoAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> giudizi1WithDissensoRows = reportPDFService.getEsitoByTipoDifesaWithCodeAndDissensoAnnuale(report.getIdCampagna());
 		//List<ReportAccessoPDFDto> giudizi1Rows = reportPDFService.getEsitoByTipoDifesaWithCode(report.getIdSSessione());
 		document.add(creaGiudiziCompletaCorpo1(giudizi1WithDissensoRows));
 		
@@ -638,7 +638,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		document.add(new Paragraph("\n"));
 		String test2 = "Si illustra il riepilogo dei giudizi definiti che comportano erogazione della prestazione e pagamento delle spese legali e di CTU (sfavorevoli + parzialmente favorevoli) distinti tra:";
 		document.add(sezione1(test2,""));
-		List<ReportAccessoPDFDto> listaGiudizi = reportPDFService.getRiepilogoGiudiziAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> listaGiudizi = reportPDFService.getRiepilogoGiudiziAnnuale(report.getIdCampagna());
 		document.add(creaGiudiziCompletaCorpo3(listaGiudizi,giudizi1WithDissensoRows));
 		String test3 = "La tabella illustra i giudizi che comportano erogazione della prestazione e pagamento delle spese legali e di CTU (esito sfavorevole e parzialmente favorevole) distinti in relazione alla difesa espletata.";
 		document.add(sezione1(test3,""));
@@ -1177,8 +1177,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	        //creaRischioCompleta(document,report);
 	        creaStatoFascicoloCompleta(document,report);
 	        document.newPage();
-	        /*creaGiudiziCompleta(document,report);
-	        creaRisultatiInRelTempoCompleta(document,report);
+	        creaGiudiziCompleta(document,report);
+	        /* creaRisultatiInRelTempoCompleta(document,report);
 	        creaNonConformitaCompleta(document,report);
 	        document.add(new Paragraph("\n"));
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
