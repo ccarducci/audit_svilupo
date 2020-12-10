@@ -400,7 +400,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	    table.getDefaultCell().setBorder(0);
 	    table.getDefaultCell().setBorderWidth(0f);
 	    table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-	    List<ReportAccessoPDFDto> listaOrder = reportPDFService.getRiepilogoFasiAnnuale(report.getIdSSessione());
+	    List<ReportAccessoPDFDto> listaOrder = reportPDFService.getRiepilogoFasiAnnuale(report.getIdCampagna());
 	    Collections.sort(listaOrder, new ConformitaProcesoComparator());
 	    //Collections.reverse(listaOrder); 
 	    
@@ -415,7 +415,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	    document.add(new Paragraph("\n"));
 		String testo2 = "Di seguito viene illustrato il grado di conformità del processo per fasi – sintesi. ";
 		document.add(sezione1(testo2,""));
-		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoFasiAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoFasiAnnuale(report.getIdCampagna());
 		document.add(creaConformitaProcessoCorpo( lista ));
 		//document.add(new Paragraph("\n"));
 		String finale = "Nella sezione 7 è presentata la conformità del processo nel dettaglio\n";
