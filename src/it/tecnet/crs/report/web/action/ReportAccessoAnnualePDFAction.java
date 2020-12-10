@@ -1173,11 +1173,11 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	        //document.add(intestazione2("Report Audit sede di " + report.getSede() + "\n\n"));
 	        creaIntestazioneCompleta(document,report);
 	        creaConformitaProcessoCompleta(document,report);
-	        /*
-	        creaRischioCompleta(document,report);
+	        
+	        //creaRischioCompleta(document,report);
 	        creaStatoFascicoloCompleta(document,report);
 	        document.newPage();
-	        creaGiudiziCompleta(document,report);
+	        /*creaGiudiziCompleta(document,report);
 	        creaRisultatiInRelTempoCompleta(document,report);
 	        creaNonConformitaCompleta(document,report);
 	        document.add(new Paragraph("\n"));
