@@ -921,7 +921,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		//document.add(sezione1(testo,""));
 		//document.add(new Paragraph("\n"));
 		
-		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoFasiAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoFasiAnnuale(report.getIdCampagna());
 
 		for(ReportAccessoPDFDto currFase : lista){
 
@@ -934,7 +934,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 			
 			NumberFormat decimalFormatter = new DecimalFormat("#0.000");
 			
-			List<ReportAccessoPDFDto> listaNC = reportPDFService.getMNonConfByIdFaseAnnuale(idFase,report.getIdSSessione());
+			List<ReportAccessoPDFDto> listaNC = reportPDFService.getMNonConfByIdFaseAnnuale(idFase,report.getIdCampagna());
 			for (ReportAccessoPDFDto nonConf : listaNC) {
 				
 				//System.out.println("SIAMO "+testoFase+" nonConf.getDescrizioneMNonConf()"+nonConf.getDescrizioneMNonConf());
@@ -967,7 +967,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 				
 				Long idMNonConf = nonConf.getIdMNonConf();
 
-				List<ReportAccessoPDFDto> listaVC = reportPDFService.getVarCompByIdMNonConfAnnuale(report.getIdSSessione(),idFase,idMNonConf);
+				List<ReportAccessoPDFDto> listaVC = reportPDFService.getVarCompByIdMNonConfAnnuale(report.getIdCampagna(),idFase,idMNonConf);
 				
 				/*
 				Integer TotaleListaVC = 0;
@@ -1057,8 +1057,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		
 		Long idMNonConf = nonConf.getIdMNonConf();
 		long hack = -1;
-		List<ReportAccessoPDFDto> listaVC = reportPDFService.getVarCompByIdMNonConfAnnuale(report.getIdSSessione(),idFase,idMNonConf);
-		List<ReportAccessoPDFDto> listaVCHack = reportPDFService.getVarCompByIdMNonConfAnnuale(report.getIdSSessione(),idFase,hack);
+		List<ReportAccessoPDFDto> listaVC = reportPDFService.getVarCompByIdMNonConfAnnuale(report.getIdCampagna(),idFase,idMNonConf);
+		List<ReportAccessoPDFDto> listaVCHack = reportPDFService.getVarCompByIdMNonConfAnnuale(report.getIdCampagna(),idFase,hack);
 		
 		double sintesi1=0;
 		double sintesi2=0;

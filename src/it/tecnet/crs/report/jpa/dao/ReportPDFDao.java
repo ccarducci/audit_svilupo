@@ -83,6 +83,7 @@ public interface ReportPDFDao {
 	public List<Object[]> getRisultatiByTempoAnnuale(long idCampagna);
 	public List<Object[]> getMNonConfByIdFaseAnnuale(Long idFase, long idCampagna);
 	public List<Object[]> getVarCompByIdMNonConfAnnuale(Long idMNonConf);
+	public List<Object[]> getVarCompByIdMNonConfAnnuale(Long idCampagna, Long idFase, Long idMNonConf);
 	public List<Object[]> getEsitoByTipoDifesaAnnuale(long idCampagna);
 	public List<String> getListaAuditorsAnnuale(long idCampagna);
 	public List<Object[]> getGiudiziDefinitiviEtichetteAnnuale();

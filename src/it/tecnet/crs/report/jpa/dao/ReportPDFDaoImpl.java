@@ -1137,8 +1137,20 @@ try {
 	@Override
 	public List<Object[]> getMNonConfByIdFaseAnnuale(Long idFase,
 			long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String queryStr = " select cnc.ID_M_NONCONF, mnc.DESCRIZIONE, cnc.INCC from AU_C_NONCONF cnc"
+						+ " join AU_M_NONCONF as mnc on cnc.ID_M_NONCONF = mnc.ID_M_NON_CONF"
+						+ " where cnc.ID_C_CAMPAGNA = " + idCampagna
+						+ " and cnc.ID_FASE = " + idFase;
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}		
+		return lista;
 	}
 	@Override
 	public Object[] getReportAccessoPDFAnnuale(long idCampagna) {
@@ -1358,6 +1370,35 @@ try {
 		// TODO Stub di metodo generato automaticamente
 		return null;
 	}
+	@Override
+	public List<Object[]> getVarCompByIdMNonConfAnnuale(Long idCampagna, Long idFase, Long idMNonConf) {
+		List<Object[]> lista = new ArrayList<Object[]>();	
+		String queryStr = " select mvar.DESCRIZIONE, avc.NUM_VC as NUM1, avc.NUM_VC as NUM2, avc.PERC_SU_PS * 100 as PERC, isnc.COLORE, mvar.CODICE_VC"
+						+ " from"
+						+ " AU_C_VARCOMP avc,"
+						+ " AU_M_VARCOMP mvar,"
+						+ " AU_TPL_ISNC isnc"
+						+ " WHERE avc.ID_M_VARCOMP = mvar.ID_M_COMP"
+						+ " and avc.ID_C_CAMPAGNA = " + idCampagna
+						+ " and avc.ID_FASE = " + idFase
+						+ " and mvar.PESO_VC = isnc.ID_TPL_ISNC";						
+		
+						if(idMNonConf>0){
+							queryStr = queryStr+	" and avc.ID_M_NONCONF = " + idMNonConf +" ";
+						}			
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}
+		
+		return lista;
+	}
+	
 	
 	// --------------------------------------------------------------------------------------------
 	// NUOVI REPORT ANGELO ALLEGATO

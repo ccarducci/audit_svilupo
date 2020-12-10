@@ -462,10 +462,10 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	}
 	
 	@Override
-	public List<ReportAccessoPDFDto> getMNonConfByIdFaseAnnuale(Long idFase, long idSSessione) {
+	public List<ReportAccessoPDFDto> getMNonConfByIdFaseAnnuale(Long idFase, long idCampagna) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
 		List<Object[]> objList = reportPDFDao.getMNonConfByIdFaseAnnuale(idFase,
-				idSSessione);
+				idCampagna);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToMNonConfPDF(obj));
@@ -475,10 +475,10 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	}
 	
 	@Override
-	public List<ReportAccessoPDFDto> getVarCompByIdMNonConfAnnuale(long idSSessione, Long idFase, Long idMNonConf) {
+	public List<ReportAccessoPDFDto> getVarCompByIdMNonConfAnnuale(long idCampagna, Long idFase, Long idMNonConf) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
 		List<Object[]> objList = reportPDFDao
-				.getVarCompByIdMNonConfAnnuale(idMNonConf);
+				.getVarCompByIdMNonConfAnnuale(idCampagna, idFase, idMNonConf);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToVarCompPDF(obj));
