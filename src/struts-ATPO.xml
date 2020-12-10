@@ -1628,7 +1628,7 @@
    		</action>
    		
    		 
-   		<action name="getReportAccessoPDFAnnuale" class="it.tecnet.crs.report.web.action.ReportAccessoPDFAction" method="getReportAccessoPDF">
+   		<action name="getReportAccessoPDFAnnuale" class="it.tecnet.crs.report.web.action.ReportAccessoAnnualePDFAction" method="getReportAccessoAnnualePDF">
                 <interceptor-ref name="authorization">
                    	<param name="allowedRoles">auditors01, auditors02, dirigente, delegato01, delegato02, masterDCSIT</param>
                 	<param name="disallowedRoles"></param>
