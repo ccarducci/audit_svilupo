@@ -1139,10 +1139,11 @@ try {
 			long idCampagna) {
 		List<Object[]> lista = new ArrayList<Object[]>();
 		
-		String queryStr = " select cnc.ID_M_NONCONF, mnc.DESCRIZIONE, cnc.INCC from AU_C_NONCONF cnc"
+		String queryStr = " select distinct cnc.ID_M_NONCONF, mnc.DESCRIZIONE, cnc.INCC from AU_C_NONCONF cnc"
 						+ " join AU_M_NONCONF as mnc on cnc.ID_M_NONCONF = mnc.ID_M_NON_CONF"
 						+ " where cnc.ID_C_CAMPAGNA = " + idCampagna
-						+ " and cnc.ID_FASE = " + idFase;
+						+ " and cnc.ID_FASE = " + idFase
+						+ " order by cnc.ID_M_NONCONF asc";
 		
 		try {
 			lista = em.createNativeQuery(queryStr).getResultList();
@@ -1171,10 +1172,12 @@ try {
 	public List<Object[]> getRiepilogoFasiAnnuale(long idCampagna) {
 		List<Object[]> lista = new ArrayList<Object[]>();
 		
-		String queryStr = "SELECT t.ID_FASE, crs.DESCRIZIONE, SUM(t.VALORE_PESATO_FASE) as INCC FROM AU_C_NONCONF AS t"
-					+ "	join CRS_SOTTOPROCESSO crs on t.ID_FASE = crs.ID_SOTTOPROCESSO"
-					+ "	where t.ID_C_CAMPAGNA = " + idCampagna
-					+ "	group by t.ID_FASE, crs.DESCRIZIONE";
+		String queryStr = " with auc as (select distinct t.ID_M_NONCONF, t.ID_FASE, crs.DESCRIZIONE, t.VALORE_PESATO_FASE as INCC FROM AU_C_NONCONF AS t"
+						+ "	join CRS_SOTTOPROCESSO crs on t.ID_FASE = crs.ID_SOTTOPROCESSO"
+						+ "	where t.ID_C_CAMPAGNA = " + idCampagna +")"
+						+ "	select auc.ID_FASE, auc.DESCRIZIONE, SUM(auc.INCC) as INCC from auc"
+						+ "	group by auc.ID_FASE, auc.DESCRIZIONE"
+						+ "	order by auc.ID_FASE asc";
 		
 		try {
 			lista = em.createNativeQuery(queryStr).getResultList();
@@ -1373,7 +1376,7 @@ try {
 	@Override
 	public List<Object[]> getVarCompByIdMNonConfAnnuale(Long idCampagna, Long idFase, Long idMNonConf) {
 		List<Object[]> lista = new ArrayList<Object[]>();	
-		String queryStr = " select mvar.DESCRIZIONE, avc.NUM_VC as NUM1, avc.NUM_VC as NUM2, avc.PERC_SU_PS * 100 as PERC, isnc.COLORE, mvar.CODICE_VC"
+		String queryStr = " select mvar.DESCRIZIONE, SUM(avc.NUM_VC) as NUM1, SUM(avc.NUM_VC) as NUM2, SUM(avc.PERC_SU_PS * 100) as PERC, isnc.COLORE, mvar.CODICE_VC"
 						+ " from"
 						+ " AU_C_VARCOMP avc,"
 						+ " AU_M_VARCOMP mvar,"
@@ -1385,7 +1388,9 @@ try {
 		
 						if(idMNonConf>0){
 							queryStr = queryStr+	" and avc.ID_M_NONCONF = " + idMNonConf +" ";
-						}			
+						}
+						
+						queryStr = queryStr + " group by mvar.DESCRIZIONE, isnc.COLORE, mvar.CODICE_VC";
 		
 		try {
 			lista = em.createNativeQuery(queryStr).getResultList();
