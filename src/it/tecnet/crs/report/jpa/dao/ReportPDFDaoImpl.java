@@ -1161,7 +1161,7 @@ try {
 		
 		List<Object[]> lista = new ArrayList<Object[]>();
 		
-		String queryStr = "SELECT 	B.descrizione, " +
+		String queryStr ="SELECT 	B.descrizione, " +
 						  "			isnull(A.quantita,0) as quantita " +
 						  "FROM " + 
 						  "		(" +
@@ -1169,7 +1169,19 @@ try {
 						  "				COD_CHIUSURA_CORRETTO,  " + 
 						  "				sum(quantita) as quantita " +
 						  "			from au_s_tesito " + 
-						  "			where id_s_sessione = " + idSSessione +
+				  		  " 	where id_s_sessione in ( " +
+				  		  " 				select  " +
+				  		  " 				ass.ID_S_SESSIONE  " +
+				  		  " 			from " +
+				  		  " 					AU_SESSIONI assi, " +
+				  		  " 				AU_S_SESSIONE ass , " +
+				  		  " 					AU_CAMPAGNA ac " +
+				  		  " 				WHERE " +
+				  		  " 					assi.ID_SESSIONE = ass.ID_SESSIONE " +
+				  		  " 				AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " +
+				  		  " 				AND ac.ID_CAMPAGNA =  " + idCampagna +
+				  		  " 				AND ass.STATO_ESAME_SESSIONE = 'C' " +
+				  		  " 			) " +
 						  " 		group by COD_CHIUSURA_CORRETTO" +
 						  "		) as A right join" +
 						  "		(	select " +
