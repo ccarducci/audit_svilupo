@@ -412,10 +412,10 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	}
 	
 	@Override
-	public List<ReportAccessoPDFDto> getEsitoByTipoDifesaWithCodeAndDissensoAnnuale(long idSSessione) {
+	public List<ReportAccessoPDFDto> getEsitoByTipoDifesaWithCodeAndDissensoAnnuale(long idCampagna) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
 		List<Object[]> objList = reportPDFDao
-				.getEsitoByTipoDifesaWithDissensoAnnuale(idSSessione);
+				.getEsitoByTipoDifesaWithDissensoAnnuale(idCampagna);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToEsitoDifesaWithCodePDF(obj));
@@ -425,9 +425,9 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	}
 	
 	@Override
-	public List<ReportAccessoPDFDto> getRiepilogoGiudiziAnnuale(long idSSessione) {
+	public List<ReportAccessoPDFDto> getRiepilogoGiudiziAnnuale(long idCampagna) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
-		List<Object[]> objList = reportPDFDao.getRiepilogoGiudiziAnnuale(idSSessione);
+		List<Object[]> objList = reportPDFDao.getRiepilogoGiudiziAnnuale(idCampagna);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToRiepilogoGiudiziPDF(obj));
@@ -437,10 +437,10 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	}
 	
 	@Override
-	public List<ReportAccessoPDFDto> getTipoDifesaIncompletaAnnuale(long idSSessione, String tipoDifesa) {
+	public List<ReportAccessoPDFDto> getTipoDifesaIncompletaAnnuale(long idCampagna, String tipoDifesa) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
 		List<Object[]> objList = reportPDFDao.getTipoDifesaIncompletaAnnuale(
-				idSSessione, tipoDifesa);
+				idCampagna, tipoDifesa);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToTipoDifesaIncompletaPDF(obj));

@@ -590,7 +590,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		String testo = 	"La sezione analizza gli esiti dei giudizi del campione per tipo di difesa.";
 		document.add(sezione1(testo,""));
 		
-		List<ReportAccessoPDFDto> giudizi1WithDissensoRows = reportPDFService.getEsitoByTipoDifesaWithCodeAndDissensoAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> giudizi1WithDissensoRows = reportPDFService.getEsitoByTipoDifesaWithCodeAndDissensoAnnuale(report.getIdCampagna());
 		//List<ReportAccessoPDFDto> giudizi1Rows = reportPDFService.getEsitoByTipoDifesaWithCode(report.getIdSSessione());
 		document.add(creaGiudiziCompletaCorpo1(giudizi1WithDissensoRows));
 		
@@ -615,7 +615,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		document.add(new Paragraph("\n"));
 		String test2 = "Si illustra il riepilogo dei giudizi definiti che comportano erogazione della prestazione e pagamento delle spese legali e di CTU (sfavorevoli + parzialmente favorevoli) distinti tra:";
 		document.add(sezione1(test2,""));
-		List<ReportAccessoPDFDto> listaGiudizi = reportPDFService.getRiepilogoGiudiziAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> listaGiudizi = reportPDFService.getRiepilogoGiudiziAnnuale(report.getIdCampagna());
 		document.add(creaGiudiziCompletaCorpo3(listaGiudizi,giudizi1WithDissensoRows));
 		String test3 = "La tabella illustra i giudizi che comportano erogazione della prestazione e pagamento delle spese legali e di CTU (esito sfavorevole e parzialmente favorevole) distinti in relazione alla difesa espletata.";
 		document.add(sezione1(test3,""));
@@ -721,7 +721,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 				descrizione = "Difesa Incompleta";
 			
 			tableInner.addCell(getCellWithtBordersColorAndRowsSpan( descrizione ,testoFont,Element.ALIGN_LEFT,baseColor,3));
-			List<ReportAccessoPDFDto> listaDifesaIncompleta = reportPDFService.getTipoDifesaIncompletaAnnuale(report.getIdSSessione(), item.getTipoDifesa());
+			List<ReportAccessoPDFDto> listaDifesaIncompleta = reportPDFService.getTipoDifesaIncompletaAnnuale(report.getIdCampagna(), item.getTipoDifesa());
 			for (ReportAccessoPDFDto reportAccessoPDFDto : listaDifesaIncompleta) {
 				
 				tableInner.addCell(getCellWithtBordersColor(reportAccessoPDFDto.getDescrizioneEsito() ,testoFont,Element.ALIGN_CENTER,baseColor));

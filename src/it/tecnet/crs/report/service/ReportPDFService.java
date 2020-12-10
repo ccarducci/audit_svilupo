@@ -75,9 +75,9 @@ public interface ReportPDFService {
 	public List<ReportAccessoPDFDto> getRisEsprByIdMNonConfAnnuale(Long idMRischio, long idCampagna);
 	public List<ReportAccessoPDFDto> getRiepilogoFascicoloAnnuale(long idSSessione);
 	public List<ReportAccessoPDFDto> getRiepilogoDocMancAnnuale(long idSSessione);
-	public List<ReportAccessoPDFDto> getEsitoByTipoDifesaWithCodeAndDissensoAnnuale(long idSSessione);
-	public List<ReportAccessoPDFDto> getRiepilogoGiudiziAnnuale(long idSSessione);
-	public List<ReportAccessoPDFDto> getTipoDifesaIncompletaAnnuale(long idSSessione, String tipoDifesa);
+	public List<ReportAccessoPDFDto> getEsitoByTipoDifesaWithCodeAndDissensoAnnuale(long idCampagna);
+	public List<ReportAccessoPDFDto> getRiepilogoGiudiziAnnuale(long idCampagna);
+	public List<ReportAccessoPDFDto> getTipoDifesaIncompletaAnnuale(long idCampagna, String tipoDifesa);
 	public List<ReportAccessoPDFDto> getRisultatiByTempoAnnuale(long idCampagna);
 	public List<ReportAccessoPDFDto> getMNonConfByIdFaseAnnuale(Long idFase, long idSSessione);
 	public List<ReportAccessoPDFDto> getVarCompByIdMNonConfAnnuale(long idSSessione, Long idFase, Long idMNonConf);

@@ -78,7 +78,7 @@ public interface ReportPDFDao {
 	public List<Object[]> getRiepilogoFascicoloAnnuale(long idCampagna);
 	public List<Object[]> getRiepilogoDocMancAnnuale(long idCampagna);
 	public List<Object[]> getEsitoByTipoDifesaWithDissensoAnnuale(long idCampagna);
-	public List<Object[]> getRiepilogoGiudiziAnnuale(long idSSeidCampagnassione);
+	public List<Object[]> getRiepilogoGiudiziAnnuale(long idCampagna);
 	public List<Object[]> getTipoDifesaIncompletaAnnuale(long idCampagna, String tipoDifesa);
 	public List<Object[]> getRisultatiByTempoAnnuale(long idCampagna);
 	public List<Object[]> getMNonConfByIdFaseAnnuale(Long idFase, long idCampagna);
