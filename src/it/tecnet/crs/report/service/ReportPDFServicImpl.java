@@ -533,13 +533,11 @@ public class ReportPDFServicImpl implements ReportPDFService {
 		return reportPDFDao.calcolaIndicatoriCampagna(idCampanga);
 	}
 	@Override
-	public List<String> getCampagnaAnno(long idCampanga) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+	public String getCampagnaAnno(long idCampanga) {
+		return reportPDFDao.getCampagnaAnno(idCampanga);
 	}
 	@Override
 	public List<String> getSediByCampagna(long idCampanga) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		return reportPDFDao.getSediByCampagna(idCampanga);;
 	}
 }

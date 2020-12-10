@@ -96,6 +96,6 @@ public interface ReportPDFService {
 	
 	public List<String> getSediByCampagna(long idCampanga);
 	
-	public List<String> getCampagnaAnno(long idCampanga);
+	public String getCampagnaAnno(long idCampanga);
 	
 }
