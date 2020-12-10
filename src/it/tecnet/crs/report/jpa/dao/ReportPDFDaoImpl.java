@@ -1158,8 +1158,36 @@ try {
 	}
 	@Override
 	public List<Object[]> getRiepilogoIstanzeAnnuale(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String queryStr = "SELECT 	B.descrizione, " +
+						  "			isnull(A.quantita,0) as quantita " +
+						  "FROM " + 
+						  "		(" +
+						  "			select " + 
+						  "				COD_CHIUSURA_CORRETTO,  " + 
+						  "				sum(quantita) as quantita " +
+						  "			from au_s_tesito " + 
+						  "			where id_s_sessione = " + idSSessione +
+						  " 		group by COD_CHIUSURA_CORRETTO" +
+						  "		) as A right join" +
+						  "		(	select " +
+						  "			tipo, codifica, descrizione " +
+						  "			from au_tpl_tipologiche " +
+						  "			where tipo = 'V019'" +
+						  "		) as B on B.codifica = A.COD_CHIUSURA_CORRETTO";
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}
+		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getRiepilogoRischiAnnuale(long idCampagna) {
