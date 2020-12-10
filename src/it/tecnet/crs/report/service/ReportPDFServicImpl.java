@@ -331,9 +331,9 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	// -------------------------------------------------------------------------------------------
 	// NUOVI REPORT ANGELO ACCESSO
 	@Override
-	public ReportAccessoPDFDto getReportAccessoAnnualePDF(long idSSessione) {
+	public ReportAccessoPDFDto getReportAccessoAnnualePDF(long idCampagna) {
 		ReportAccessoPDFDto accesso = new ReportAccessoPDFDto();
-		Object[] obj = reportPDFDao.getReportAccessoPDFAnnuale(idSSessione);
+		Object[] obj = reportPDFDao.getReportAccessoPDFAnnuale(idCampagna);
 
 		if (obj != null) {
 			accesso = ModelToDto.modelToReportAccessoPDFDto(obj);
@@ -353,9 +353,9 @@ public class ReportPDFServicImpl implements ReportPDFService {
 		return lista;
 	}
 	@Override
-	public List<ReportAccessoPDFDto> getRiepilogoFasiAnnuale(long idSSessione) {
+	public List<ReportAccessoPDFDto> getRiepilogoFasiAnnuale(long idCampagna) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
-		List<Object[]> objList = reportPDFDao.getRiepilogoFasiAnnuale(idSSessione);
+		List<Object[]> objList = reportPDFDao.getRiepilogoFasiAnnuale(idCampagna);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToRiepilogoFasiPDF(obj));
@@ -364,9 +364,9 @@ public class ReportPDFServicImpl implements ReportPDFService {
 		return lista;
 	}
 	@Override
-	public List<ReportAccessoPDFDto> getRiepilogoRischiAnnuale(long idSSessione) {
+	public List<ReportAccessoPDFDto> getRiepilogoRischiAnnuale(long idCampagna) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
-		List<Object[]> objList = reportPDFDao.getRiepilogoRischiAnnuale(idSSessione);
+		List<Object[]> objList = reportPDFDao.getRiepilogoRischiAnnuale(idCampagna);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToRiepilogoRischiPDF(obj));
@@ -375,10 +375,10 @@ public class ReportPDFServicImpl implements ReportPDFService {
 		return lista;
 	}
 	@Override
-	public List<ReportAccessoPDFDto> getRisEsprByIdMNonConfAnnuale(Long idMRischio, long idSSessione) {
+	public List<ReportAccessoPDFDto> getRisEsprByIdMNonConfAnnuale(Long idMRischio, long idCampagna) {
 		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
 		List<Object[]> objList = reportPDFDao.getRisEsprByIdMNonConfAnnuale(
-				idMRischio, idSSessione);
+				idMRischio, idCampagna);
 
 		for (Object[] obj : objList) {
 			lista.add(ModelToDto.modelToRisEsprPDF(obj));

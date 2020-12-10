@@ -441,7 +441,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		document.add(intestazione2("\nSezione 2 - I rischi"));		
 		String testo = 	"Si illustrano di seguito i rischi del processo con l'impatto degli eventi dannosi verificati:";
 		document.add(sezione1(testo,""));
-		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoRischiAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoRischiAnnuale(report.getIdCampagna());
 		document.add(creaRischioCorpo( lista , report));
 	}
 	
@@ -482,11 +482,11 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 			//NumberFormat decimalFormatter = new DecimalFormat("#0.00");
 			DecimalFormat decimalFormatter = new DecimalFormat("###,###,###,##0.00");
 			//2) estraggo le espressioni rischio per il rischio corrente
-			List<ReportAccessoPDFDto> listaRisEspr = reportPDFService.getRisEsprByIdMNonConfAnnuale(idMRischio, report.getIdSSessione());
+			List<ReportAccessoPDFDto> listaRisEspr = reportPDFService.getRisEsprByIdMNonConfAnnuale(idMRischio, report.getIdCampagna());
 			for (ReportAccessoPDFDto reportAccessoPDFDto : listaRisEspr) {
 				descrizioneRischio += "\n • " + reportAccessoPDFDto.getDescrizioneRisEspr();
 				quantita += "\n" + reportAccessoPDFDto.getNumSRischio();
-				suPs += "\n" + formatMigliaia.format(reportAccessoPDFDto.getSuPsPerc().multiply(new BigDecimal(100)))+"%";
+				suPs += "\n" + formatMigliaia.format(reportAccessoPDFDto.getSuPsPerc())+"%";
 				impatto += "\n" + decimalFormatter.format(reportAccessoPDFDto.getImporto());
 			}
 				

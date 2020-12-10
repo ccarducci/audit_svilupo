@@ -16,6 +16,8 @@ public class ReportAccessoPDFDto {
 	private String dirigente;
 
 	private long idSessione;
+	
+	private long idCampagna;
 
 	private long idSSessione;
 
@@ -540,6 +542,14 @@ public class ReportAccessoPDFDto {
 
 	public void setCodiceVC(String codiceVC) {
 		this.codiceVC = codiceVC;
+	}
+
+	public void setIdCampagna(long idCampagna) {
+		this.idCampagna = idCampagna;
+	}
+
+	public long getIdCampagna() {
+		return idCampagna;
 	}
 
 }
