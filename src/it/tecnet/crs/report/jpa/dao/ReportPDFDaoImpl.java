@@ -1130,7 +1130,19 @@ try {
 		List<Object[]> lista = new ArrayList<Object[]>();
 
 		String queryStr = 	"select	tpl.DESCRIZIONE, sum(isnull(td.QUANTITA,0)) " +
-							"from AU_TPL_TIPOLOGICHE tpl left join (select * from AU_TDOCMANC where ID_S_SESSIONE = " + idSSessione + " ) as td on tpl.CODIFICA = td.CODIFICA    " + 
+							"from AU_TPL_TIPOLOGICHE tpl left join (select * from AU_TDOCMANC where ID_S_SESSIONE in (" +
+						  	"		select " + 
+							"		ass.ID_S_SESSIONE  " + 
+							"	from " + 
+							"		AU_SESSIONI assi, " + 
+							"		AU_S_SESSIONE ass , " + 
+							"		AU_CAMPAGNA ac " + 
+							"	WHERE " + 
+							"		assi.ID_SESSIONE = ass.ID_SESSIONE " + 
+							"		AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " + 
+							"		AND ac.ID_CAMPAGNA =  " + idCampagna + 
+							"		AND ass.STATO_ESAME_SESSIONE = 'C' " + 
+				  			") ) as td on tpl.CODIFICA = td.CODIFICA    " + 
 							"where	tpl.TIPO = 'V003'  " +
 							"group by tpl.DESCRIZIONE"; 
 							// "and	tpl.CODIFICA in ('R01','R02','R03','R05','R06','R08','R09','R10','R12','R23','R24') " +

@@ -538,10 +538,10 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		document.add(intestazione2("\nSezione 3 - Lo stato del fascicolo"));		
 		String testo = 	"Si riepiloga lo stato del fascicolo: ";
 		document.add(sezione1(testo,""));
-		List<ReportAccessoPDFDto> fascicoloRows = reportPDFService.getRiepilogoFascicoloAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> fascicoloRows = reportPDFService.getRiepilogoFascicoloAnnuale(report.getIdCampagna());
 		document.add(sezioneFascicoloCorpo(fascicoloRows));
 		document.add(new Paragraph("\n"));
-		List<ReportAccessoPDFDto> docRows = reportPDFService.getRiepilogoDocMancAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> docRows = reportPDFService.getRiepilogoDocMancAnnuale(report.getIdCampagna());
 		document.add(sezioneFascicoloDocCorpo(docRows));
 	}
 	
