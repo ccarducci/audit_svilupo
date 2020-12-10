@@ -94,5 +94,8 @@ public interface ReportPDFService {
 	// Chiamata procedura per calcolo indicatori Campanga
 	public String calcolaIndicatoriCampagna(long idCampanga);
 	
+	public List<String> getSediByCampagna(long idCampanga);
+	
+	public List<String> getCampagnaAnno(long idCampanga);
 	
 }
