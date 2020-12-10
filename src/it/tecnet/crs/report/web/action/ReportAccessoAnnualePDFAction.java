@@ -788,7 +788,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		row8[2].setBackgroundColor(BaseColor.WHITE);
 		row8[3].setBackgroundColor(BaseColor.WHITE);
 		row9[1].setBackgroundColor(BaseColor.WHITE);
-		row9[2].setBackgroundColor(BaseColor.WHITE); // DA RIVEDERE
+		row9[2].setBackgroundColor(BaseColor.WHITE); 
 		row9[3].setBackgroundColor(BaseColor.WHITE);
 		
 		
