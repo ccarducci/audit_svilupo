@@ -361,14 +361,22 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		List<String> listaSedi = reportPDFService.getSediByCampagna(report.getIdCampagna());
 		List<CampagnaInfoDto> info = reportPDFService.getCampagnaInfoForReport(report.getIdCampagna());
 		
-		String testo = "Gli accessi di Audit  effettuati dal 01/01/" + anno + " al 31/12/" + anno + " riguardano le seguenti sedi: \n\n";
+		String testo = "\nGli accessi di Audit  effettuati dal 01/01/" + anno + " al 31/12/" + anno + " riguardano le seguenti sedi: \n\n";
 		for (String sede : listaSedi) {
 			testo += "    -    " + sede + "\n";
 		}
-		testo += "\n\ne sono costituiti da un campione di n. " + info.get(0).getNumPratiche() + " istanze di ATPO dell'invalidità civile definite dal " + info.get(0).getDataInzio() + " al " + info.get(0).getDataFine() + ". Nei seguenti esiti:" ;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(); 
+		sdf.applyPattern("dd/MM/yyyy");  
+		String dataStr = sdf.format(info.get(0).getDataInzio()); 
+		String data2Str = sdf.format(info.get(0).getDataFine());
+	
+		testo += "\n\ne sono costituiti da un campione di n. " + info.get(0).getNumPratiche() 
+		+ " istanze di ATPO dell'invalidità civile definite dal " + dataStr + " al " 
+		+ data2Str + ". Nei seguenti esiti:" ;
 		document.add(sezione1(testo,""));
-		//List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdSSessione());
-		//document.add(sezione1Corpo(rowsRiepilogoIstanzelista));
+		List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdCampagna());
+		document.add(sezione1Corpo(rowsRiepilogoIstanzelista));
 		/*
         String testo = 	"L' accesso di Audit, effettuato dal " + report.getDataInizio() + " al " +  report.getDataFine() +
 		" riguarda un campione costituito da n. " + report.getNumeroPraticheEsaminate() + " istanze " +
@@ -1162,7 +1170,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	public void generaPDF(Document document, ReportAccessoPDFDto report){
 		try {
 	        createIntestazione(document,report);
-	        document.add(intestazione2("Report Audit sede di " + report.getSede() + "\n\n"));
+	        //document.add(intestazione2("Report Audit sede di " + report.getSede() + "\n\n"));
 	        creaIntestazioneCompleta(document,report);
 	        //creaConformitaProcessoCompleta(document,report);
 	        /*
