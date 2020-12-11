@@ -1402,7 +1402,7 @@ try {
 	public List<Object[]> getRiepilogoRischiAnnuale(long idCampagna) {
 		List<Object[]> lista = new ArrayList<Object[]>();
 		
-		String queryStr = "select r.ID_M_RISCHIO, 0 as ID_S_RISCHIO, m.DESCRIZIONE_RISCHIO ,0 as importo, 0 as SU_PS_PERC, 0 as NUM from AU_C_RISESPR as r"
+		String queryStr = " select r.ID_M_RISCHIO, cast(0 as bigint) as ID_S_RISCHIO, m.DESCRIZIONE_RISCHIO , cast (0 as decimal(18,2)) as importo, cast (0 as decimal(18,2)) as SU_PS_PERC, 0 as NUM from AU_C_RISESPR as r"
 						+ " join AU_S_RISCHIO as s on r.ID_M_RISCHIO = s.ID_M_RISCHIO"
 						+ " join AU_M_RISCHIO as m on r.ID_M_RISCHIO = m.ID_M_RISCHIO"
 						+ " where r.ID_C_CAMPAGNA = " + idCampagna
@@ -1484,7 +1484,7 @@ try {
 		String queryStr = "select"  
 						+ " B.DESCRIZIONE,"   
 						+ " SUM(isnull(A.QUANTITA,0)) as quantita,"  
-						+ " 0 as perc_quantita"  
+						+ " cast(0 as decimal(18,2)) as perc_quantita"  
 						+ " from("  
 						+ " 	(select"  
 						+ " 	aut.COD_CHIUSURA_CORRETTO,"  

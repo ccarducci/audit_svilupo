@@ -1174,12 +1174,12 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	        creaIntestazioneCompleta(document,report);
 	        creaConformitaProcessoCompleta(document,report);
 	        
-	        //creaRischioCompleta(document,report);
+	        creaRischioCompleta(document,report);
 	        creaStatoFascicoloCompleta(document,report);
 	        document.newPage();
 	        creaGiudiziCompleta(document,report);
 	        creaRisultatiInRelTempoCompleta(document,report);
-	        // creaNonConformitaCompleta(document,report);
+	        creaNonConformitaCompleta(document,report);
 	        document.add(new Paragraph("\n"));
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        String dataStr = sdf.format(new Date());
