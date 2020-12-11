@@ -34,7 +34,7 @@ public class CalcolaIndicatoriCampagnaAction extends BaseAction implements
 		
 		String idCampagnaS = (String)request.getParameter("idCampangna");
 		long idCampagna = Long.parseLong(idCampagnaS);
-		idCampagna = 2;
+		//idCampagna = 2;
 		calcoloIndicatoriCampagnaService.calcolaIndicatoriCampagna(idCampagna);
 		model = "{status:'OK',description:''}";
 		return SUCCESS;
@@ -46,7 +46,7 @@ public class CalcolaIndicatoriCampagnaAction extends BaseAction implements
 		String idCampagnaS = (String)request.getParameter("idCampangna");
 		
 		long idCampagna = Long.parseLong(idCampagnaS);
-		idCampagna = 2;
+		//idCampagna = 2;
 		
 		calcoloIndicatoriCampagnaService.aggiornaStatoCampagna(idCampagna, "A");
 		

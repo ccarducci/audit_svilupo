@@ -1,6 +1,7 @@
 package it.tecnet.crs.report.service;
 
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoPratiche;
+import it.tecnet.crs.report.jpa.dao.CampagnaInfoDto;
 import it.tecnet.crs.report.jpa.dao.ReportPDFDao;
 import it.tecnet.crs.report.web.dto.ReportAccessoPDFDto;
 import it.tecnet.crs.util.ModelToDto;
@@ -532,4 +533,18 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	public String calcolaIndicatoriCampagna(long idCampanga) {
 		return reportPDFDao.calcolaIndicatoriCampagna(idCampanga);
 	}
+	@Override
+	public String getCampagnaAnno(long idCampanga) {
+		return reportPDFDao.getCampagnaAnno(idCampanga);
+	}
+	@Override
+	public List<String> getSediByCampagna(long idCampanga) {
+		return reportPDFDao.getSediByCampagna(idCampanga);
+	}
+	
+	@Override
+	public List<CampagnaInfoDto> getCampagnaInfoForReport(long idCampanga) {
+		return reportPDFDao.getCampagnaInfoForReport(idCampanga);
+	}
+	
 }

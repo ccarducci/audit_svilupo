@@ -5,6 +5,7 @@ import it.tecnet.crs.report.web.dto.ReportAccessoPDFDto;
 
 import java.sql.CallableStatement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -1158,16 +1159,78 @@ try {
 		// TODO Stub di metodo generato automaticamente
 		return null;
 	}
+	
 	@Override
 	public List<Object[]> getRiepilogoDocMancAnnuale(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+
+		String queryStr = 	"select	tpl.DESCRIZIONE, sum(isnull(td.QUANTITA,0)) " +
+							"from AU_TPL_TIPOLOGICHE tpl left join (select * from AU_TDOCMANC where ID_S_SESSIONE in (" +
+						  	"		select " + 
+							"		ass.ID_S_SESSIONE  " + 
+							"	from " + 
+							"		AU_SESSIONI assi, " + 
+							"		AU_S_SESSIONE ass , " + 
+							"		AU_CAMPAGNA ac " + 
+							"	WHERE " + 
+							"		assi.ID_SESSIONE = ass.ID_SESSIONE " + 
+							"		AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " + 
+							"		AND ac.ID_CAMPAGNA =  " + idCampagna + 
+							"		AND ass.STATO_ESAME_SESSIONE = 'C' " + 
+				  			") ) as td on tpl.CODIFICA = td.CODIFICA    " + 
+							"where	tpl.TIPO = 'V003'  " +
+							"group by tpl.DESCRIZIONE"; 
+							// "and	tpl.CODIFICA in ('R01','R02','R03','R05','R06','R08','R09','R10','R12','R23','R24') " +
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}
+		
+		return lista;
 	}
+
 	@Override
 	public List<Object[]> getRiepilogoFascicoloAnnuale(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		List<Object[]> lista = new ArrayList<Object[]>();
+
+		String queryStr = 	"select " + 
+							"	tpl.DESCRIZIONE, " + 
+							"	sum(isnull(t.QUANTITA,0)) " + 
+							"from " + 
+							"	AU_TPL_TIPOLOGICHE tpl left join ( Select * from AU_S_TFASCICOLO where ID_S_SESSIONE in (" +
+						  	"		select " + 
+							"		ass.ID_S_SESSIONE  " + 
+							"	from " + 
+							"		AU_SESSIONI assi, " + 
+							"		AU_S_SESSIONE ass , " + 
+							"		AU_CAMPAGNA ac " + 
+							"	WHERE " + 
+							"		assi.ID_SESSIONE = ass.ID_SESSIONE " + 
+							"		AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " + 
+							"		AND ac.ID_CAMPAGNA =  " + idCampagna + 
+							"		AND ass.STATO_ESAME_SESSIONE = 'C' " + 
+				  			")) as t on  tpl.CODIFICA = t.CODIFICA  " + 
+							"where " + 
+							"	tpl.TIPO  = 'V007' " + 
+							"group by tpl.DESCRIZIONE";
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}
+		
+		return lista;
 	}
+	
 	@Override
 	public List<Object[]> getRiepilogoFasiAnnuale(long idCampagna) {
 		List<Object[]> lista = new ArrayList<Object[]>();
@@ -1189,55 +1252,99 @@ try {
 	}
 	@Override
 	public List<Object[]> getRiepilogoGiudiziAnnuale(long idCampagna) {
-		List<Object[]> lista = new ArrayList<Object[]>();		
-		String queryStr = " SELECT tab.descrizione,"  
-					    + "     Sum(TAB.quantita)            AS nr_giudizi," 
-					    + "     Sum(TAB.perc_quantita)  * 100     AS perc_quantita,"  
-					    + "     Sum(TAB.num_prestazioni)     AS num_prestazioni,"  
-					    + "     Sum(TAB.importo_prestazione) AS importo_prestazione,"  
-					    + "     Sum(TAB.spese_legali)        AS spese_legali,"  
-					    + "     Sum(TAB.spese_ctu)        AS spese_legali_ctu"  
-						+ " FROM   (SELECT *"  
-						+ "         FROM   (SELECT 'U02'                            AS esito,"  
-						+ "                        'COMPLETA  ESSENZIALE'          AS DESCRIZIONE,"  
-						+ "                        Isnull(a.quantita, 0)            AS quantita,"  
-						+ "                        Isnull(a.perc_quantita, 0)       AS perc_quantita,"  
-						+ "                        Isnull(a.num_prestazioni, 0)     AS num_prestazioni,"  
-						+ "                        Isnull(a.importo_prestazione, 0) AS importo_prestazione,"  
-						+ "                        Isnull(a.spese_legali, 0)        AS spese_legali,"  
-						+ "                        Isnull(a.spese_legali_ctu, 0)        AS spese_ctu"  
-						+ "                 FROM   (select * from au_s_tesito where COD_CHIUSURA_CORRETTO in (2,3) AND ID_S_SESSIONE in (select C.ID_S_SESSIONE from AU_S_SESSIONE as C"
-						+ " 																													JOIN AU_SESSIONI AS D ON C.ID_SESSIONE = D.ID_SESSIONE"   
-						+ " 																													JOIN AU_CAMPAGNA AS E ON D.ID_CAMPAGNA = E.ID_CAMPAGNA"  
-						+ " 																													WHERE D.ID_CAMPAGNA = " + idCampagna
-						+ " 																													AND C.STATO_ESAME_SESSIONE = 'C')) a"  
-						+ "                        RIGHT JOIN (SELECT *"  
-						+ "                                    FROM   au_tpl_tipologiche b"  
-						+ "                                    WHERE  tipo = 'V009'"  
-						+ "                                           AND b.codifica IN ( 'U02', 'U03' )) b"  
-						+ "                                ON a.tipo_difesa = B.codifica) AS A"  
-						+ "         UNION ALL"  
-						+ "         SELECT *"  
-						+ "         FROM   (SELECT b.codifica                       AS esito,"  
-						+ "                        'INCOMPLETA'                     AS DESCRIZIONE,"  
-						+ "                        Isnull(a.quantita, 0)            AS quantita,"  
-						+ "                        Isnull(a.perc_quantita, 0)       AS perc_quantita,"  
-						+ "                        Isnull(a.num_prestazioni, 0)     AS num_prestazioni,"  
-						+ "                        Isnull(a.importo_prestazione, 0) AS importo_prestazione,"  
-						+ "                        Isnull(a.spese_legali, 0)        AS spese_legali,"  
-						+ "                        Isnull(a.spese_legali_ctu, 0)        AS spese_ctu"  
-						+ "                 FROM   (select * from au_s_tesito where COD_CHIUSURA_CORRETTO in (2,3) AND ID_S_SESSIONE in (select C.ID_S_SESSIONE from AU_S_SESSIONE as C"
-						+ " 																													JOIN AU_SESSIONI AS D ON C.ID_SESSIONE = D.ID_SESSIONE"   
-						+ " 																													JOIN AU_CAMPAGNA AS E ON D.ID_CAMPAGNA = E.ID_CAMPAGNA" 
-						+ " 																													WHERE D.ID_CAMPAGNA = " + idCampagna
-						+ " 																													AND C.STATO_ESAME_SESSIONE = 'C')) a"  
-						+ "                        RIGHT JOIN (SELECT *"  
-						+ "                                    FROM   au_tpl_tipologiche b"  
-						+ "                                    WHERE  tipo = 'V009'"  
-						+ "                                           AND b.codifica IN ( 'U04' )) b"  
-						+ "                                ON a.tipo_difesa = B.codifica) AS A) AS TAB"  
-						+ " GROUP  BY tab.descrizione";
-		
+		List<Object[]> lista = new ArrayList<Object[]>();
+		/*
+		String queryStr = "select " + 
+							"A.DESCRIZIONE, " + 
+						  	"isnull(A.QUANTITA,0) as nr_giudizi, " +
+						  	"isnull(A.PERC_QUANTITA,0) as percentuale, " +
+						  	"isnull(A.NUM_PRESTAZIONI, 0) as num_prestazioni, " +
+						  	"isnull(A.IMPORTO_PRESTAZIONE, 0) as importo_prestazioni, " + 
+						  	"isnull(A.SPESE_LEGALI, 0) as spese_legali " + 
+						  	"from( " +
+							"(select " +
+							"'U02' as esito, " +
+							"'COMPLETA + ESSENZIALE' AS DESCRIZIONE, " +
+							"sum(QUANTITA) as quantita, sum(PERC_QUANTITA) as perc_quantita, " +
+							"sum(NUM_PRESTAZIONI) as num_prestazioni, sum(IMPORTO_PRESTAZIONE) as importo_prestazione, sum(SPESE_LEGALI) as spese_legali " +
+							"from " +
+							"AU_S_TESITO " +
+							"where ID_S_SESSIONE = " + idSSessione + " and TIPO_DIFESA in ('U02', 'U03') " +
+							"union all " +
+							"select " +
+							"TIPO_DIFESA, 'INCOMPLETA' AS DESCRIZIONE, QUANTITA, PERC_QUANTITA, NUM_PRESTAZIONI, IMPORTO_PRESTAZIONE, SPESE_LEGALI " +
+							"from " +
+							"AU_S_TESITO " +
+							"where ID_S_SESSIONE = " + idSSessione + " and TIPO_DIFESA in ('U04')) as A right join " +
+							"(select TIPO, CODIFICA " +
+							"from AU_TPL_TIPOLOGICHE where tipo = 'V009') as B on A.ESITO = B.CODIFICA) " +
+							"where ESITO <> 'NULL'";
+		*/					
+		String queryStr =  "SELECT tab.descrizione, " +
+						    "    Sum(TAB.quantita)            AS nr_giudizi, " +
+						    "    Sum(TAB.perc_quantita)  * 100     AS perc_quantita, " +
+						    "    Sum(TAB.num_prestazioni)     AS num_prestazioni, " +
+						    "    Sum(TAB.importo_prestazione) AS importo_prestazione, " +
+						    "    Sum(TAB.spese_legali)        AS spese_legali, " +
+						    "    Sum(TAB.spese_ctu)        AS spese_legali_ctu " +
+							"FROM   (SELECT * " +
+							"        FROM   (SELECT 'U02'                            AS esito, " +
+							"                       'COMPLETA + ESSENZIALE'          AS DESCRIZIONE, " +
+							"                       Isnull(a.quantita, 0)            AS quantita, " +
+							"                       Isnull(a.perc_quantita, 0)       AS perc_quantita, " +
+							"                       Isnull(a.num_prestazioni, 0)     AS num_prestazioni, " +
+							"                       Isnull(a.importo_prestazione, 0) AS importo_prestazione, " +
+							"                       Isnull(a.spese_legali, 0)        AS spese_legali, " +
+							"                       Isnull(a.spese_legali_ctu, 0)        AS spese_ctu " +
+							"                FROM   (select * from au_s_tesito where COD_CHIUSURA_CORRETTO in (2,3) AND ID_S_SESSIONE in ( " +
+					  		  " 				select  " +
+					  		  " 				ass.ID_S_SESSIONE  " +
+					  		  " 			from " +
+					  		  " 					AU_SESSIONI assi, " +
+					  		  " 				AU_S_SESSIONE ass , " +
+					  		  " 					AU_CAMPAGNA ac " +
+					  		  " 				WHERE " +
+					  		  " 					assi.ID_SESSIONE = ass.ID_SESSIONE " +
+					  		  " 				AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " +
+					  		  " 				AND ac.ID_CAMPAGNA =  " + idCampagna +
+					  		  " 				AND ass.STATO_ESAME_SESSIONE = 'C' " +
+					  		  " 			) " 
+							+ " ) a " +
+							"                       RIGHT JOIN (SELECT * " +
+							"                                   FROM   au_tpl_tipologiche b " +
+							"                                   WHERE  tipo = 'V009' " +
+							"                                          AND b.codifica IN ( 'U02', 'U03' )) b " +
+							"                               ON a.tipo_difesa = B.codifica) AS A " +
+							"        UNION ALL " +
+							"        SELECT * " +
+							"        FROM   (SELECT b.codifica                       AS esito, " +
+							"                       'INCOMPLETA'                     AS DESCRIZIONE, " +
+							"                       Isnull(a.quantita, 0)            AS quantita, " +
+							"                       Isnull(a.perc_quantita, 0)       AS perc_quantita, " +
+							"                       Isnull(a.num_prestazioni, 0)     AS num_prestazioni, " +
+							"                       Isnull(a.importo_prestazione, 0) AS importo_prestazione, " +
+							"                       Isnull(a.spese_legali, 0)        AS spese_legali, " +
+							"                       Isnull(a.spese_legali_ctu, 0)        AS spese_ctu " +
+							"                FROM   (select * from au_s_tesito where COD_CHIUSURA_CORRETTO in (2,3) AND ID_S_SESSIONE  in ( " +
+					  		  " 				select  " +
+					  		  " 				ass.ID_S_SESSIONE  " +
+					  		  " 			from " +
+					  		  " 					AU_SESSIONI assi, " +
+					  		  " 				AU_S_SESSIONE ass , " +
+					  		  " 					AU_CAMPAGNA ac " +
+					  		  " 				WHERE " +
+					  		  " 					assi.ID_SESSIONE = ass.ID_SESSIONE " +
+					  		  " 				AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " +
+					  		  " 				AND ac.ID_CAMPAGNA =  " + idCampagna +
+					  		  " 				AND ass.STATO_ESAME_SESSIONE = 'C' " +
+					  		  " 			) " +
+							" ) a " +
+							"                       RIGHT JOIN (SELECT * " +
+							"                                   FROM   au_tpl_tipologiche b " +
+							"                                   WHERE  tipo = 'V009' " +
+							"                                          AND b.codifica IN ( 'U04' )) b " +
+							"                               ON a.tipo_difesa = B.codifica) AS A) AS TAB " +
+							"GROUP  BY tab.descrizione   ";
 		try {
 			lista = em.createNativeQuery(queryStr).getResultList();
 		} catch (Throwable e) {
@@ -1248,8 +1355,48 @@ try {
 	}
 	@Override
 	public List<Object[]> getRiepilogoIstanzeAnnuale(long idCampagna) {
-		// TODO Stub di metodo generato automaticamente
-		return null;
+		
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String queryStr ="SELECT 	B.descrizione, " +
+						  "			isnull(A.quantita,0) as quantita " +
+						  "FROM " + 
+						  "		(" +
+						  "			select " + 
+						  "				COD_CHIUSURA_CORRETTO,  " + 
+						  "				sum(quantita) as quantita " +
+						  "			from au_s_tesito " + 
+				  		  " 	where id_s_sessione in ( " +
+				  		  " 				select  " +
+				  		  " 				ass.ID_S_SESSIONE  " +
+				  		  " 			from " +
+				  		  " 					AU_SESSIONI assi, " +
+				  		  " 				AU_S_SESSIONE ass , " +
+				  		  " 					AU_CAMPAGNA ac " +
+				  		  " 				WHERE " +
+				  		  " 					assi.ID_SESSIONE = ass.ID_SESSIONE " +
+				  		  " 				AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " +
+				  		  " 				AND ac.ID_CAMPAGNA =  " + idCampagna +
+				  		  " 				AND ass.STATO_ESAME_SESSIONE = 'C' " +
+				  		  " 			) " +
+						  " 		group by COD_CHIUSURA_CORRETTO" +
+						  "		) as A right join" +
+						  "		(	select " +
+						  "			tipo, codifica, descrizione " +
+						  "			from au_tpl_tipologiche " +
+						  "			where tipo = 'V019'" +
+						  "		) as B on B.codifica = A.COD_CHIUSURA_CORRETTO";
+		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}
+		
+		return lista;
 	}
 	@Override
 	public List<Object[]> getRiepilogoRischiAnnuale(long idCampagna) {
@@ -1481,4 +1628,94 @@ try {
 		}
 		return null;
 	}
+	
+	@Override
+	public String getCampagnaAnno(long idCampanga) {
+		String anno = "";
+		List<Object[]> lista = new ArrayList<Object[]>();
+		String queryStr = "SELECT cast(DATEPART(year, [DATA_INIZIO]) as varchar) AS Anno  FROM AU_CAMPAGNA where ID_CAMPAGNA  = " + idCampanga;	
+ 		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();
+			
+			for (Object row : lista) {
+				anno = (String)row;
+			}
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+
+		}		
+		return anno;
+	}
+	
+	@Override
+	public List<String> getSediByCampagna(long idCampanga) {
+		
+		List<String> listaSedi = new ArrayList<String>();
+		
+		String query = " select " 
+						+ " 	SEDE " 
+						+ " from " 
+						+ " 	AU_SESSIONI assi, " 
+						+ " 	AU_S_SESSIONE ass , " 
+						+ " 	AU_CAMPAGNA ac " 
+						+ " WHERE " 
+						+ " 	assi.ID_SESSIONE = ass.ID_SESSIONE " 
+						+ " 	AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA " 
+						+ " 	AND ac.ID_CAMPAGNA = " + idCampanga
+						+ " 	AND ass.STATO_ESAME_SESSIONE = 'C'";
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		try {
+			lista = em.createNativeQuery(query).getResultList();
+			
+			for (Object  row : lista) {
+				 String sede = (String)row;
+				 listaSedi.add(sede);
+			}
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}	
+		
+		return listaSedi;
+	}
+	
+	@Override
+	public List<CampagnaInfoDto> getCampagnaInfoForReport(long idCampanga) {
+		List<CampagnaInfoDto> listaRet = new ArrayList<CampagnaInfoDto>();
+		List<Object[]> lista = new ArrayList<Object[]>();
+		
+		String query = " select "
+						+ " 	ac.ID_CAMPAGNA ,ac.DATA_INIZIO, ac.DATA_FINE , sum( ass.NR_PRATICHE )  "
+						+ " from "
+						+ " 	AU_SESSIONI assi, "
+						+ " 	AU_S_SESSIONE ass , "
+						+ " 	AU_CAMPAGNA ac "
+						+ " WHERE "
+						+ " 	assi.ID_SESSIONE = ass.ID_SESSIONE "
+						+ " 	AND assi.ID_CAMPAGNA = ac.ID_CAMPAGNA "
+						+ " 	AND ac.ID_CAMPAGNA =  " + idCampanga
+						+ " 	and ass.STATO_ESAME_SESSIONE = 'C' "
+						+ " group by ac.ID_CAMPAGNA ,ac.DATA_INIZIO, ac.DATA_FINE ";
+		try {
+			lista = em.createNativeQuery(query).getResultList();
+			
+			for (Object[]  row : lista) {
+				CampagnaInfoDto itemToAdd = new CampagnaInfoDto();
+				itemToAdd.setIdCampagna((Long) row[0]);
+				itemToAdd.setDataInzio((Date) row[1]);
+				itemToAdd.setDataFine((Date) row[2]);
+				itemToAdd.setNumPratiche((Integer) row[3]);
+				listaRet.add(itemToAdd);
+			}
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	
+		return listaRet;
+	}
+	
 }

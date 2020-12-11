@@ -80,6 +80,11 @@ implements Interceptor {
 			String email =  request.getHeader(ApplicationUtil.INPS_email);
 			Enumeration roles =  request.getHeaders(ApplicationUtil.INPS_Ruoli); 
 			
+			nome = "Michela";
+			cognome = "Domanico";
+			username = "mdomanico01";
+			email= "michela.domanico@gruppoisei.it";
+			
 			log.info("nome:" +nome);
 			log.info("cognome:" +cognome);
 			log.info("username:" +username);

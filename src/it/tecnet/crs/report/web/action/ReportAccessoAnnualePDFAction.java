@@ -3,6 +3,7 @@ package it.tecnet.crs.report.web.action;
 
 import it.tecnet.crs.ATPO.auditors.jpa.model.AtpoPratiche;
 import it.tecnet.crs.indicatori.campagna.CalcoloIndicatoriCampagnaService;
+import it.tecnet.crs.report.jpa.dao.CampagnaInfoDto;
 import it.tecnet.crs.report.service.ReportPDFService;
 import it.tecnet.crs.report.web.bean.ReportPDFBean;
 import it.tecnet.crs.report.web.dto.ReportAccessoPDFDto;
@@ -356,6 +357,27 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	
 	/* OK */
 	public void creaIntestazioneCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
+		String anno = reportPDFService.getCampagnaAnno(report.getIdCampagna());
+		List<String> listaSedi = reportPDFService.getSediByCampagna(report.getIdCampagna());
+		List<CampagnaInfoDto> info = reportPDFService.getCampagnaInfoForReport(report.getIdCampagna());
+		
+		String testo = "\nGli accessi di Audit  effettuati dal 01/01/" + anno + " al 31/12/" + anno + " riguardano le seguenti sedi: \n\n";
+		for (String sede : listaSedi) {
+			testo += "    -    " + sede + "\n";
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(); 
+		sdf.applyPattern("dd/MM/yyyy");  
+		String dataStr = sdf.format(info.get(0).getDataInzio()); 
+		String data2Str = sdf.format(info.get(0).getDataFine());
+	
+		testo += "\n\ne sono costituiti da un campione di n. " + info.get(0).getNumPratiche() 
+		+ " istanze di ATPO dell'invalidità civile definite dal " + dataStr + " al " 
+		+ data2Str + ". Nei seguenti esiti:" ;
+		document.add(sezione1(testo,""));
+		List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdCampagna());
+		document.add(sezione1Corpo(rowsRiepilogoIstanzelista));
+		/*
         String testo = 	"L' accesso di Audit, effettuato dal " + report.getDataInizio() + " al " +  report.getDataFine() +
 		" riguarda un campione costituito da n. " + report.getNumeroPraticheEsaminate() + " istanze " +
 		"di ATPO dell' invalidità civile definite dal " + report.getDataInizioOsservazione() + 
@@ -363,13 +385,14 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		document.add(sezione1(testo,""));
 		List<ReportAccessoPDFDto> rowsRiepilogoIstanzelista = reportPDFService.getRiepilogoIstanzeAnnuale(report.getIdSSessione());
 		document.add(sezione1Corpo(rowsRiepilogoIstanzelista));
+		*/
 	}
 	
 	/* OK */
 	public void creaConformitaProcessoCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
 
 		document.add(intestazione2("\nSezione 1 - Conformità del Processo"));		
-		String testo = 	"Lo stato di conformità del processo è " + report.getINCCDescrizione() +" con un valore dell'indicatore INCC* pari a " + formatMigliaia.format(report.getINCC()) + ". Di seguito vengono riportate le fasi del processo a cui prestare maggiore attenzione:";
+		String testo = 	"Lo stato di conformità del processo è " + "report.getINCCDescrizione()" +" con un valore dell'indicatore INCC* pari a " + "formatMigliaia.format(report.getINCC())" + ". Di seguito vengono riportate le fasi del processo a cui prestare maggiore attenzione:";
 		document.add(sezione1(testo,""));
 		
 		PdfPTable table = new PdfPTable(1);
@@ -377,7 +400,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	    table.getDefaultCell().setBorder(0);
 	    table.getDefaultCell().setBorderWidth(0f);
 	    table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-	    List<ReportAccessoPDFDto> listaOrder = reportPDFService.getRiepilogoFasiAnnuale(report.getIdSSessione());
+	    List<ReportAccessoPDFDto> listaOrder = reportPDFService.getRiepilogoFasiAnnuale(report.getIdCampagna());
 	    Collections.sort(listaOrder, new ConformitaProcesoComparator());
 	    //Collections.reverse(listaOrder); 
 	    
@@ -392,7 +415,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	    document.add(new Paragraph("\n"));
 		String testo2 = "Di seguito viene illustrato il grado di conformità del processo per fasi – sintesi. ";
 		document.add(sezione1(testo2,""));
-		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoFasiAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> lista = reportPDFService.getRiepilogoFasiAnnuale(report.getIdCampagna());
 		document.add(creaConformitaProcessoCorpo( lista ));
 		//document.add(new Paragraph("\n"));
 		String finale = "Nella sezione 7 è presentata la conformità del processo nel dettaglio\n";
@@ -515,10 +538,10 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		document.add(intestazione2("\nSezione 3 - Lo stato del fascicolo"));		
 		String testo = 	"Si riepiloga lo stato del fascicolo: ";
 		document.add(sezione1(testo,""));
-		List<ReportAccessoPDFDto> fascicoloRows = reportPDFService.getRiepilogoFascicoloAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> fascicoloRows = reportPDFService.getRiepilogoFascicoloAnnuale(report.getIdCampagna());
 		document.add(sezioneFascicoloCorpo(fascicoloRows));
 		document.add(new Paragraph("\n"));
-		List<ReportAccessoPDFDto> docRows = reportPDFService.getRiepilogoDocMancAnnuale(report.getIdSSessione());
+		List<ReportAccessoPDFDto> docRows = reportPDFService.getRiepilogoDocMancAnnuale(report.getIdCampagna());
 		document.add(sezioneFascicoloDocCorpo(docRows));
 	}
 	
@@ -765,7 +788,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		row8[2].setBackgroundColor(BaseColor.WHITE);
 		row8[3].setBackgroundColor(BaseColor.WHITE);
 		row9[1].setBackgroundColor(BaseColor.WHITE);
-		row9[2].setBackgroundColor(BaseColor.WHITE);
+		row9[2].setBackgroundColor(BaseColor.WHITE); 
 		row9[3].setBackgroundColor(BaseColor.WHITE);
 		
 		
@@ -1147,15 +1170,16 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	public void generaPDF(Document document, ReportAccessoPDFDto report){
 		try {
 	        createIntestazione(document,report);
-	        document.add(intestazione2("Report Audit sede di " + report.getSede() + "\n\n"));
+	        //document.add(intestazione2("Report Audit sede di " + report.getSede() + "\n\n"));
 	        creaIntestazioneCompleta(document,report);
 	        creaConformitaProcessoCompleta(document,report);
-	        creaRischioCompleta(document,report);
+	        
+	        //creaRischioCompleta(document,report);
 	        creaStatoFascicoloCompleta(document,report);
 	        document.newPage();
 	        creaGiudiziCompleta(document,report);
 	        creaRisultatiInRelTempoCompleta(document,report);
-	        creaNonConformitaCompleta(document,report);
+	        // creaNonConformitaCompleta(document,report);
 	        document.add(new Paragraph("\n"));
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	        String dataStr = sdf.format(new Date());
@@ -1170,6 +1194,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	        Paragraph p = new Paragraph("DIRETTORE DELLA SEDE                                   IL DIRIGENTE DI AUDIT");
 	        p.setAlignment(Paragraph.ALIGN_CENTER);
 	        document.add(p);
+	        
 		}catch(Exception ex){
 			log.error(ex.getMessage());
 		}
@@ -2530,6 +2555,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		if (idCampagnaS != null )
 			idCampagna = Long.parseLong(idCampagnaS);
 		
+		// idCampagna = 2; // OKKIO DA LEVARE PER TEST
+		
 		try {
 			
 			//PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));
@@ -2538,7 +2565,8 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 			writer.setPageEvent(new BaseReportBuilder());
 			// Eseguo la query che estrae i dati da visualizzare in stampa
 			report = reportPDFService.getReportAccessoAnnualePDF(idCampagna);
-
+			report.setIdCampagna(idCampagna);
+			
 			// Apro il documento
 			document.open();
 			// Imposto e implemento il pdf
@@ -2578,7 +2606,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		if (idCampagnaS != null )
 			idCampagna = Long.parseLong(idCampagnaS);
 		
-		idCampagna = 2;
+		//idCampagna = 2;
 		 
 		//calcoloIndicatoriCampagnaService.calcolaIndicatoriCampagna(idCampagna);
 		//long idSSessione = user.getIdSSessione();

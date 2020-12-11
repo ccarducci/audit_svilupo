@@ -93,4 +93,7 @@ public interface ReportPDFDao {
 	public String getAllegatoReportAccessoPDFAnnuale(long idCampagna);
 	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(String sede, long idCampagna);
 	public String calcolaIndicatoriCampagna(long idCampanga);
+	public String getCampagnaAnno(long idCampanga);
+	public List<String> getSediByCampagna(long idCampanga);
+	public List<CampagnaInfoDto> getCampagnaInfoForReport(long idCampanga);
 }
