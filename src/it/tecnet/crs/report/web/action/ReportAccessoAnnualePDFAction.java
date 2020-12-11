@@ -2555,7 +2555,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		if (idCampagnaS != null )
 			idCampagna = Long.parseLong(idCampagnaS);
 		
-		idCampagna = 2; // OKKIO DA LEVARE PER TEST
+		// idCampagna = 2; // OKKIO DA LEVARE PER TEST
 		
 		try {
 			
@@ -2606,7 +2606,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 		if (idCampagnaS != null )
 			idCampagna = Long.parseLong(idCampagnaS);
 		
-		idCampagna = 2;
+		//idCampagna = 2;
 		 
 		//calcoloIndicatoriCampagnaService.calcolaIndicatoriCampagna(idCampagna);
 		//long idSSessione = user.getIdSSessione();
