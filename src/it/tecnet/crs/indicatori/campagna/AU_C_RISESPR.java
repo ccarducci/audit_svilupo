@@ -15,8 +15,8 @@ import javax.persistence.Table;
 public class AU_C_RISESPR {
 
 	@Id
-	@SequenceGenerator(name = "AU_ASS_VERBALE_CAMPAGNA_GENERATOR", sequenceName = "ID_ASS_VERB_CMPGN_SEQ", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AU_ASS_VERBALE_CAMPAGNA_GENERATOR")
+	@SequenceGenerator(name = "ID_AU_C_RISESPR_SEQ_GENERATOR", sequenceName = "ID_AU_C_RISESPR_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_AU_C_RISESPR_SEQ_GENERATOR")
 	private Long id;
 
 	@Column(name = "ID_C_CAMPAGNA")
