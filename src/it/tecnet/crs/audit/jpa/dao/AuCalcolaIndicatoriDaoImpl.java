@@ -1549,7 +1549,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				+ " 		AND snc2.ID_S_NONCONF = svc2.ID_S_NONCONF "
 				+ " 		AND ausess2.ID_SESSIONE = sess2.ID_SESSIONE "
 				+ " 		AND svc2.ID_M_NONCONF = mnc2.ID_M_NON_CONF "
-				+ " 		AND sess2.ID_CAMPAGNA = " + idCampagna	+
+				+ " 		AND sess2.ID_CAMPAGNA = " + idCampagna	
 				+ " 		AND ausess2.STATO_ESAME_SESSIONE = 'C' "
 				+ " 	GROUP BY "
 				+ " 		svc2.ID_M_NONCONF) AS t2 "
@@ -1580,7 +1580,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				+ " 		AND mvc.ID_M_COMP = svc1.id_m_varcomp "
 				+ " 		AND cam.id_campagna = sess.id_campagna "
 				+ " 		AND ID_TPL_ISNC = mvc.PESO_VC "
-				+ " 		AND sess.ID_CAMPAGNA =  " +  idCampagna	+
+				+ " 		AND sess.ID_CAMPAGNA =  " +  idCampagna	
 				+ " 		AND ausess.STATO_ESAME_SESSIONE = 'C' "
 				+ " 	GROUP BY "
 				+ " 		svc1.ID_M_NONCONF, "
