@@ -1521,6 +1521,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public void getDatiCampagnaVarCompDto(long idCampagna,
 			List<AU_C_VARCOMP> listaAU_C_VARCOMP) {
+		
 		String queryStr = "SELECT "
 				+ " 	t1.ID_FASE, "
 				+ " 	t1.ID_M_NONCONF, "
@@ -1531,7 +1532,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				+ " 	NUM_NC, "
 				+ " 	SOGLIA, "
 				+ " 	(CAST((NUM_VC) AS decimal (7, 2))/ CAST((NUM_NC) AS decimal (7,2))) AS PERC_SU_PS, "
-				+ " 	(CAST((NUM_VC) AS decimal (7, 2))/ CAST((NUM_NC) AS decimal (7, "2))* SOGLIA) AS PERC_PESATA "
+				+ " 	(CAST((NUM_VC) AS decimal (7, 2))/ CAST((NUM_NC) AS decimal (7, 2))* SOGLIA) AS PERC_PESATA " 
 				+ " FROM "
 				+ " 	( "
 				+ " 	SELECT "
@@ -1579,7 +1580,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				+ " 		AND mvc.ID_M_COMP = svc1.id_m_varcomp "
 				+ " 		AND cam.id_campagna = sess.id_campagna "
 				+ " 		AND ID_TPL_ISNC = mvc.PESO_VC "
-				+ " 		AND sess.ID_CAMPAGNA = + " idCampagna	+
+				+ " 		AND sess.ID_CAMPAGNA =  " +  idCampagna	+
 				+ " 		AND ausess.STATO_ESAME_SESSIONE = 'C' "
 				+ " 	GROUP BY "
 				+ " 		svc1.ID_M_NONCONF, "
@@ -1604,7 +1605,7 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 				+ " 	svc1.DATA_INIZIO, "
 				+ " 	svc1.DATA_FINE, "
 				+ " 	soglia) AS t1 ON "
-				+ " 	t2.ID_M_NONCONF = t1.ID_M_NONCONF "
+				+ " 	t2.ID_M_NONCONF = t1.ID_M_NONCONF ";
 			
 				List<Object[]> lista = new ArrayList<Object[]>();
 	
