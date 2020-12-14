@@ -1604,36 +1604,37 @@ public class AuCalcolaIndicatoriDaoImpl implements AuCalcolaIndicatoriDao {
 	@Override
 	public void getDatiCampagnaVNonConfDto(long idCampagna,
 			List<AU_C_NONCONF> listaNonConf) {
-				String query =  "Select t1.ID_C_CAMPAGNA, t1.ID_M_NONCONF, t1.PESO_NON_CONF, t1.ID_FASE, t1.DATA_INIZIO, t1.DATA_FINE, t1.NUM_NC, "
-								+ "	case when t1.PESO_NON_CONF = 0 then null else t2.INCC end AS INCC, TOT_PESO_NC, TOT_PESO_FS, "
-								+ "	case when t1.PESO_NON_CONF = 0 then null else t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t1.TOT_PESO_NC) as decimal (7,2))) end AS VALORE_PESATO, "
-								+ "	case when t1.PESO_NON_CONF = 0 then null else t2.INCC*(cast((t1.PESO_NON_CONF) as decimal (7,2))/cast((t3.TOT_PESO_FS) as decimal (7,2))) end AS VALORE_PESATO_FASE  from"
-								+ "	(Select cvc2.ID_M_NONCONF,"
-								+ "	case when sum (cvc2.PERC_PESATA) < 0 then 0 else sum (cvc2.PERC_PESATA) end  as INCC "
-								+ "	FROM AU_C_VARCOMP cvc2"
-								+ "	where "
-								+ "	cvc2.ID_C_CAMPAGNA = " + idCampagna
-								+ "	group by cvc2.ID_M_NONCONF) as t2"
-								+ "	left join "
-								+ "	(Select cvc1.id_c_campagna, cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, mnc.ID_FASE, cvc1.data_inizio, cvc1.data_fine, sum (mnc.PESO_NON_CONF) as TOT_PESO_NC, sum (cvc1.num_vc) as NUM_NC" 
-								+ "	FROM"
-								+ "	AU_C_VARCOMP cvc1 "
-								+ "	, AU_M_NONCONF mnc"
-								+ "	where "
-								+ "	cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and"
-								+ "	cvc1.ID_C_CAMPAGNA = " + idCampagna
-								+ "	group by cvc1.id_c_campagna, cvc1.ID_M_NONCONF, mnc.PESO_NON_CONF, mnc.ID_FASE, cvc1.data_inizio, cvc1.data_fine) as t1 on t2.ID_M_NONCONF = t1.ID_M_NONCONF"
-								+ "	left join "
-								+ "	(Select cvc1.ID_FASE, sum (mnc.PESO_NON_CONF) as TOT_PESO_FS "
-								+ "	FROM"
-								+ "	AU_C_VARCOMP cvc1 "
-								+ "	, AU_M_NONCONF mnc"
-								+ "	where "
-								+ "	cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and"
-								+ "	cvc1.ID_C_CAMPAGNA = " + idCampagna
-								+ "	group by cvc1.ID_FASE) as t3"
-								+ "	on t1.ID_FASE = t3.ID_FASE";
-					
+				String query =  " Select t1.ID_C_CAMPAGNA, t2.ID_M_NON_CONF, t2.PESO_NON_CONF, t3.ID_FASE, t2.DATA_INIZIO, t2.DATA_FINE, t2.NUM_NC, case when t2.PESO_NON_CONF = 0 then null else t2.INCC end AS INCC, TOT_PESO_NC, TOT_PESO_FS,"
+								+ " case when t2.PESO_NON_CONF = 0 then null else t2.INCC*(cast((t2.PESO_NON_CONF) as decimal (7,2))/cast((t1.TOT_PESO_NC) as decimal (7,2))) end AS VALORE_PESATO,"
+								+ " case when t2.PESO_NON_CONF = 0 then null else t2.INCC*(cast((t2.PESO_NON_CONF) as decimal (7,2))/cast((t3.TOT_PESO_FS) as decimal (7,2))) end AS VALORE_PESATO_FASE from"
+								+ " (Select ID_C_CAMPAGNA, cvc2.id_fase, mnc.ID_M_NON_CONF, cvc2.data_inizio, cvc2.data_fine, mnc.Peso_NON_CONF,"
+								+ " case when sum (cvc2.PERC_PESATA) < 0 then 0 else sum (cvc2.PERC_PESATA) end as INCC,"
+								+ " sum (cvc2.num_vc) as NUM_NC" 
+								+ " FROM AU_C_VARCOMP cvc2"
+								+ " , AU_M_NONCONF mnc"
+								+ " where" 
+								+ " cvc2.ID_M_NONCONF = mnc.ID_M_NON_CONF and"
+								+ " cvc2.ID_C_CAMPAGNA = " + idCampagna
+								+ " group by ID_C_CAMPAGNA, cvc2.id_fase, mnc.ID_M_NON_CONF, cvc2.data_inizio, cvc2.data_fine, mnc.Peso_NON_CONF) as t2"
+								+ " left join" 
+								+ " (Select cvc1.id_c_campagna, sum (mnc.PESO_NON_CONF) as TOT_PESO_NC" 
+								+ " FROM"
+								+ " AU_C_NONCONF cvc1" 
+								+ " , AU_M_NONCONF mnc"
+								+ " where" 
+								+ " cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and"
+								+ " cvc1.ID_C_CAMPAGNA = " + idCampagna
+								+ " group by cvc1.id_c_campagna) as t1 on t2.ID_C_CAMPAGNA = t1.ID_C_CAMPAGNA"
+								+ " left join" 
+								+ " (Select ID_C_CAMPAGNA, cvc1.ID_FASE, sum (mnc.PESO_NON_CONF) as TOT_PESO_FS" 
+								+ " FROM"
+								+ " AU_C_NONCONF cvc1" 
+								+ " , AU_M_NONCONF mnc"
+								+ " where" 
+								+ " cvc1.ID_M_NONCONF = mnc.ID_M_NON_CONF and"
+								+ " cvc1.ID_C_CAMPAGNA = " + idCampagna
+								+ " group by ID_C_CAMPAGNA, cvc1.ID_FASE) as t3" 
+								+ " on t3.ID_C_CAMPAGNA = t1.ID_C_CAMPAGNA and t3.id_fase =t2.id_fase";				 	
 		
 		List<Object[]> lista = new ArrayList<Object[]>();
 
