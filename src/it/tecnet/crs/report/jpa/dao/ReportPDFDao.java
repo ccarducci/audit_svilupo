@@ -87,7 +87,8 @@ public interface ReportPDFDao {
 	public List<Object[]> getEsitoByTipoDifesaAnnuale(long idCampagna);
 	public List<String> getListaAuditorsAnnuale(long idCampagna);
 	public List<Object[]> getGiudiziDefinitiviEtichetteAnnuale();
-	
+	public List<Object[]> getInccDescriptionsSet();
+	public Object getInccByCampagna(long idCampagna);
 	// --------------------------------------------------------------------------------------------
 	// NUOVI REPORT ANGELO ALLEGATO
 	public String getAllegatoReportAccessoPDFAnnuale(long idCampagna);

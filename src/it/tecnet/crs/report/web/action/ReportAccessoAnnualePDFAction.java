@@ -390,9 +390,10 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 	
 	/* OK */
 	public void creaConformitaProcessoCompleta(Document document, ReportAccessoPDFDto report) throws DocumentException{
-
+		ReportAccessoPDFDto report2 = new ReportAccessoPDFDto();
+		report2 = reportPDFService.getInccDescrizioneAnnuale(report.getIdCampagna());
 		document.add(intestazione2("\nSezione 1 - Conformità del Processo"));		
-		String testo = 	"Lo stato di conformità del processo è " + "report.getINCCDescrizione()" +" con un valore dell'indicatore INCC* pari a " + "formatMigliaia.format(report.getINCC())" + ". Di seguito vengono riportate le fasi del processo a cui prestare maggiore attenzione:";
+		String testo = 	"Lo stato di conformità del processo è " + report2.getINCCDescrizione() + " con un valore dell'indicatore INCC* pari a " + formatMigliaia.format(report2.getINCC()) + ". Di seguito vengono riportate le fasi del processo a cui prestare maggiore attenzione:";
 		document.add(sezione1(testo,""));
 		
 		PdfPTable table = new PdfPTable(1);

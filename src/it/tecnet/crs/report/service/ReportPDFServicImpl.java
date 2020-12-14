@@ -6,6 +6,7 @@ import it.tecnet.crs.report.jpa.dao.ReportPDFDao;
 import it.tecnet.crs.report.web.dto.ReportAccessoPDFDto;
 import it.tecnet.crs.util.ModelToDto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -499,6 +500,34 @@ public class ReportPDFServicImpl implements ReportPDFService {
 
 		return lista;
 	}
+	
+	@Override
+	public ReportAccessoPDFDto getInccDescrizioneAnnuale(long idCampagna) {
+		List<ReportAccessoPDFDto> lista = new ArrayList<ReportAccessoPDFDto>();
+		ReportAccessoPDFDto descrizione = new ReportAccessoPDFDto();
+		Object obj_ = reportPDFDao.getInccByCampagna(idCampagna);
+		List<Object[]> objList = reportPDFDao.getInccDescriptionsSet();
+		
+		for (Object[] obj : objList) {
+			lista.add(ModelToDto.modelToListaDescrizioniIncc(obj));
+		}
+		
+		Double incc = ((BigDecimal)obj_).doubleValue();
+		descrizione.setINCC(incc);
+		for (int i=0; i<lista.size(); i++) {
+			if (incc < lista.get(i).getINCC()) {
+				if (i == 0)
+					descrizione.setINCCDescrizione(lista.get(0).getINCCDescrizione());
+				else
+					descrizione.setINCCDescrizione(lista.get(i-1).getINCCDescrizione());
+				break;
+			}
+			if (i == lista.size()-1 && incc > lista.get(i).getINCC())
+				descrizione.setINCCDescrizione(lista.get(i).getINCCDescrizione());
+		}	
+		return descrizione;
+	}
+	
 	
 	@Override
 	public List<String> getListaAuditorsAnnuale(long idSSessione) {

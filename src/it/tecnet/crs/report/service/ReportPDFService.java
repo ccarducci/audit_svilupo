@@ -70,6 +70,7 @@ public interface ReportPDFService {
 	// -------------------------------------------------------------------------------------------
 	// NUOVI REPORT ANGELO ACCESSO
 	public ReportAccessoPDFDto getReportAccessoAnnualePDF(long idCampagna);
+	public ReportAccessoPDFDto getInccDescrizioneAnnuale(long idCampagna);
 	public List<ReportAccessoPDFDto> getRiepilogoIstanzeAnnuale(long idSSessione);
 	public List<ReportAccessoPDFDto> getRiepilogoFasiAnnuale(long idCampagna);
 	public List<ReportAccessoPDFDto> getRiepilogoRischiAnnuale(long idCampagna);

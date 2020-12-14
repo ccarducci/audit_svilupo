@@ -768,6 +768,19 @@ public static ReportAccessoPDFDto modelToRiepilogoFasiPDF(Object[] o) {
 	return dto;
 }
 
+public static ReportAccessoPDFDto modelToListaDescrizioniIncc(Object[] o) {
+	
+	ReportAccessoPDFDto dto = new ReportAccessoPDFDto();
+	
+	if(o[0] != null){
+		dto.setINCC(((BigDecimal)o[0]).doubleValue());
+	}
+	if(o[1] != null){
+		dto.setINCCDescrizione((String)o[1]);
+	}	
+	return dto;
+}
+
 public static ReportAccessoPDFDto modelToVarCompPDF(Object[] o) {
 	
 	ReportAccessoPDFDto dto = new ReportAccessoPDFDto();

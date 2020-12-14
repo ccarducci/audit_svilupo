@@ -1651,6 +1651,32 @@ try {
 	}
 	
 	@Override
+	public List<Object[]> getInccDescriptionsSet() {		
+		List<Object[]> lista = new ArrayList<Object[]>();
+		String queryStr = "select VALORE_INCC, DESCRIZIONE from AU_INCC_DES order by ID_INCC_DES desc";	
+ 		
+		try {
+			lista = em.createNativeQuery(queryStr).getResultList();		
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}		
+		return lista;
+	}
+	
+	@Override
+	public Object getInccByCampagna(long idCampagna) {		
+		Object valore_incc = new Object();
+		String queryStr = "select sum(VALORE_PESATO) from AU_C_NONCONF where ID_C_CAMPAGNA = " + idCampagna;	
+ 		
+		try {
+			valore_incc = em.createNativeQuery(queryStr).getSingleResult();		
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}		
+		return valore_incc;
+	}
+	
+	@Override
 	public List<String> getSediByCampagna(long idCampanga) {
 		
 		List<String> listaSedi = new ArrayList<String>();
