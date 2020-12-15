@@ -151,7 +151,8 @@ public class ReportPDFDaoImpl implements ReportPDFDao {
 						  	"A.NR_PRATICHE_ND AS numeroPraticheND, " +
 						  	"A.NR_PRATICHE AS numeroPratiche, " +
 						  	"A.INCC, A.INCC_DESCRIZIONE AS INCCDescrizione, " +
-						  	"CONVERT(VARCHAR(10), A.DATA_AGG_DATI_SESS, 103) as dataAggiornamentoDatiSessione " +
+						  	"CONVERT(VARCHAR(10), A.DATA_AGG_DATI_SESS, 103) as dataAggiornamentoDatiSessione, " +
+						  	"cast(0 as bigint) " +
 						  "FROM " + 
 						  	"AU_S_SESSIONE AS A " + 
 							"JOIN AU_SESSIONI AS B ON A.ID_SESSIONE = B.ID_SESSIONE " + 
@@ -672,7 +673,7 @@ public class ReportPDFDaoImpl implements ReportPDFDao {
 							"        SELECT * " +
 							"        FROM   (SELECT b.codifica                       AS esito, " +
 							"                       'INCOMPLETA'                     AS DESCRIZIONE, " +
-							"                       Isnull(a.qu	antita, 0)            AS quantita, " +
+							"                       Isnull(a.quantita, 0)            AS quantita, " +
 							"                       Isnull(a.perc_quantita, 0)       AS perc_quantita, " +
 							"                       Isnull(a.num_prestazioni, 0)     AS num_prestazioni, " +
 							"                       Isnull(a.importo_prestazione, 0) AS importo_prestazione, " +
