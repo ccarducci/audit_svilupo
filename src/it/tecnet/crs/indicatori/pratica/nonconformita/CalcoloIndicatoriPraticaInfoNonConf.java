@@ -535,7 +535,9 @@ public class CalcoloIndicatoriPraticaInfoNonConf {
 
 		if (dataAcqSisco != null) {
 			if (( dataDepdOmol != null && dataDepdOmol.getTime() <= dataAcqSisco.getTime())
-					 || ( dataDepdOmol == null && "4".equals(codChiuCorr) ) ) {
+					 || 
+					 /*( dataDepdOmol == null && "4".equals(codChiuCorr) ) ) {   - modificato da frusso il 18/11/2020*/
+					 ( dataDepdOmol == null && !"4".equals(codChiuCorr) ) ) {
 			    // Se (Data_depd_omol <> null e Data_depd_omol <= Data_acq_sisco) 
 				// o (Data_depd_omol = null e cod_chiu_corr <> 4) allora VC = “A011”
 				varComp = PraticaUtil.A011;
