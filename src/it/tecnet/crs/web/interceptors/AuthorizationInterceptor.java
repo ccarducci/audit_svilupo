@@ -82,7 +82,7 @@ implements Interceptor {
 			
 			nome = "Michela";
 			cognome = "Domanico";
-			username = "mdomanico01";
+			username = "mdomanico02";
 			email= "michela.domanico@gruppoisei.it";
 			
 			log.info("nome:" +nome);
