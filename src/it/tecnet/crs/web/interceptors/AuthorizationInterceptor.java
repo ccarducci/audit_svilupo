@@ -80,11 +80,6 @@ implements Interceptor {
 			String email =  request.getHeader(ApplicationUtil.INPS_email);
 			Enumeration roles =  request.getHeaders(ApplicationUtil.INPS_Ruoli); 
 			
-			nome = "Michela";
-			cognome = "Domanico";
-			username = "mdomanico02";
-			email= "michela.domanico@gruppoisei.it";
-			
 			log.info("nome:" +nome);
 			log.info("cognome:" +cognome);
 			log.info("username:" +username);
@@ -160,18 +155,6 @@ implements Interceptor {
 						}
 					}
 				}
-				/* DA RIMUOVERE DOPO LO SVILUPO inizio  */
-				for(CrsRuolo crsRuolo:listaRuoliValidi){
-					UserRole role = new UserRole();
-					CrsAssUtenteRuolo ass=new CrsAssUtenteRuolo();
-					ass.setIdRuolo(crsRuolo.getIdRuolo());
-					ass.setIdUtente(idUtente);
-					utenzeService.salva(ass);
-					role.setRoleName(crsRuolo.getDescrizione());
-					appUser.getRoles().add(role);
-				}
-				/* DA RIMUOVERE DOPO LO SVILUPO fine  */
-				
 				if(appUser.getRoles().size()==0){
 					log.info("nessun ruolo assegnato all'utente "+nome+" "+cognome);
 					exception="Nessun ruolo assegnato all'utente "+nome+" "+cognome;
