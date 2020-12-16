@@ -90,7 +90,7 @@ public interface ReportPDFService {
 	// --------------------------------------------------------------------------------------------
 	// NUOVI REPORT ANGELO ALLEGATO
 	public String getAllegatoReportAccessoPDFAnnuale(long idSSessione);
-	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(String sede, long idSessione);
+	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(long idCampagna);
 	
 	// ------------------------------------------
 	// Chiamata procedura per calcolo indicatori Campanga

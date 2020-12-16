@@ -1578,31 +1578,14 @@ try {
 	}
 	
 	@Override
-	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(String sede,
-			long idCampagna) {
-/*		String queryStr = "select prt.* from ATPO_PRATICHE_SISCO sisco, ATPO_PRATICHE prt, ATPO_ASS_PRATICA_CAMPAGNA ass, AU_SESSIONI sess " 	
-			+"where sisco.ID_PRATICHE_SISCO = prt.ID_PRATICHE_SISCO "
-			+"and sisco.ID_PRATICHE_SISCO = ass.ID_PRATICA_SISCO "
-			//+"and sess.ID_SESSIONE= "+idSessione
-			+"and sess.ID_CAMPAGNA = ass.ID_CAMPAGNA "
-			+"and sess.ID_CAMPAGNA =  "  + idCampagna
-			//+"and prt.sede = '"+sede+"'"
-			+" and (prt.Esito like 'SFAVOREVOLE%' or  "
-			+"	prt.Esito like 'FAVOREVOLE%' or  "
-			+"	prt.Esito like 'PARZIALMENTE%' ) ";*/
-		String queryStr = "select prt.* " +
-				"FROM 	AU_S_PRATICA pra	" +
-				", AU_S_SESSIONE ausess	" +
-				", AU_SESSIONI sess	" +
-				", ATPO_PRATICHE prt" +
-				" where " +
-				"	pra.ID_S_SESSIONE = ausess.ID_S_SESSIONE" +
-				" AND ausess.ID_SESSIONE = sess.ID_SESSIONE" +
-				" AND pra.ESAME_PRATICA = 'C'" +
-				" AND ausess.STATO_ESAME_SESSIONE = 'C'" +
-				" AND pra.ID_PRATICA = prt.ID_PRATICHE" +
-				" AND sess.ID_CAMPAGNA =  " + idCampagna +
-				" AND (prt.Esito like 'SFAVOREVOLE%' or  	prt.Esito like 'FAVOREVOLE%' or  	prt.Esito like 'PARZIALMENTE%' ) ";
+	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(long idCampagna) {
+		String queryStr = " Select prt.* FROM"   
+						+ " ATPO_PRATICHE prt"
+						+ " ,ATPO_ASS_PRATICA_CAMPAGNA ass"
+						+ " where ass.ID_PRATICA_SISCO = prt.ID_PRATICHE_SISCO" 
+						+ " AND ass.ID_CAMPAGNA = " + idCampagna
+						+ " AND (prt.Esito like 'SFAVOREVOLE%' or  prt.Esito like 'FAVOREVOLE%' or  prt.Esito like 'PARZIALMENTE%')";
+;
 		try {
 			
 			List<AtpoPratiche> list = (List<AtpoPratiche>)em.createNativeQuery(queryStr,AtpoPratiche.class).getResultList();
@@ -1716,7 +1699,7 @@ try {
 		List<Object[]> lista = new ArrayList<Object[]>();
 		
 		String query = " select "
-						+ " 	ac.ID_CAMPAGNA ,ac.DATA_INIZIO, ac.DATA_FINE , sum( ass.NR_PRATICHE )  "
+						+ " 	ac.ID_CAMPAGNA ,ac.DATA_INIZIO, ac.DATA_FINE , sum( ass.NR_PRATICHE_ESAMINATE )  "
 						+ " from "
 						+ " 	AU_SESSIONI assi, "
 						+ " 	AU_S_SESSIONE ass , "

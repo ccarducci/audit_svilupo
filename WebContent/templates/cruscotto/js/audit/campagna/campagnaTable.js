@@ -1,5 +1,3 @@
-
-
 /*
  * TABELLA AUDITOR/CAMPAGNA
  */

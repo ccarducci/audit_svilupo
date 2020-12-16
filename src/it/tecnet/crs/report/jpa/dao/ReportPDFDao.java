@@ -92,7 +92,7 @@ public interface ReportPDFDao {
 	// --------------------------------------------------------------------------------------------
 	// NUOVI REPORT ANGELO ALLEGATO
 	public String getAllegatoReportAccessoPDFAnnuale(long idCampagna);
-	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(String sede, long idCampagna);
+	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(long idCampagna);
 	public String calcolaIndicatoriCampagna(long idCampanga);
 	public String getCampagnaAnno(long idCampanga);
 	public List<String> getSediByCampagna(long idCampanga);

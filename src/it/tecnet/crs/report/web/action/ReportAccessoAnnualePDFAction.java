@@ -2620,7 +2620,7 @@ public class ReportAccessoAnnualePDFAction extends BaseAction implements ModelDr
 			// Eseguo la query che estrae i dati da visualizzare in stampa
 			String campagnaDescrizione = reportPDFService.getAllegatoReportAccessoPDFAnnuale(idCampagna);
 			report.setSede(campagnaDescrizione);
-			List<AtpoPratiche> objects = reportPDFService.getReportAllegatiPDFAnnuale(campagnaDescrizione,idCampagna);
+			List<AtpoPratiche> objects = reportPDFService.getReportAllegatiPDFAnnuale(idCampagna);
 			// Apro il documento
 			document.open();
 			// Imposto e implemento il pdf

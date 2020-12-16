@@ -554,8 +554,8 @@ public class ReportPDFServicImpl implements ReportPDFService {
 	}
 	
 	@Override
-	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(String sede, long idSessione) {
-		return  reportPDFDao.getReportAllegatiPDFAnnuale(sede,idSessione);
+	public List<AtpoPratiche> getReportAllegatiPDFAnnuale(long idCampagna) {
+		return  reportPDFDao.getReportAllegatiPDFAnnuale(idCampagna);
 	}
 	
 	@Override
